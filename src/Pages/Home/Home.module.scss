@@ -1,0 +1,175 @@
+.home-page {
+    width: 100%;
+}
+.home-page-heading {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    & > .page-heading-img {
+        width: 460px;
+        margin-top: 1rem;
+        position: absolute;
+        text-align: center;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.home-page-main {
+    width: 100%;
+    height: 706px;
+    display: flex;
+    flex-direction: row;
+    margin-top: -0.6rem;
+    & > .page-main-left {
+        width: 50%;
+        background-color: var(---back-ground-fff);
+    }
+}
+.main-left-body {
+    margin-top: 21rem;
+    position: relative;
+
+    & > .main-left-title {
+        position: absolute;
+        right: 15rem;
+        top: -8rem;
+        font-family: 'Felipa', cursive;
+        color: var(--back-ground-red);
+        font-size: 7rem;
+        font-weight: 500;
+    }
+}
+.main-left-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 430px;
+    margin-left: 9rem;
+    text-align: justify;
+    & > .left-information-title {
+        margin-top: 7rem;
+        color: var(--back-ground-red);
+        font-weight: 900;
+        font-size: 1.8rem;
+    }
+    & > .left-information-describe {
+        color: var(--back-ground-red);
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 300;
+    }
+    & > .left-information-button {
+        position: relative;
+        width: 13rem;
+        height: 3.8rem;
+        margin-top: 2rem;
+        margin-left: 2rem;
+        background-color: #958b8b;
+        & > .button-title {
+            position: absolute;
+            top: -1.7rem;
+            right: 0.6rem;
+            width: 13rem;
+            height: 3.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--back-ground-red);
+            color: #fff;
+            margin-top: 1rem;
+            opacity: 0.8;
+            font-size: 15px;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.page-main-right {
+    background-color: var(--back-ground-red);
+    width: 50%;
+    & > .main-right-body {
+        margin-top: 21rem;
+        position: relative;
+        & > .main-right-title {
+            position: absolute;
+            left: 3rem;
+            top: -8rem;
+            color: var(--color-fff);
+            font-family: 'Felipa', cursive;
+            font-size: 7rem;
+            font-weight: 500;
+        }
+    }
+}
+.page-main-tag {
+    width: 100%;
+    height: 30px;
+    background-color: #742433;
+    opacity: 0.6;
+}
+
+.home-page-slide {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.page-slide-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & > .product-table-body {
+        width: 500px;
+        height: 300px;
+        border-collapse: collapse;
+        & > tbody {
+            & > tr {
+                border-collapse: collapse;
+                & > td {
+                    border-collapse: collapse;
+                    border: 1px solid #dcdcdc;
+                }
+            }
+        }
+    }
+}
+.page-slide-information {
+    position: absolute;
+    & > .slide-information-main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+.slide-information-list {
+    & > .icon {
+        position: absolute;
+        top: 6px;
+        right: 51%;
+        color: var(--color-red);
+    }
+    & > .information-title {
+        color: #422127;
+        font-family: var(--font-family-felipa);
+        font-size: 3.8rem;
+    }
+    & > .information-describe {
+        color: #aa747e;
+        font-weight: 400;
+    }
+}
+.page-slide-slick {
+    position: absolute;
+    /* background-color: red; */
+    width: 100%;
+    top: 11rem;
+}

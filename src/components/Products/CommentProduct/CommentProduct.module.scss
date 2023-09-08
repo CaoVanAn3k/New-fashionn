@@ -1,0 +1,205 @@
+.comment-product {
+    width: 100%;
+    background-color: #e3e1e1;
+    & > .comment-product-main {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 7rem;
+    }
+}
+.comment-head {
+    width: 96%;
+    display: flex;
+    border-bottom: 1px solid #000;
+    justify-content: space-between;
+    & > .head-product-left {
+        font-size: 1.5rem;
+        color: #000000;
+        opacity: 0.8;
+    }
+    & > .head-product-right {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        & > .product-right-sort {
+            margin-right: 12px;
+            opacity: 0.8;
+            font-size: 15px;
+        }
+        & > .product-right-list {
+            display: flex;
+            height: 2.6rem;
+            border: 1px solid #292d32;
+            background-color: #d9d9d9;
+            border-radius: 5px;
+        }
+    }
+}
+.comment-body {
+    width: 70%;
+    margin-top: 2rem;
+    & > .comment-body-left {
+        width: 100%;
+    }
+}
+.comment-left-write {
+    display: flex;
+    align-items: center;
+    & > .left-logo {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        border: 1px solid;
+        & > img {
+            border-radius: 50%;
+            object-fit: contain;
+        }
+    }
+    & > .left-input {
+        margin-left: 2.5rem;
+        width: 85%;
+        opacity: 0.8;
+        border-bottom: 1px solid;
+        & > input {
+            float: left;
+            width: 50%;
+            background-color: transparent;
+        }
+    }
+}
+.comment-body-right {
+    margin-top: 3rem;
+}
+.comment-right-client {
+    margin-bottom: 2.5rem;
+    & > .client-right-list {
+        display: flex;
+        & > .client-list-logo {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            border: 1px solid;
+            & > img {
+                border-radius: 50%;
+                object-fit: contain;
+            }
+        }
+    }
+}
+
+.client-information-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: left;
+    margin-left: 2.5rem;
+}
+.information-name {
+    margin-bottom: 2px;
+    & > h4 {
+        margin: 0;
+        color: #000;
+        opacity: 0.9;
+    }
+}
+.information-comment {
+    & > p {
+        margin: 0;
+        font-size: 15px;
+    }
+}
+.information-icon {
+    & > .icon-color-yellow {
+        color: #f0e713;
+        font-size: 1.5rem;
+    }
+    & > .icon-color {
+        color: #292d32;
+        opacity: 0.2;
+        font-size: 1.5rem;
+    }
+}
+.information-feedback {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    & > .feedback-left {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+        color: #3966e8;
+    }
+    & > .feedback-left > p:nth-child(2) {
+        margin: 0 3px;
+    }
+    & > .feedback-between {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+        & > i {
+            color: #ff0c0c;
+            opacity: 0.8;
+            margin-right: 4px;
+        }
+    }
+    & > .feedback-right {
+        font-size: 1.3rem;
+    }
+}
+.comment-right-shop {
+    margin-left: 9rem;
+    margin-bottom: 3rem;
+    & > .comment-shop-list {
+        margin-top: 1.5rem;
+        & > .shop-right-list {
+            display: flex;
+            & > .shop-list-logo {
+                width: 5rem;
+                height: 5rem;
+                border-radius: 50%;
+                border: 1px solid;
+                & > img {
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+}
+
+.shop-information-client {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: left;
+    margin-left: 2.5rem;
+}
+
+.information-feedback-shop {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    & > .feedback-left {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+    }
+    & > .feedback-left > p:first-child {
+        color: #3966e8;
+    }
+    & > .feedback-left > p:nth-child(2) {
+        margin: 0 3px;
+    }
+}
+.information-border {
+    width: 100%;
+    background: #000000;
+    height: 1px;
+    margin-left: 12px;
+}
