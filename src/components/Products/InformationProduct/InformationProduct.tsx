@@ -57,6 +57,7 @@ const InformationProduct: React.FC<ChildrenProps> = ({ children }) => {
                                                         {product.titleInformation}
                                                     </h2>
                                                     <p className={cx('information-price')}>{product.price}</p>
+
                                                     <div className={cx('information-icon')}>
                                                         <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>
                                                         <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>

@@ -1,0 +1,97 @@
+.product-main-shop {
+    width: 83%;
+    margin: 0 auto;
+    & > .main-shop-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 3rem;
+        margin-top: 4rem;
+        width: 100%;
+    }
+}
+
+.shop-list-item {
+    background-color: #ffffff;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 1rem;
+    position: relative;
+    & > .list-discount {
+        width: 31px;
+        height: 31px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 12px;
+        left: 17px;
+        border-radius: 50%;
+        font-size: 12px;
+        background: #982d41;
+        color: #fff;
+        font-weight: 600;
+    }
+    & > .list-img {
+        width: 228px;
+        height: 316px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1px auto 0px;
+        margin-top: 0.8rem;
+        margin-bottom: 3rem;
+    }
+}
+
+.list-information {
+    & > .information-main {
+        width: 80%;
+        position: relative;
+        margin-left: 2rem;
+        & > .information-title {
+            color: var(--color-red);
+            text-align: start;
+        }
+        & > .information-price {
+            position: absolute;
+            top: 18px;
+            font-size: 18px;
+            color: var(--color-red);
+        }
+        & > .information-status {
+            display: flex;
+            align-items: center;
+            & > p:first-child {
+                margin-right: 8px;
+                color: #982d41;
+                border-bottom: 1px solid #982d41;
+            }
+        }
+        & > .information-icon {
+            text-align: start;
+            margin-top: 4rem;
+            & > .icon-color-yellow {
+                color: #f0e713;
+                font-size: 1.9rem;
+            }
+            & > .icon-color {
+                color: #292d32;
+                opacity: 0.2;
+                font-size: 1.9rem;
+            }
+        }
+        & > .information-button {
+            opacity: 0.9;
+            background-color: #982d41;
+            color: var(--color-fff1);
+            border-radius: 10px;
+            font-size: 1.6rem;
+            width: 100%;
+            height: 3.7rem;
+            margin-bottom: 2rem;
+        }
+    }
+}
+.information-padding {
+    background-color: #000;
+    height: 100px;
+}

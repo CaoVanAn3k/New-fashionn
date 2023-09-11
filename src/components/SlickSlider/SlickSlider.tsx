@@ -16,8 +16,8 @@ const settings = {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    // autoplay: true,
-    autoplaySpeed: 1000,
+    autoplay: true,
+    autoplaySpeed: 2000,
     pauseOnHover: true,
 };
 const SlickSlider: React.FC<ChildrenSlider> = ({ children }) => {
