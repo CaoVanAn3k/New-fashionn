@@ -94,7 +94,7 @@
 .client-information-main {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     text-align: left;
     margin-left: 2.5rem;
 }
@@ -175,7 +175,7 @@
 .shop-information-client {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     text-align: left;
     margin-left: 2.5rem;
 }

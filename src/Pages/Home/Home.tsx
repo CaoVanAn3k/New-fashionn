@@ -2,30 +2,39 @@ import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 import images from '../../components/Images';
 import PageProduct from '../../components/Products';
-import SlickSlider from '../../components/SlickSlider/SlickSlider';
+import SlickSlider from './SlickSlider/SlickSlider';
 import img1 from '../../components/Images/Product/Blue.png';
-import img3 from '../../components/Images/Product/Black3.png';
-import img4 from '../../components/Images/Product/white.png';
-import img5 from '../../components/Images/Product/yellow.png';
+import img2 from '../../components/Images/Product/Black3.png';
+import img3 from '../../components/Images/Product/Green.png';
+import img4 from '../../components/Images/Product/White.png';
 
 const cx = classNames.bind(styles);
 
-const imgSlider = [
+let imgSlider = [
     {
         id: 1,
         img: img1,
+        backgroundColor: '#3651a0',
     },
     {
-        id: 1,
+        id: 2,
+        img: img2,
+        backgroundColor: '#151414',
+    },
+    {
+        id: 3,
+        img: images.homeimg,
+        backgroundColor: '#802a3a',
+    },
+    {
+        id: 4,
         img: img3,
+        backgroundColor: '#788028',
     },
     {
-        id: 1,
+        id: 5,
         img: img4,
-    },
-    {
-        id: 1,
-        img: img5,
+        backgroundColor: '#a8aaa8',
     },
 ];
 

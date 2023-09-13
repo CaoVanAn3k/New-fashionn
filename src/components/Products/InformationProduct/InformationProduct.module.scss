@@ -1,7 +1,9 @@
 .information-product {
     margin-top: 5rem;
 }
-
+.information-product:nth-child(1) {
+    margin-top: 20rem;
+}
 .product-main-header {
     display: flex;
     justify-content: space-between;

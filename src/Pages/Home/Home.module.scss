@@ -35,11 +35,12 @@
     & > .main-left-title {
         position: absolute;
         right: 15rem;
-        top: -8rem;
+        top: -5rem;
         font-family: 'Felipa', cursive;
         color: var(--back-ground-red);
-        font-size: 7rem;
+        font-size: 10rem;
         font-weight: 500;
+        margin: 0;
     }
 }
 .main-left-information {
@@ -49,6 +50,8 @@
     width: 430px;
     margin-left: 9rem;
     text-align: justify;
+    position: absolute;
+    top: 10rem;
     & > .left-information-title {
         margin-top: 7rem;
         color: var(--back-ground-red);
@@ -98,11 +101,12 @@
         & > .main-right-title {
             position: absolute;
             left: 3rem;
-            top: -8rem;
+            top: -5rem;
             color: var(--color-fff);
             font-family: 'Felipa', cursive;
-            font-size: 7rem;
+            font-size: 10rem;
             font-weight: 500;
+            margin: 0;
         }
     }
 }
