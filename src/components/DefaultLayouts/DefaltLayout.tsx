@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import Footer from '../Footer';
 import Header from '../Header/Header';
 
 interface DefaultChildren {
@@ -9,6 +10,7 @@ const DefaultLayout = ({ children }: DefaultChildren) => {
         <div>
             <Header />
             {children}
+            <Footer />
         </div>
     );
 };
