@@ -17,6 +17,10 @@ const ReasonProduct: React.FC<ReasonChildren> = ({ children }) => {
     const [informationStates, setInformationStates] = useState<boolean[]>(children.map(() => false));
     const toggleInformation = (index: number) => {
         const newStates = [...informationStates];
+        const findStateOfInformation = newStates.findIndex((state) => state === true);
+        if (findStateOfInformation !== -1 && findStateOfInformation !== index) {
+            newStates[findStateOfInformation] = false;
+        }
         newStates[index] = !newStates[index];
         setInformationStates(newStates);
     };
@@ -32,10 +36,13 @@ const ReasonProduct: React.FC<ReasonChildren> = ({ children }) => {
                             <div className={cx('list-left-icon')}>
                                 <i className={cx('fa-sharp fa-solid fa-star-of-life', 'icon')}></i>
                             </div>
-
                             {children.map((child, index) => {
                                 return (
-                                    <div className={cx('list-left-main')} key={child.id}>
+                                    <div
+                                        className={cx('list-left-main')}
+                                        key={child.id}
+                                        onClick={() => toggleInformation(index)}
+                                    >
                                         <div className={cx('product-left-title')}>
                                             <h3>{child.title}</h3>
                                         </div>

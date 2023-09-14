@@ -10,14 +10,16 @@
         justify-content: center;
         flex-direction: row;
         z-index: 10;
+        & > div {
+            display: flex;
+        }
     }
 }
 
 .header-main-left {
     background-color: var(--back-ground-fff);
     width: 50%;
-    display: flex;
-    padding-top: 1rem;
+    padding: 1rem 0;
     & > .main-left-body {
         display: flex;
         width: 97%;
@@ -47,15 +49,22 @@
 .header-main-right {
     background-color: var(--back-ground-red);
     width: 50%;
-    padding-top: 1rem;
+    padding: 1rem 0;
     & > .main-right-body {
         width: 97%;
         margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        & > ul {
+            margin: 0;
+        }
         & > .main-right-list {
             display: flex;
             justify-content: space-around;
             align-items: center;
             padding: 0 6px;
+            gap: 5rem;
             & > li {
                 font-size: 1.9rem;
                 font-weight: 600;
@@ -63,6 +72,25 @@
                 & > a {
                     text-decoration: none;
                     color: var(--back-ground-fff);
+                }
+            }
+        }
+        & > .main-right-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            color: #fff;
+            padding: 0 3rem 0 0;
+            & > li {
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                & > svg {
+                    font-size: 3rem;
                 }
             }
         }

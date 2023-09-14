@@ -147,8 +147,6 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/*  */}
                     <div className={cx('page-slide-slick')}>
                         <SlickSlider children={imgSlider} />
                     </div>

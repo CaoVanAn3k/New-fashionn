@@ -2,7 +2,9 @@ import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import images from '../Images';
 import { Link } from 'react-router-dom';
-
+import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+import PersonIcon from '@mui/icons-material/Person';
+import SearchIcon from '@mui/icons-material/Search';
 const cx = classNames.bind(styles);
 const menuList = [
     {
@@ -42,9 +44,16 @@ const Header = () => {
                                     </li>
                                 );
                             })}
-
+                        </ul>
+                        <ul className={cx('main-right-icon')}>
                             <li>
-                                <i className={cx('fa-solid fa-magnifying-glass')}></i>
+                                <SearchIcon />
+                            </li>
+                            <li>
+                                <LocalMallOutlinedIcon />
+                            </li>
+                            <li>
+                                <PersonIcon />
                             </li>
                         </ul>
                     </div>

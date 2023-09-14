@@ -32,6 +32,9 @@
             height: 400px;
             width: 400px;
             opacity: 0.95;
+            & > img {
+                transform: scale(1.4);
+            }
         }
         &:nth-child(3) {
             width: 450px;
@@ -42,11 +45,17 @@
             height: 400px;
             width: 400px;
             opacity: 0.95;
+            & > img {
+                transform: scale(1.4);
+            }
         }
         &:nth-child(5) {
             height: 350px;
             width: 350px;
             opacity: 0.9;
+            & > img {
+                transform: scale(1.3);
+            }
         }
     }
 }
