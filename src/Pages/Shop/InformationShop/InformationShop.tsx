@@ -56,7 +56,7 @@ const InformationShop: React.FC<ShopProps> = ({ chidren }) => {
                     })}
                 </div>
             </div>
-            <div className={cx('information-padding')}></div>
+            {/* <div className={cx('information-padding')}></div> */}
         </div>
     );
 };

@@ -1,5 +1,6 @@
 import Home from '../../Pages/Home';
 import Shop from '../../Pages/Shop';
+import DetailShop from '../../Pages/Shop/DetailShop';
 
 const RouterPublic = () => [
     {
@@ -9,6 +10,10 @@ const RouterPublic = () => [
     {
         path: '/shop',
         component: Shop,
+    },
+    {
+        path: '/detail',
+        component: DetailShop,
     },
 ];
 export default RouterPublic;

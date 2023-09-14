@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import style from './SlickSlider.module.scss';
+import style from './SlickSliderShop.module.scss';
 import Slider from 'react-slick';
 
 const cx = classNames.bind(style);

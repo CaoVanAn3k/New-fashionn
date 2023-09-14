@@ -1,1 +1,1 @@
-export { default } from './ReasonProduct.module.scss';
+export { default } from './ReasonProduct';

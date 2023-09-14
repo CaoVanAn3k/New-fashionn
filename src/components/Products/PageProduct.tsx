@@ -9,7 +9,6 @@ import logo from '../Images/Product/logo.svg';
 import InformationProduct from './InformationProduct/InformationProduct';
 import ReasonProduct from './ReasonProduct/ReasonProduct';
 import CommentProduct from './CommentProduct';
-import Footer from '../Footer';
 const cx = classNames.bind(styles);
 
 const informationProduct = [
@@ -239,7 +238,6 @@ const PageProduct: React.FC = () => {
             <InformationProduct children={informationProduct} />
             <ReasonProduct children={reasonProduct} />
             <CommentProduct children={commentProduct} />
-            <Footer />
         </div>
     );
 };

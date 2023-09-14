@@ -1,0 +1,22 @@
+.information-icon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    & > .icon-main {
+        display: flex;
+        & > .icon-color-yellow {
+            color: #f0e713;
+            font-size: 1.9rem;
+        }
+        & > .icon-color {
+            color: #292d32;
+            opacity: 0.2;
+            font-size: 1.9rem;
+        }
+        & > p {
+            margin: 0;
+            font-size: 15px;
+            margin-left: 6px;
+        }
+    }
+}

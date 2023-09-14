@@ -1,0 +1,47 @@
+.evaluate-main-comment {
+    width: 50%;
+    text-align: left;
+    border-top: 1px solid var(--color-red78);
+    & > .comment-body {
+        width: 100%;
+    }
+}
+.comment-body-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & > .title-left {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        & > p {
+            color: var(--color-red78);
+            font-weight: 600;
+            margin: 0;
+            margin-right: 20px;
+            font-size: 19px;
+        }
+    }
+    & > .title-right {
+        color: var(--color-red78);
+    }
+}
+.comment-information-list {
+    color: var(--color-red78);
+    & > .information-list-title {
+        margin-bottom: 25px;
+        & > h3 {
+            font-size: 17px;
+        }
+        & > p {
+            margin: 10px 0;
+            font-size: 15px;
+        }
+    }
+    & > .information-list-item {
+        & > p {
+            margin: 10px 0;
+            font-size: 15px;
+        }
+    }
+}
