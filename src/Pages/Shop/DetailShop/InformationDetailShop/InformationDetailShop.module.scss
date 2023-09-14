@@ -26,6 +26,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        cursor: pointer;
+
         & > h3 {
             color: var(--color-red78);
             font-size: 22px;
@@ -36,7 +38,6 @@
             background: transparent;
             color: var(--color-red78);
             font-weight: 100;
-            cursor: pointer;
         }
     }
     & > .list-body-information {

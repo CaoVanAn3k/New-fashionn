@@ -19,25 +19,27 @@ interface HeaderChildren {
 interface ChildrenProps {
     children: HeaderChildren[];
 }
+
 const InformationProduct: React.FC<ChildrenProps> = ({ children }) => {
     return (
         <>
             {children.map((child, index) => {
                 return (
                     <div key={index} className={cx('information-product')}>
-                        <div className={cx('product-main-header')}>
-                            <div className={cx('header-title')}>
-                                <h1 className={cx('title-list')}>{child.titleHead}</h1>
-
-                                <i className={cx('fa-sharp fa-solid fa-star-of-life', 'icon')}></i>
+                        {child.titleHead !== '' && (
+                            <div className={cx('product-main-header')}>
+                                <div className={cx('header-title')}>
+                                    <h1 className={cx('title-list')}>{child.titleHead}</h1>
+                                    <i className={cx('fa-sharp fa-solid fa-star-of-life', 'icon')}></i>
+                                </div>
+                                <div className={cx('header-button')}>
+                                    <button className={cx('button-list')}>
+                                        XEM TẨT CẢ
+                                        <i className={cx('fa-solid fa-arrow-right')}></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div className={cx('header-button')}>
-                                <button className={cx('button-list')}>
-                                    XEM TẨT CẢ
-                                    <i className={cx('fa-solid fa-arrow-right')}></i>
-                                </button>
-                            </div>
-                        </div>
+                        )}
                         <div className={cx('product-main-shop')}>
                             <div className={cx('main-shop-list')}>
                                 {child.product.map((product) => {
@@ -65,9 +67,11 @@ const InformationProduct: React.FC<ChildrenProps> = ({ children }) => {
                                                         <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>
                                                         <i className={cx('fa-solid fa-star', 'icon-color')}></i>
                                                     </div>
-                                                    <button className={cx('information-button')}>
-                                                        <AddOutlinedIcon />
-                                                    </button>
+                                                    <div className={cx('information-button')}>
+                                                        <button className={cx('information-button-main')}>
+                                                            <AddOutlinedIcon />
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

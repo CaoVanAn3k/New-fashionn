@@ -47,6 +47,7 @@
     color: #000;
     transform: scale(1.2);
     outline: none;
+    cursor: pointer;
     & > option {
         padding: 2px 2px;
         color: #000;
@@ -62,6 +63,7 @@
     text-align: center;
     padding: 7px;
     appearance: none;
+    cursor: pointer;
     outline: none;
     border: 3px solid #ccc;
 }

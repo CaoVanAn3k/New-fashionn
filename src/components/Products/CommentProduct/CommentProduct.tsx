@@ -127,25 +127,6 @@ const CommentProduct: React.FC<ChildrenPropComment> = ({ children }) => {
                                 </div>
                             );
                         })}
-
-                        {/* button  */}
-                        {/* <div className={cx('comment-right-next')}>
-                            <div className={cx('right-next-page')}>
-                                <div className={cx('next-page-button')}>
-                                    <div className={cx('button-left')}>
-                                        <i className={cx('fa-solid fa-chevron-left')}></i>
-                                    </div>
-                                    <div className={cx('button-list')}>
-                                        <button>1</button>
-                                        <button>2</button>
-                                        <button>3</button>
-                                    </div>
-                                    <div className={cx('button-left')}>
-                                        <i className={cx('fa-solid fa-chevron-right')}></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             </div>

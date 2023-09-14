@@ -11,6 +11,7 @@ import { useState } from 'react';
 import InformationDetailShop from './InformationDetailShop';
 import IconEvaluate from '../../../components/IconEvaluate';
 import CommentDetailShop from './CommentDetailShop';
+import InformationProduct from '../../../components/Products/InformationProduct/InformationProduct';
 
 const cx = classNames.bind(styles);
 
@@ -185,6 +186,46 @@ const commentDetail = [
         evaluatecmt: 'Sản phẩm đẹp,lên dánh ok,sẽ ủng hộ thêm sau này !!!',
     },
 ];
+const informationDetailShop = [
+    {
+        id: 1,
+        titleHead: '',
+        product: [
+            {
+                idd: 1,
+                linkimg: img1,
+                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+                price: '$50.00',
+                discount: '%20',
+                button: 'Mua ngay',
+            },
+            {
+                idd: 2,
+                linkimg: img5,
+                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+                price: '$50.00',
+                discount: '',
+                button: 'Mua ngay',
+            },
+            {
+                idd: 3,
+                linkimg: img3,
+                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+                price: '$50.00',
+                discount: '%20',
+                button: 'Mua ngay',
+            },
+            {
+                idd: 4,
+                linkimg: img4,
+                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+                price: '$50.00',
+                discount: '',
+                button: 'Mua ngay',
+            },
+        ],
+    },
+];
 
 function DetailShop() {
     const [sliderDetail, setSliderDetail] = useState(img1);
@@ -209,8 +250,11 @@ function DetailShop() {
                                     {imgDetailShop.map((img, index) => {
                                         return (
                                             <div className={cx('left-slide-main')} key={index}>
-                                                <div className={cx('an')}>
-                                                    <div className={cx('a')} onClick={() => handleClickSlider(img.img)}>
+                                                <div className={cx('slider-main-list')}>
+                                                    <div
+                                                        className={cx('main-list-img')}
+                                                        onClick={() => handleClickSlider(img.img)}
+                                                    >
                                                         <img src={img.img} alt="img" />
                                                     </div>
                                                 </div>
@@ -309,9 +353,11 @@ function DetailShop() {
                         <div className={cx('shop-watched-title')}>
                             <h2>SẢN PHẨM TƯƠNG TỰ</h2>
                         </div>
+                        <InformationProduct children={informationDetailShop} />
                     </div>
                 </div>
             </div>
+            <div className={cx('detail-shop-boder')}></div>
         </div>
     );
 }

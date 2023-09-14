@@ -29,9 +29,9 @@ const InformationDetailShop: React.FC<DetailChildren> = ({ children }) => {
                     {children.map((child, index) => {
                         return (
                             <div className={cx('main-list-body')} key={index}>
-                                <div className={cx('list-body-title')}>
+                                <div className={cx('list-body-title')} onClick={() => handleDetail(index)}>
                                     <h3>{child.title}</h3>
-                                    <button onClick={() => handleDetail(index)}>
+                                    <button>
                                         {informationDetail[index] ? (
                                             <i className={cx('fa-solid fa-chevron-up')}></i>
                                         ) : (
