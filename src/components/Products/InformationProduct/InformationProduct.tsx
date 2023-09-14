@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './InformationProduct.module.scss';
-
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 const cx = classNames.bind(styles);
 
 interface Product {
@@ -66,7 +66,7 @@ const InformationProduct: React.FC<ChildrenProps> = ({ children }) => {
                                                         <i className={cx('fa-solid fa-star', 'icon-color')}></i>
                                                     </div>
                                                     <button className={cx('information-button')}>
-                                                        {product.button}
+                                                        <AddOutlinedIcon />
                                                     </button>
                                                 </div>
                                             </div>

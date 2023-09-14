@@ -1,9 +1,6 @@
 .information-product {
     margin-top: 5rem;
 }
-.information-product:nth-child(1) {
-    margin-top: 15rem;
-}
 .product-main-header {
     display: flex;
     justify-content: space-between;
@@ -67,6 +64,7 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 1rem;
     position: relative;
+    cursor: pointer;
     & > .list-discount {
         width: 31px;
         height: 31px;
@@ -128,10 +126,11 @@
             color: var(--color-fff1);
             border-radius: 10px;
             font-size: 1.6rem;
-            width: 12.4rem;
-            height: 5.7rem;
+            width: 40px;
+            height: 40px;
             right: -2.4rem;
             top: 4.5rem;
+            cursor: pointer;
         }
     }
 }
