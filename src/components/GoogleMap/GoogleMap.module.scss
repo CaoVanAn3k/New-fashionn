@@ -1,0 +1,91 @@
+.contact {
+    margin-top: 5rem;
+    width: 100%;
+    .information {
+        & > div > h5,
+        & > div > p {
+            margin: 0;
+        }
+        & > div > h5 {
+            font-size: 2rem;
+            color: var(--color-red);
+            font-weight: 300;
+        }
+        & > div > p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            & > span {
+                font-size: 3rem;
+                font-weight: 300;
+            }
+            & > span:nth-child(1) {
+                font-style: italic;
+            }
+            & > span:nth-child(2) {
+                color: var(--color-red);
+            }
+        }
+    }
+    .google-map {
+        margin: 5rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        & > iframe {
+            width: 85%;
+        }
+    }
+    .contact-method {
+        margin: 2rem 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        & > .container {
+            width: 85%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            & > .box-contact {
+                background-color: var(--back-ground-fff);
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 2rem;
+                padding-left: 2rem;
+                height: 150px;
+                & > .box-icon {
+                    width: 70px;
+                    height: 70px;
+                    border-radius: 50%;
+                    background-color: #ce1212;
+                    color: var(--color-fff1);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    & > svg {
+                        font-size: 3rem;
+                    }
+                }
+                & > .box-text {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+                    gap: 1.5rem;
+                    & > h3,
+                    & > p {
+                        margin: 0;
+                    }
+                    & > h3 {
+                        color: var(--color-red);
+                    }
+                }
+            }
+        }
+    }
+}

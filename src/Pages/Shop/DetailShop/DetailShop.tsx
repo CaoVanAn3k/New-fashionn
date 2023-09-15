@@ -226,7 +226,6 @@ const informationDetailShop = [
         ],
     },
 ];
-
 function DetailShop() {
     const [sliderDetail, setSliderDetail] = useState(img1);
     const handleClickSlider = (children: string) => {
@@ -321,7 +320,10 @@ function DetailShop() {
                                         </select>
                                     </div>
                                 </div>
-                                <button className={cx('information-buy')}>MUA NGAY</button>
+                                <div className={cx('button-control')}>
+                                    <button className={cx('button-cart')}>Thêm Vào Giỏ Hàng</button>
+                                    <button className={cx('button-payment')}>MUA NGAY</button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -210,3 +210,67 @@
     height: 1px;
     margin-left: 12px;
 }
+.comment-paging {
+    height: 100px;
+    border-top: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    & > .paging {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        position: relative;
+        z-index: 1;
+        & > span {
+            width: 35px;
+            height: 35px;
+            text-align: center;
+            border: 1px solid var(--back-ground-red);
+            line-height: 35px;
+            border-radius: 1rem;
+            background-color: #7424338f;
+            color: var(--back-ground-fff);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        & > .dot {
+            background-color: transparent;
+            border: none;
+            color: #000000;
+            font-size: 4rem;
+            display: flex;
+            align-items: flex-end;
+        }
+        & > span:hover:not(.dot),
+        & > .active {
+            background-color: var(--back-ground-red);
+        }
+    }
+    & > .button-control {
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        width: 350px;
+        & > div {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            z-index: 1;
+            & > svg {
+                font-size: 4rem;
+                font-weight: 300px;
+            }
+            &:hover {
+                background-color: #7424338f;
+                color: var(--color-fff1);
+            }
+        }
+    }
+}

@@ -69,9 +69,27 @@
                 font-size: 1.9rem;
                 font-weight: 600;
                 color: var(--back-ground-fff);
+                position: relative;
                 & > a {
                     text-decoration: none;
                     color: var(--back-ground-fff);
+                }
+                &::before {
+                    content: '';
+                    position: absolute;
+                    width: 100%;
+                    height: 4px;
+                    border-radius: 4px;
+                    background-color: #ffffff;
+                    bottom: -10px;
+                    left: 0;
+                    transform-origin: right;
+                    transform: scaleX(0);
+                    transition: transform 0.3s ease-in-out;
+                }
+                &:hover::before {
+                    transform-origin: left;
+                    transform: scaleX(1);
                 }
             }
         }
@@ -83,14 +101,38 @@
             color: #fff;
             padding: 0 3rem 0 0;
             & > li {
-                width: 32px;
-                height: 32px;
+                width: 40px;
+                height: 40px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
+                border-radius: 50%;
+                position: relative;
                 & > svg {
                     font-size: 3rem;
+                }
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    background: var(--back-ground-fff);
+                    transition: 0.5s;
+                    transform: scale(0.9);
+                    z-index: -1;
+                }
+                &:hover::before {
+                    transform: scale(1.1);
+                    box-shadow: 0 0 15px var(--back-ground-fff);
+                }
+                &:hover {
+                    color: var(--back-ground-fff);
+                    box-shadow: 0 0 5px var(--back-ground-fff);
+                    text-shadow: 0 0 5px var(--back-ground-fff);
                 }
             }
         }

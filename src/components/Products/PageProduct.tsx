@@ -4,11 +4,12 @@ import img1 from '../Images/Product/Blue.png';
 import img3 from '../Images/Product/Green.png';
 import img4 from '../Images/Product/yellow.png';
 import img5 from '../Images/Product/Black3.png';
-import logo from '../Images/Product/logo.svg';
+// import logo from '../Images/Product/logo.svg';
 
 import InformationProduct from './InformationProduct/InformationProduct';
 import ReasonProduct from './ReasonProduct/ReasonProduct';
-import CommentProduct from './CommentProduct';
+// import CommentProduct from './CommentProduct';
+import GoogleMap from '../GoogleMap/GoogleMap';
 const cx = classNames.bind(styles);
 
 const informationProduct = [
@@ -182,62 +183,62 @@ const reasonProduct = [
               lifewear tại việt Nam..',
     },
 ];
-const commentProduct = [
-    {
-        id: 1,
-        imgClient: img3,
-        titleClient: 'Nguyễn Văn Hiếu',
-        commentClient: ' Tư vấn rất nhiệt tình, chất liệu mình thấy khá oke, mua về tặng vợ rất hợp lý =))',
-        like: '26',
-        commentShops: [
-            {
-                idd: 1,
-                logoShop: logo,
-                titleShop: 'Bích Thuận Store',
-                commentShop:
-                    'Cảm ơn bạn đã quan tâm và ủng hộ Shop, Nếu có bất kì thắc mắc, liên hệ với Shop qua Hotline 0989.696.393.',
-            },
-        ],
-    },
-    {
-        id: 2,
-        imgClient: img4,
-        titleClient: 'Nguyễn Huy',
-        commentClient: ' Tư vấn rất nhiệt tình, chất liệu mình thấy khá oke, mua về tặng vợ rất hợp lý =))',
-        like: '26',
-        commentShops: [],
-    },
-    {
-        id: 3,
-        imgClient: img5,
-        titleClient: 'Tuấn Vỹ',
-        commentClient: ' Tư vấn rất nhiệt tình, chất liệu mình thấy khá oke, mua về tặng vợ rất hợp lý =))',
-        like: '26',
-        commentShops: [
-            {
-                idd: 1,
-                logoShop: logo,
-                titleShop: 'Bích Thuận Store',
-                commentShop:
-                    'Cảm ơn bạn đã quan tâm và ủng hộ Shop, Nếu có bất kì thắc mắc, liên hệ với Shop qua Hotline 0989.696.393.',
-            },
-        ],
-    },
-    {
-        id: 4,
-        imgClient: img3,
-        titleClient: 'Nguyễn Văn Hiếu',
-        commentClient: ' Tư vấn rất nhiệt tình, chất liệu mình thấy khá oke, mua về tặng vợ rất hợp lý =))',
-        like: '26',
-        commentShops: [],
-    },
-];
+// const commentProduct = [
+//     {
+//         id: 1,
+//         imgClient: img3,
+//         titleClient: 'Nguyễn Văn Hiếu',
+//         commentClient: ' Tư vấn rất nhiệt tình, chất liệu mình thấy khá oke, mua về tặng vợ rất hợp lý =))',
+//         like: '26',
+//         commentShops: [
+//             {
+//                 idd: 1,
+//                 logoShop: logo,
+//                 titleShop: 'Bích Thuận Store',
+//                 commentShop:
+//                     'Cảm ơn bạn đã quan tâm và ủng hộ Shop, Nếu có bất kì thắc mắc, liên hệ với Shop qua Hotline 0989.696.393.',
+//             },
+//         ],
+//     },
+//     {
+//         id: 2,
+//         imgClient: img4,
+//         titleClient: 'Nguyễn Huy',
+//         commentClient: ' Tư vấn rất nhiệt tình, chất liệu mình thấy khá oke, mua về tặng vợ rất hợp lý =))',
+//         like: '26',
+//         commentShops: [],
+//     },
+//     {
+//         id: 3,
+//         imgClient: img5,
+//         titleClient: 'Tuấn Vỹ',
+//         commentClient: ' Tư vấn rất nhiệt tình, chất liệu mình thấy khá oke, mua về tặng vợ rất hợp lý =))',
+//         like: '26',
+//         commentShops: [
+//             {
+//                 idd: 1,
+//                 logoShop: logo,
+//                 titleShop: 'Bích Thuận Store',
+//                 commentShop:
+//                     'Cảm ơn bạn đã quan tâm và ủng hộ Shop, Nếu có bất kì thắc mắc, liên hệ với Shop qua Hotline 0989.696.393.',
+//             },
+//         ],
+//     },
+//     {
+//         id: 4,
+//         imgClient: img3,
+//         titleClient: 'Nguyễn Văn Hiếu',
+//         commentClient: ' Tư vấn rất nhiệt tình, chất liệu mình thấy khá oke, mua về tặng vợ rất hợp lý =))',
+//         like: '26',
+//         commentShops: [],
+//     },
+// ];
 const PageProduct: React.FC = () => {
     return (
         <div className={cx('home-page-product')}>
             <InformationProduct children={informationProduct} />
             <ReasonProduct children={reasonProduct} />
-            <CommentProduct children={commentProduct} />
+            <GoogleMap />
         </div>
     );
 };

@@ -3,6 +3,7 @@ import images from '../../Images/Product/Red.png';
 
 import styles from './ReasonProduct.module.scss';
 import { useState } from 'react';
+import 'animate.css';
 const cx = classNames.bind(styles);
 
 interface Reason {
@@ -48,16 +49,21 @@ const ReasonProduct: React.FC<ReasonChildren> = ({ children }) => {
                                         </div>
                                         <div className={cx('product-left-information')}>
                                             {informationStates[index] && (
-                                                <div className={cx('left-information-list')}>
+                                                <div
+                                                    className={cx(
+                                                        'left-information-list',
+                                                        'animate__animated animate__fadeIn',
+                                                    )}
+                                                >
                                                     <p>{child.describe}</p>
                                                 </div>
                                             )}
                                             <div className={cx('left-button-list')}>
                                                 <button onClick={() => toggleInformation(index)}>
                                                     {informationStates[index] ? (
-                                                        <i className={cx('fa-solid fa-caret-up')}></i>
+                                                        <i className={cx('fa-solid fa-caret-up', 'icon-up')}></i>
                                                     ) : (
-                                                        <i className={cx('fa-solid fa-caret-down')}></i>
+                                                        <i className={cx('fa-solid fa-caret-down', 'icon-down')}></i>
                                                     )}
                                                 </button>
                                             </div>

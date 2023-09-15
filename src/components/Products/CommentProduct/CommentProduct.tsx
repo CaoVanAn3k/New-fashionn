@@ -1,7 +1,8 @@
 import classNames from 'classnames/bind';
-import images from '../../Images/Product/Blue.png';
 import styles from './CommentProduct.module.scss';
-
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import { useRef, useState } from 'react';
 const cx = classNames.bind(styles);
 interface CommentShop {
     idd: number;
@@ -20,8 +21,22 @@ interface CommentProducts {
 interface ChildrenPropComment {
     children: CommentProducts[];
 }
-
+const array = [1, 2, 3, 4, 5];
 const CommentProduct: React.FC<ChildrenPropComment> = ({ children }) => {
+    const [activePage, setActivePage] = useState(1);
+    // const [showPage, setShowPage] = useState(3);
+    const showPage = useRef(3);
+    const visiblePages = array.slice(activePage - 1, activePage - 1 + showPage.current);
+    const handleNextClick = () => {
+        if (activePage < array.length) {
+            setActivePage(activePage + 1);
+        }
+    };
+    const handlePreviousClick = () => {
+        if (activePage > 1) {
+            setActivePage(activePage - 1);
+        }
+    };
     return (
         <div className={cx('comment-product')}>
             <div className={cx('comment-product-main')}>
@@ -41,14 +56,14 @@ const CommentProduct: React.FC<ChildrenPropComment> = ({ children }) => {
                 </div>
                 <div className={cx('comment-body')}>
                     <div className={cx('comment-body-left')}>
-                        <div className={cx('comment-left-write')}>
+                        {/* <div className={cx('comment-left-write')}>
                             <div className={cx('left-logo')}>
                                 <img src={images} alt="logo" />
                             </div>
                             <div className={cx('left-input')}>
                                 <input placeholder="Viết bình luận" />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className={cx('comment-body-right')}>
@@ -127,6 +142,51 @@ const CommentProduct: React.FC<ChildrenPropComment> = ({ children }) => {
                                 </div>
                             );
                         })}
+                    </div>
+                </div>
+                <div className={cx('comment-paging')}>
+                    <div className={cx('paging')}>
+                        {activePage > 1 && (
+                            <>
+                                <span className={cx('dot')}>...</span>
+                            </>
+                        )}
+                        {visiblePages.map((item, index) => {
+                            return (
+                                <span
+                                    className={cx(item === activePage ? 'active' : '')}
+                                    key={index + 1}
+                                    onClick={() => {
+                                        setActivePage(item);
+                                    }}
+                                >
+                                    {item}
+                                </span>
+                            );
+                        })}
+                        {activePage + 2 < array.length && (
+                            <>
+                                <span className={cx('dot')}>...</span>
+                            </>
+                        )}
+                    </div>
+                    <div className={cx('button-control')}>
+                        <div
+                            className={cx('button-previous')}
+                            onClick={() => {
+                                handlePreviousClick();
+                            }}
+                        >
+                            <NavigateBeforeIcon />
+                        </div>
+                        <div
+                            className={cx('button-next')}
+                            onClick={() => {
+                                handleNextClick();
+                            }}
+                        >
+                            <NavigateNextIcon />
+                        </div>
                     </div>
                 </div>
             </div>

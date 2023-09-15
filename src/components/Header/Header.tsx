@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import PersonIcon from '@mui/icons-material/Person';
 import SearchIcon from '@mui/icons-material/Search';
+import Tooltip from '@mui/material/Tooltip';
 const cx = classNames.bind(styles);
 const menuList = [
     {
@@ -17,7 +18,7 @@ const menuList = [
     },
     {
         title: 'Thông tin',
-        paths: '/thongtin',
+        paths: '',
     },
 ];
 const Header = () => {
@@ -50,7 +51,9 @@ const Header = () => {
                                 <SearchIcon />
                             </li>
                             <li>
-                                <LocalMallOutlinedIcon />
+                                <Tooltip title="Cart 0 items" placement="bottom-start">
+                                    <LocalMallOutlinedIcon />
+                                </Tooltip>
                             </li>
                             <li>
                                 <PersonIcon />

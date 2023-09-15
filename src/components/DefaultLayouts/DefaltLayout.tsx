@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import Footer from '../Footer';
 import Header from '../Header/Header';
+import ButtonScrollTop from '../ButtonScrollTop/ButtonScrollTop';
 
 interface DefaultChildren {
     children: ReactNode;
@@ -11,6 +12,7 @@ const DefaultLayout = ({ children }: DefaultChildren) => {
             <Header />
             {children}
             <Footer />
+            <ButtonScrollTop />
         </div>
     );
 };

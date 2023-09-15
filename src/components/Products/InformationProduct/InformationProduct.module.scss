@@ -38,8 +38,11 @@
             font-size: 1.7rem;
             color: #999999;
             border: 1px solid #999999;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
             &:hover {
-                cursor: pointer;
+                color: var(--color-fff1);
+                background-color: var(--back-ground-red);
             }
         }
     }
@@ -88,6 +91,13 @@
         align-items: center;
         margin: 1px auto 0px;
         margin-bottom: 3rem;
+        overflow: hidden;
+        & > img {
+            transition: all 0.3s ease-in-out;
+        }
+        &:hover > img {
+            transform: scale(1.2);
+        }
     }
 }
 
@@ -131,9 +141,13 @@
     color: var(--color-fff1);
     border-radius: 10px;
     font-size: 1.6rem;
-    width: 40px;
+    width: 100px;
     height: 40px;
     right: 11px;
     top: 4.5rem;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        background-color: #982d41db;
+    }
 }

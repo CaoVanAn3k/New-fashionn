@@ -60,15 +60,15 @@
     }
 }
 .detail-information-right {
+    background-color: var(--back-ground-fff);
     width: 50%;
 }
 .information-right-main {
-    margin-top: 4rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     text-align: start;
-    margin-left: 3rem;
+    padding: 10px;
     & > h1 {
         color: var(--color-red78);
         opacity: 0.8;
@@ -137,37 +137,42 @@
             width: 51px;
             height: 51px;
             border-radius: 10px;
-            border: 1px solid;
+            border: 1px solid var(--color-red78);
             background-color: #fff;
+            font-weight: 700;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
         }
         :hover {
-            background-color: #605454;
-            cursor: pointer;
+            background-color: var(--back-ground-red);
             color: #fff;
-            font-weight: 700;
         }
     }
 }
 .information-height {
     margin-top: 25px;
     & > .height-top-list {
-        background: #fff;
-        width: 60%;
+        background: var(--back-ground-red);
+        color: var(--color-fff1);
         display: flex;
         border-radius: 13px;
         justify-content: center;
         cursor: pointer;
+        transition: opacity 0.3s ease-in-out;
         & > p {
             font-size: 18px;
             font-weight: 500;
             margin: 15px;
         }
+        &:hover {
+            opacity: 0.9;
+        }
     }
     & > .height-bottom-list {
-        width: 60%;
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        cursor: pointer;
         & > p {
             text-decoration: underline;
             margin-left: 4px;
@@ -194,27 +199,47 @@
         font-size: 17px;
     }
 }
-.information-buy {
-    width: 60%;
-    background: var(--color-red78);
-    font-size: 18px;
-    padding: 8px 0;
-    text-align: center;
-    color: #fff;
-    font-weight: 600;
-    margin-top: 25px;
-    border-radius: 11px;
-    cursor: pointer;
+.button-control {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    & > button {
+        width: 50%;
+        background: var(--color-red78);
+        font-size: 2rem;
+        padding: 15px 0;
+        text-align: center;
+        color: #fff;
+        margin-top: 25px;
+        border-radius: 11px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+    & > .button-cart {
+        background-color: #fff5f1;
+        border: 1px solid var(--back-ground-red);
+        color: var(--back-ground-red);
+    }
+    & > button:hover {
+        opacity: 0.8;
+    }
+}
+
+.detail-shop-evaluate {
+    width: 80%;
+    background-color: #fff;
+    padding: 10px;
+    margin-top: 2rem;
 }
 .shop-evaluate-main {
-    margin-top: 5rem;
     width: 100%;
 }
 .evaluate-main-title {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 23%;
+    gap: 2rem;
     & > h1 {
         font-size: 29px;
         color: var(--color-red78);
@@ -239,6 +264,11 @@
     padding: 8px 14px;
     margin-top: 29px;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+        background-color: var(--back-ground-red);
+        color: var(--color-fff1);
+    }
 }
 .detail-shop-watched {
     margin-top: 4rem;
