@@ -1,0 +1,140 @@
+.pay-home {
+    width: 100%;
+    background: whitesmoke;
+    & > .pay-home-main {
+        margin-bottom: 5rem;
+        width: 87%;
+        margin: 0 auto;
+    }
+}
+.pay-main-information {
+    margin-top: 1.8rem;
+    & > .pay-information-add {
+        background: #fff;
+        border-top: 8px solid red;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        margin-bottom: 4rem;
+        & > .information-add-title {
+            display: flex;
+            align-items: center;
+            color: var(--color-red78);
+            & > i {
+                margin: 0 10px;
+            }
+        }
+        & > .information-add-list {
+            display: flex;
+            align-items: center;
+            color: #000bff;
+            & > i {
+                margin: 0 10px;
+            }
+        }
+    }
+}
+
+.pay-information-product {
+    background-color: #fff;
+}
+.information-product-main {
+    & > .information-product-title {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+        & > p {
+            font-size: 17px;
+            color: #000000;
+            opacity: 0.7;
+        }
+    }
+}
+
+.information-product-list {
+    & > .product-list-item {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+        & > .product-item-img {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            border: 1px solid var(--color-red78);
+        }
+    }
+}
+.product-item-data {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    & > .product-data-left {
+        text-align: left;
+        & > p {
+            color: #000000;
+            opacity: 0.7;
+        }
+    }
+    & > .product-data-right {
+        & > p {
+            color: #000000;
+            opacity: 0.7;
+        }
+    }
+}
+.product-item-price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.product-item-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.information-product-last {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    & > .information-last-input {
+        display: flex;
+        width: 40%;
+        align-items: center;
+        justify-content: space-around;
+        margin-left: 3rem;
+
+        & > p {
+            margin-right: 12px;
+        }
+        & > input {
+            width: 60%;
+            padding: 10px 5px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+    }
+    & > .information-last-fee {
+        display: flex;
+        width: 35%;
+        justify-content: space-around;
+        & > .information-fee-left {
+            color: #000000;
+            opacity: 0.7;
+        }
+    }
+}
+.information-product-total {
+    text-align: right;
+    & > .information-total-left {
+        display: flex;
+        margin-right: 6rem;
+        justify-content: flex-end;
+        & > p:first-child {
+            margin-right: 4rem;
+            color: #000000;
+            opacity: 0.7;
+        }
+        & > p:last-child {
+            color: var(--color-red78);
+            font-size: 18px;
+            font-weight: 700;
+        }
+    }
+}

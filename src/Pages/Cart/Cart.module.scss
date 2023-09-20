@@ -1,0 +1,273 @@
+.cart {
+    width: 100%;
+    background: whitesmoke;
+    & > .cart-main {
+        margin-bottom: 5rem;
+        & > .cart-main-link {
+            width: 87%;
+            margin: 0 auto;
+        }
+    }
+}
+.cart-main-check {
+    width: 94%;
+    margin: 0 auto;
+    margin-top: 1rem;
+    & > .main-check-list {
+        display: flex;
+        align-items: center;
+        & > input {
+            margin-right: 8px;
+            height: 18px;
+            width: 18px;
+        }
+    }
+}
+.cart-main-information {
+    width: 94%;
+    margin: 0 auto;
+    margin-top: 3rem;
+    & > .main-information-list {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+}
+.information-list-left {
+    width: 59%;
+    & > .information-left-item {
+        background: #e9e9e9;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 3rem;
+        & > .left-item-body {
+            display: flex;
+            align-items: flex-start;
+            width: 45%;
+            & > .item-discount {
+                width: 27px;
+                height: 27px;
+                background: var(--color-red78);
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                font-size: 11px;
+                color: #fff;
+                margin-left: 13px;
+                margin-top: 11px;
+            }
+            & > .item-img {
+                width: 271px;
+                height: 335px;
+            }
+            & > .left-icon {
+                font-size: 20px;
+                margin-top: 11px;
+                color: red;
+                margin-right: 13px;
+            }
+        }
+    }
+}
+
+.left-item-data {
+    width: 53%;
+    & > .item-data-main {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        text-align: left;
+        & > .data-main-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            & > h3 {
+                font-size: 19px;
+                margin: 15px 0;
+                color: var(--color-red78);
+            }
+            & > input {
+                width: 20px;
+                height: 20px;
+                margin-right: 11px;
+            }
+        }
+        & > .data-main-list {
+            color: var(--color-red78);
+            opacity: 0.8;
+            & > :first-child {
+                margin: 0;
+            }
+            & > :nth-child(2),
+            :nth-child(3) {
+                margin: 5px 0;
+            }
+        }
+        & > .data-main-price {
+            color: red;
+            font-weight: 700;
+            font-size: 18px;
+        }
+    }
+}
+.data-main-quantity {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    & > .main-quantity-left {
+        & > h3 {
+            color: var(--color-red78);
+        }
+        & > .main-left-icon {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            & > .icon-list {
+                width: 20px;
+                border-radius: 50%;
+                height: 20px;
+                background: red;
+                cursor: pointer;
+            }
+            & > div:nth-child(3) {
+                background-color: green;
+                cursor: pointer;
+            }
+            & > p {
+                margin: 0;
+            }
+        }
+    }
+    & > .main-quantity-right {
+        display: flex;
+        justify-content: space-between;
+        width: 44%;
+        & > p {
+            margin-top: 19px;
+            font-size: 17px;
+            color: var(--color-red78);
+            font-weight: 700;
+        }
+    }
+}
+.information-list-right {
+    width: 40%;
+    // background: red;
+    height: max-content;
+    text-align: left;
+}
+.information-right-total {
+    padding: 0 12px;
+    border: 1px solid #ccc;
+    color: var(--color-red78);
+    & > .right-total-title {
+        & > h2 {
+            margin-bottom: 0;
+        }
+        & > p {
+            margin: 0;
+        }
+    }
+}
+
+.right-total-data {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+.right-total-add {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    & > .total-add-left {
+        & > h3 {
+            margin: 0;
+        }
+    }
+    & > .total-add-right {
+        & > h3 {
+            margin: 0;
+        }
+        & > p {
+            text-align: right;
+        }
+    }
+}
+.right-total-list {
+    & > .total-list-left {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        & > p {
+            font-size: 21px;
+            font-weight: 600;
+        }
+    }
+}
+.information-right-pay {
+    margin-top: 5rem;
+}
+.right-main-list {
+    padding: 0 12px;
+    & > .main-list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #ccc;
+        & > .list-item-left {
+            display: flex;
+            align-items: center;
+            & > i {
+                font-size: 21px;
+            }
+            & > p {
+                font-size: 2rem;
+                margin-left: 10px;
+            }
+        }
+    }
+}
+.ight-main-information {
+    border-top: 1px solid;
+    font-size: 18px;
+    padding: 0 12px;
+}
+.right-main-information {
+    border-top: 1px solid #ccc;
+    & > p {
+        font-size: 19px;
+    }
+}
+.right-main-button {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    & > button {
+        height: 45px;
+        background: var(--color-red78);
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 21px;
+        text-align: center;
+        font-weight: 600;
+        color: #fff;
+    }
+    & > button:nth-child(2) {
+        background-color: #fff;
+        color: var(--color-red78);
+        margin-top: 2rem;
+        border: 1px solid #ccc;
+    }
+}
+.cart-main-watched {
+    width: 94%;
+    margin: 0 auto;
+    margin-top: 13rem;
+    & > h1 {
+        text-align: left;
+        color: var(--color-red78);
+    }
+}

@@ -234,129 +234,127 @@ function DetailShop() {
     return (
         <div className={cx('detail-shop')}>
             <div className={cx('detail-shop-main')}>
-                <div className={cx('detail-shop-main')}>
-                    <MenuLink children={menuLink} />
-                    <div className={cx('detail-shop-information')}>
-                        <div className={cx('detail-information-left')}>
-                            <div className={cx('information-left-img')}>
-                                <img src={sliderDetail} alt="img" />
-                            </div>
-                            <div className={cx('information-left-icon')}>
-                                <i className={cx('fa-solid fa-heart')}></i>
-                            </div>
-                            <div className={cx('information-left-slide')}>
-                                <Slider {...settings}>
-                                    {imgDetailShop.map((img, index) => {
-                                        return (
-                                            <div className={cx('left-slide-main')} key={index}>
-                                                <div className={cx('slider-main-list')}>
-                                                    <div
-                                                        className={cx('main-list-img')}
-                                                        onClick={() => handleClickSlider(img.img)}
-                                                    >
-                                                        <img src={img.img} alt="img" />
-                                                    </div>
+                <MenuLink children={menuLink} />
+                <div className={cx('detail-shop-information')}>
+                    <div className={cx('detail-information-left')}>
+                        <div className={cx('information-left-img')}>
+                            <img src={sliderDetail} alt="img" />
+                        </div>
+                        <div className={cx('information-left-icon')}>
+                            <i className={cx('fa-solid fa-heart')}></i>
+                        </div>
+                        <div className={cx('information-left-slide')}>
+                            <Slider {...settings}>
+                                {imgDetailShop.map((img, index) => {
+                                    return (
+                                        <div className={cx('left-slide-main')} key={index}>
+                                            <div className={cx('slider-main-list')}>
+                                                <div
+                                                    className={cx('main-list-img')}
+                                                    onClick={() => handleClickSlider(img.img)}
+                                                >
+                                                    <img src={img.img} alt="img" />
                                                 </div>
                                             </div>
-                                        );
-                                    })}
-                                </Slider>
-                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </Slider>
                         </div>
-                        <div className={cx('detail-information-right')}>
-                            <div className={cx('information-right-main')}>
-                                <h1>SẢN PHẨM MẪU SỐ 1</h1>
-                                <div className={cx('information-price')}>
-                                    <div className={cx('price-main')}>
-                                        <p className={cx('discount')}>500.000 VND</p>
-                                        <p className={cx('current')}>400.000 VND</p>
+                    </div>
+                    <div className={cx('detail-information-right')}>
+                        <div className={cx('information-right-main')}>
+                            <h1>SẢN PHẨM MẪU SỐ 1</h1>
+                            <div className={cx('information-price')}>
+                                <div className={cx('price-main')}>
+                                    <p className={cx('discount')}>500.000 VND</p>
+                                    <p className={cx('current')}>400.000 VND</p>
+                                </div>
+                            </div>
+                            <p>Giảm giá đến hết ngày 20/10/2023</p>
+                            <div className={cx('information-list')}>
+                                <h3>MÀU SẮC</h3>
+                                <div className={cx('color-list')}>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                            <div className={cx('information-list')}>
+                                <h3>KÍCH CỠ</h3>
+                                <div className={cx('size-list')}>
+                                    <div>
+                                        <p>S</p>
+                                    </div>
+                                    <div>
+                                        <p>M</p>
+                                    </div>
+                                    <div>
+                                        <p>L</p>
+                                    </div>
+                                    <div>
+                                        <p>XL</p>
                                     </div>
                                 </div>
-                                <p>Giảm giá đến hết ngày 20/10/2023</p>
-                                <div className={cx('information-list')}>
-                                    <h3>MÀU SẮC</h3>
-                                    <div className={cx('color-list')}>
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
-                                    </div>
+                            </div>
+                            <div className={cx('information-height')}>
+                                <div className={cx('height-top-list')}>
+                                    <p>KÍCH THƯỚC CHIỀU CAO</p>
                                 </div>
-                                <div className={cx('information-list')}>
-                                    <h3>KÍCH CỠ</h3>
-                                    <div className={cx('size-list')}>
-                                        <div>
-                                            <p>S</p>
-                                        </div>
-                                        <div>
-                                            <p>M</p>
-                                        </div>
-                                        <div>
-                                            <p>L</p>
-                                        </div>
-                                        <div>
-                                            <p>XL</p>
-                                        </div>
-                                    </div>
+                                <div className={cx('height-bottom-list')}>
+                                    <i className={cx('fa-solid fa-ruler-vertical')}></i>
+                                    <p>BẢNG KÍCH THƯỚC</p>
                                 </div>
-                                <div className={cx('information-height')}>
-                                    <div className={cx('height-top-list')}>
-                                        <p>KÍCH THƯỚC CHIỀU CAO</p>
-                                    </div>
-                                    <div className={cx('height-bottom-list')}>
-                                        <i className={cx('fa-solid fa-ruler-vertical')}></i>
-                                        <p>BẢNG KÍCH THƯỚC</p>
-                                    </div>
+                            </div>
+                            <div className={cx('information-quantity')}>
+                                <div className={cx('quantity-top-list')}>
+                                    <p>SỐ LƯỢNG</p>
+                                    <span>Còn 10 bộ</span>
                                 </div>
-                                <div className={cx('information-quantity')}>
-                                    <div className={cx('quantity-top-list')}>
-                                        <p>SỐ LƯỢNG</p>
-                                        <span>Còn 10 bộ</span>
-                                    </div>
-                                    <div className={cx('quantity-bottom-list')}>
-                                        <select>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        </select>
-                                    </div>
+                                <div className={cx('quantity-bottom-list')}>
+                                    <select>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
                                 </div>
-                                <div className={cx('button-control')}>
-                                    <button className={cx('button-cart')}>Thêm Vào Giỏ Hàng</button>
-                                    <button className={cx('button-payment')}>MUA NGAY</button>
-                                </div>
+                            </div>
+                            <div className={cx('button-control')}>
+                                <button className={cx('button-cart')}>Thêm Vào Giỏ Hàng</button>
+                                <button className={cx('button-payment')}>MUA NGAY</button>
                             </div>
                         </div>
                     </div>
-                    <InformationDetailShop children={informationDetail} />
-                    <div className={cx('detail-shop-evaluate')}>
-                        <div className={cx('shop-evaluate-main')}>
-                            <div className={cx('evaluate-main-title')}>
-                                <h1>ĐÁNH GIÁ</h1>
-                                <IconEvaluate children={iconEvaluate} />
-                            </div>
-                            <div className={cx('evaluate-main-title')}>
-                                <h3>ĐÁNH GIÁ CỦA KHÁCH HÀNG</h3>
-                            </div>
-                            <div className={cx('evaluate-main-icon')}>
-                                <IconEvaluate children={iconEvaluate} />
-                                <IconEvaluate children={iconEvaluate} />
-                                <IconEvaluate children={iconEvaluate} />
-                                <IconEvaluate children={iconEvaluate1} />
-                                <IconEvaluate children={iconEvaluate1} />
-                            </div>
-                            <div className={cx('evaluate-main-item')}>
-                                <p>10 bài đáng giá</p>
-                            </div>
-                            <CommentDetailShop children={commentDetail} />
-                            <button className={cx('evaluate-main-button')}>XEM THÊM</button>
+                </div>
+                <InformationDetailShop children={informationDetail} />
+                <div className={cx('detail-shop-evaluate')}>
+                    <div className={cx('shop-evaluate-main')}>
+                        <div className={cx('evaluate-main-title')}>
+                            <h1>ĐÁNH GIÁ</h1>
+                            <IconEvaluate children={iconEvaluate} />
                         </div>
-                    </div>
-                    <div className={cx('detail-shop-watched')}>
-                        <div className={cx('shop-watched-title')}>
-                            <h2>SẢN PHẨM TƯƠNG TỰ</h2>
+                        <div className={cx('evaluate-main-title')}>
+                            <h3>ĐÁNH GIÁ CỦA KHÁCH HÀNG</h3>
                         </div>
-                        <InformationProduct children={informationDetailShop} />
+                        <div className={cx('evaluate-main-icon')}>
+                            <IconEvaluate children={iconEvaluate} />
+                            <IconEvaluate children={iconEvaluate} />
+                            <IconEvaluate children={iconEvaluate} />
+                            <IconEvaluate children={iconEvaluate1} />
+                            <IconEvaluate children={iconEvaluate1} />
+                        </div>
+                        <div className={cx('evaluate-main-item')}>
+                            <p>10 bài đáng giá</p>
+                        </div>
+                        <CommentDetailShop children={commentDetail} />
+                        <button className={cx('evaluate-main-button')}>XEM THÊM</button>
                     </div>
+                </div>
+                <div className={cx('detail-shop-watched')}>
+                    <div className={cx('shop-watched-title')}>
+                        <h2>SẢN PHẨM TƯƠNG TỰ</h2>
+                    </div>
+                    <InformationProduct children={informationDetailShop} />
                 </div>
             </div>
             <div className={cx('detail-shop-boder')}></div>
