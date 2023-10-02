@@ -4,6 +4,7 @@ import Pay from '../../Pages/Pay';
 import Shop from '../../Pages/Shop';
 import DetailShop from '../../Pages/Shop/DetailShop';
 import FavouriteShop from '../../Pages/Shop/FavouriteShop';
+import Authentication from '../../Pages/Authentication/Authentication';
 
 const RouterPublic = () => [
     {
@@ -29,6 +30,14 @@ const RouterPublic = () => [
     {
         path: '/pay',
         component: Pay,
+    },
+    {
+        path: '/login',
+        component: Authentication,
+    },
+    {
+        path: '/register',
+        component: Authentication,
     },
 ];
 export default RouterPublic;

@@ -13,39 +13,39 @@ function MenuShop() {
                 <div className={cx('menu-main-information')}>
                     <div className={cx('main-information-left')}>
                         <select className={cx('information-item-left')}>
-                            <option>Jumsuit liền thân</option>
-                            <option>Jumsuit liền 1</option>
-                            <option>Jumsuit liền 2</option>
-                            <option>Jumsuit liền 3</option>
-                            <option>Jumsuit liền 4</option>
+                            <option className={cx('selected-option')}>Jumsuit liền thân</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 1</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 2</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 3</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 4</option>
                         </select>
                         <select className={cx('information-item-left')}>
-                            <option>Jumsuit liền thân</option>
-                            <option>Jumsuit liền 1</option>
-                            <option>Jumsuit liền 2</option>
-                            <option>Jumsuit liền 3</option>
-                            <option>Jumsuit liền 4</option>
+                            <option className={cx('selected-option')}>Jumsuit liền thân</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 1</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 2</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 3</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 4</option>
                         </select>
                         <select className={cx('information-item-left')}>
-                            <option>Jumsuit liền thân</option>
-                            <option>Jumsuit liền 1</option>
-                            <option>Jumsuit liền 2</option>
-                            <option>Jumsuit liền 3</option>
-                            <option>Jumsuit liền 4</option>
+                            <option className={cx('selected-option')}>Jumsuit liền thân</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 1</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 2</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 3</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 4</option>
                         </select>
                         <select className={cx('information-item-left')}>
-                            <option>Jumsuit liền thân</option>
-                            <option>Jumsuit liền 1</option>
-                            <option>Jumsuit liền 2</option>
-                            <option>Jumsuit liền 3</option>
-                            <option>Jumsuit liền 4</option>
+                            <option className={cx('selected-option')}>Jumsuit liền thân</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 1</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 2</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 3</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 4</option>
                         </select>
                         <select className={cx('information-item-left')}>
-                            <option>Jumsuit liền thân</option>
-                            <option>Jumsuit liền 1</option>
-                            <option>Jumsuit liền 2</option>
-                            <option>Jumsuit liền 3</option>
-                            <option>Jumsuit liền 4</option>
+                            <option className={cx('selected-option')}>Jumsuit liền thân</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 1</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 2</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 3</option>
+                            <option className={cx('selected-option')}>Jumsuit liền 4</option>
                         </select>
                     </div>
                     <div className={cx('main-information-right')}>

@@ -135,6 +135,43 @@
                     text-shadow: 0 0 5px var(--back-ground-fff);
                 }
             }
+            & > .dropdown {
+                & > .dropdown-menu {
+                    display: flex;
+                    margin: 0;
+                    position: absolute;
+                    bottom: -200%;
+                    right: 10%;
+                    background-color: white;
+                    color: var(--color-red);
+                    padding: 0;
+                    width: 150px;
+                    text-align: center;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                    border-radius: 10px;
+                    & > li {
+                        width: 100%;
+                        padding: 1rem 0;
+                        transition: all 0.2s ease-in-out;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 1rem;
+                        &:hover {
+                            background-color: #ccc;
+                        }
+                    }
+                    & > li:first-child {
+                        border-radius: 10px 10px 0 0;
+                    }
+                    & > li:last-child {
+                        border-radius: 0 0 10px 10px;
+                    }
+                }
+            }
         }
     }
 }

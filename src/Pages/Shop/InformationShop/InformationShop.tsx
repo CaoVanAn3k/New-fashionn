@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './InformationShop.module.scss';
-
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 const cx = classNames.bind(styles);
 
 interface ShopChildren {
@@ -9,8 +9,6 @@ interface ShopChildren {
     titleInformation: string;
     price: string;
     discount: string;
-    status: string;
-    button: string;
 }
 
 interface ShopProps {
@@ -35,25 +33,33 @@ const InformationShop: React.FC<ShopProps> = ({ chidren }) => {
                                 <div className={cx('list-information')}>
                                     <div className={cx('information-main')}>
                                         <h2 className={cx('information-title')}>{product.titleInformation}</h2>
-                                        <p className={cx('information-price')}>{product.price}</p>
-
-                                        <div className={cx('information-icon')}>
-                                            <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>
-                                            <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>
-                                            <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>
-                                            <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>
-                                            <i className={cx('fa-solid fa-star', 'icon-color')}></i>
+                                        <div className={cx('information-content')}>
+                                            <div className={cx('information-content-left')}>
+                                                <p className={cx('information-price')}>{product.price}</p>
+                                                <div className={cx('information-icon')}>
+                                                    <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>
+                                                    <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>
+                                                    <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>
+                                                    <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>
+                                                    <i className={cx('fa-solid fa-star', 'icon-color')}></i>
+                                                </div>
+                                            </div>
+                                            <div className={cx('information-button')}>
+                                                <button className={cx('information-button-main')}>
+                                                    <AddOutlinedIcon />
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div className={cx('information-status')}>
-                                            <p>Tình trạng</p>
-                                            <p>{product.status}</p>
-                                        </div>
-                                        <button className={cx('information-button')}>{product.button}</button>
                                     </div>
                                 </div>
                             </div>
                         );
                     })}
+                </div>
+                <div className={cx('load-more')}>
+                    <button className={cx('button')}>
+                        <span>Xem Thêm</span>
+                    </button>
                 </div>
             </div>
         </div>

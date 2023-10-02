@@ -3,18 +3,22 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { store } from './redux/store';
 import GlobalStyles from './components/GlobalStyles/GlobalStyles';
 import { BrowserRouter } from 'react-router-dom';
-import DefaultLayout from './components/DefaultLayouts/DefaltLayout';
+import { Provider } from 'react-redux';
+import DefaultLayout from './components/DefaultLayouts/DefaultLayout';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <GlobalStyles>
         <React.StrictMode>
             <BrowserRouter>
-                <DefaultLayout>
-                    <App />
-                </DefaultLayout>
+                <Provider store={store}>
+                    <DefaultLayout>
+                        <App />
+                    </DefaultLayout>
+                </Provider>
             </BrowserRouter>
         </React.StrictMode>
     </GlobalStyles>,

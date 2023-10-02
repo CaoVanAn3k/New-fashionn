@@ -6,7 +6,6 @@ const cx = classNames.bind(style);
 const ButtonScrollTop = () => {
     const [isVisible, setIsVisible] = useState(false);
     useEffect(() => {
-        // Thêm một sự kiện lắng nghe cuộn trang để kiểm tra khi nào nút nên hiển thị
         const handleScroll = () => {
             if (window.scrollY > 100) {
                 setIsVisible(true);
@@ -16,8 +15,6 @@ const ButtonScrollTop = () => {
         };
 
         window.addEventListener('scroll', handleScroll);
-
-        // Loại bỏ sự kiện lắng nghe khi component unmount
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -25,10 +22,9 @@ const ButtonScrollTop = () => {
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth', // Tạo hiệu ứng cuộn mượt
+            behavior: 'smooth',
         });
     };
-
     return (
         <>
             {isVisible && (

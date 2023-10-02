@@ -18,10 +18,10 @@
     align-items: center;
 }
 .main-information-left {
-    width: 75%;
-    display: grid;
-    grid-template-columns: 1fr 0.8fr 0.8fr 0.8fr 0.8fr;
-    gap: 71px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7rem;
 }
 
 .information-item {
@@ -48,11 +48,17 @@
     transform: scale(1.2);
     outline: none;
     cursor: pointer;
-    & > option {
-        padding: 2px 2px;
-        color: #000;
+    & > .selected-option {
+        color: var(--color-red);
+        cursor: pointer;
+        background-color: transparent;
+        text-align: center;
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
+
 .main-information-right {
     width: 16%;
 }

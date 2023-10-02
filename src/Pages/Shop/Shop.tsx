@@ -31,11 +31,9 @@ const informationShop = [
     {
         id: 1,
         linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+        titleInformation: 'SẢN PHẨM MẪU SỐ 124444444421424325534',
         price: '$50.00',
         discount: '%20',
-        status: 'Còn hàng',
-        button: 'Mua ngay',
     },
     {
         id: 2,
@@ -43,8 +41,6 @@ const informationShop = [
         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
         price: '$50.00',
         discount: '%20',
-        status: 'Còn hàng',
-        button: 'Mua ngay',
     },
     {
         id: 3,
@@ -52,8 +48,6 @@ const informationShop = [
         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
         price: '$50.00',
         discount: '%20',
-        status: 'Còn hàng',
-        button: 'Mua ngay',
     },
     {
         id: 4,
@@ -61,8 +55,6 @@ const informationShop = [
         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
         price: '$50.00',
         discount: '%20',
-        status: 'Còn hàng',
-        button: 'Mua ngay',
     },
     {
         id: 5,
@@ -70,8 +62,6 @@ const informationShop = [
         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
         price: '$50.00',
         discount: '%20',
-        status: 'Còn hàng',
-        button: 'Mua ngay',
     },
     {
         id: 6,
@@ -79,8 +69,6 @@ const informationShop = [
         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
         price: '$50.00',
         discount: '%20',
-        status: 'Còn hàng',
-        button: 'Mua ngay',
     },
     {
         id: 7,
@@ -88,8 +76,6 @@ const informationShop = [
         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
         price: '$50.00',
         discount: '%20',
-        status: 'Còn hàng',
-        button: 'Mua ngay',
     },
     {
         id: 8,
@@ -97,8 +83,6 @@ const informationShop = [
         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
         price: '$50.00',
         discount: '%20',
-        status: 'Còn hàng',
-        button: 'Mua ngay',
     },
     {
         id: 9,
@@ -106,8 +90,27 @@ const informationShop = [
         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
         price: '$50.00',
         discount: '%20',
-        status: 'Còn hàng',
-        button: 'Mua ngay',
+    },
+    {
+        id: 10,
+        linkimg: img2,
+        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+        price: '$50.00',
+        discount: '%20',
+    },
+    {
+        id: 11,
+        linkimg: img2,
+        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+        price: '$50.00',
+        discount: '%20',
+    },
+    {
+        id: 12,
+        linkimg: img2,
+        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+        price: '$50.00',
+        discount: '%20',
     },
 ];
 const commentProduct = [

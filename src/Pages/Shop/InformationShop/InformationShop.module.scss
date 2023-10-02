@@ -3,10 +3,29 @@
     margin: 0 auto;
     & > .main-shop-list {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         gap: 3rem;
         margin-top: 4rem;
         width: 100%;
+    }
+    & > .load-more {
+        margin-top: 5rem;
+        & > .button {
+            padding: 2rem 6rem;
+            cursor: pointer;
+            border: 1px solid black;
+            border-radius: 1rem;
+            background-color: white;
+            color: var(--color-red);
+            transition: all 0.3s ease-in-out;
+            & > span {
+                font-size: 2rem;
+            }
+            &:hover {
+                color: var(--color-fff1);
+                background-color: var(--back-ground-red);
+            }
+        }
     }
 }
 
@@ -16,6 +35,11 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 1rem;
     cursor: pointer;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out;
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
     & > .list-discount {
         width: 31px;
         height: 31px;
@@ -40,56 +64,77 @@
         margin: 1px auto 0px;
         margin-top: 0.8rem;
         margin-bottom: 3rem;
+        overflow: hidden;
+        & > img {
+            transition: transform 0.3s ease-in-out;
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
     }
 }
 
 .list-information {
     & > .information-main {
-        width: 80%;
-        position: relative;
         margin-left: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
         & > .information-title {
             color: var(--color-red);
             text-align: start;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 0;
+            height: 50px;
+            line-height: 50px;
         }
-        & > .information-price {
-            position: absolute;
-            top: 18px;
-            font-size: 18px;
-            color: var(--color-red);
-        }
-        & > .information-status {
+        & > .information-content {
             display: flex;
             align-items: center;
-            & > p:first-child {
-                margin-right: 8px;
-                color: #982d41;
-                border-bottom: 1px solid #982d41;
+            justify-content: space-between;
+            & > .information-content-left {
+                & > .information-price {
+                    font-size: 18px;
+                    color: var(--color-red);
+                    text-align: start;
+                    margin: 0;
+                }
+                & > .information-icon {
+                    text-align: start;
+                    margin-bottom: 2rem;
+                    & > .icon-color-yellow {
+                        color: #f0e713;
+                        font-size: 1.9rem;
+                    }
+                    & > .icon-color {
+                        color: #292d32;
+                        opacity: 0.2;
+                        font-size: 1.9rem;
+                    }
+                }
             }
-        }
-        & > .information-icon {
-            text-align: start;
-            margin-top: 4rem;
-            & > .icon-color-yellow {
-                color: #f0e713;
-                font-size: 1.9rem;
+            & > .information-button {
+                padding-right: 1rem;
+                text-align: right;
+                & > .information-button-main {
+                    opacity: 0.7;
+                    background-color: #982d41;
+                    color: var(--color-fff1);
+                    border-radius: 10px;
+                    font-size: 1.6rem;
+                    width: 100px;
+                    height: 40px;
+                    right: 11px;
+                    top: 4.5rem;
+                    cursor: pointer;
+                    transition: all 0.2s ease-in-out;
+                    &:hover {
+                        background-color: #982d41db;
+                    }
+                }
             }
-            & > .icon-color {
-                color: #292d32;
-                opacity: 0.2;
-                font-size: 1.9rem;
-            }
-        }
-        & > .information-button {
-            opacity: 0.9;
-            background-color: #982d41;
-            color: var(--color-fff1);
-            border-radius: 10px;
-            font-size: 1.6rem;
-            width: 100%;
-            height: 3.7rem;
-            margin-bottom: 2rem;
-            cursor: pointer;
         }
     }
 }

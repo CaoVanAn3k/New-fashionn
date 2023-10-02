@@ -5,6 +5,7 @@ import img2 from '../../components/Images/Product/Blue.png';
 
 import MenuLink from '../../components/Menu/MenuLink';
 import InformationProduct from '../../components/Products/InformationProduct/InformationProduct';
+import { useState } from 'react';
 const cx = classNames.bind(styles);
 const menuLink = [
     {
@@ -86,7 +87,21 @@ const informationCart = [
         ],
     },
 ];
+
 function Cart() {
+    const [checkInputList, setCheckInputList] = useState(CartList.map(() => false));
+    const handleCheckedBtn = (e: any) => {
+        if (e.target.checked) {
+            setCheckInputList(checkInputList.map(() => true));
+        } else {
+            setCheckInputList(checkInputList.map(() => false));
+        }
+    };
+    const handleClickCheckBox = (index: number) => {
+        const updateCheck = [...checkInputList];
+        updateCheck[index] = !updateCheck[index];
+        setCheckInputList(updateCheck);
+    };
     return (
         <div className={cx('cart')}>
             <div className={cx('cart-main')}>
@@ -95,7 +110,7 @@ function Cart() {
                 </div>
                 <div className={cx('cart-main-check')}>
                     <div className={cx('main-check-list')}>
-                        <input id="inputcheck" type="checkbox" />
+                        <input id="inputcheck" type="checkbox" onChange={(e) => handleCheckedBtn(e)} />
                         <label htmlFor="inputcheck">Chọn tất cả sản phẩm</label>
                     </div>
                 </div>
@@ -118,7 +133,12 @@ function Cart() {
                                             <div className={cx('item-data-main')}>
                                                 <div className={cx('data-main-title')}>
                                                     <h3>{menu.title}</h3>
-                                                    <input id="inputcheck" type="checkbox" />
+                                                    <input
+                                                        id="inputcheck"
+                                                        type="checkbox"
+                                                        onChange={() => handleClickCheckBox(index)}
+                                                        checked={checkInputList[index]}
+                                                    />
                                                 </div>
                                                 <div className={cx('data-main-list')}>
                                                     <p>Mã sản phẩm:{menu.code}</p>
@@ -136,7 +156,7 @@ function Cart() {
                                                             <div className={cx('icon-list')}>
                                                                 <i className={cx('fa-solid fa-plus')}></i>
                                                             </div>
-                                                            <p>1</p>
+                                                            <span>1</span>
                                                             <div className={cx('icon-list')}>
                                                                 <i className={cx('fa-solid fa-minus')}></i>
                                                             </div>
