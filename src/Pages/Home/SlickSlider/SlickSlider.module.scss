@@ -59,3 +59,26 @@
         }
     }
 }
+
+@media (min-width: 576px) and (max-width: 767px) {
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+    .slide-slick-img {
+        padding-top: 0 !important;
+        &:nth-child(1) {
+            height: 325px !important;
+        }
+        &:nth-child(2) {
+            height: 375px !important;
+        }
+        &:nth-child(3) {
+            height: 425px !important;
+        }
+        &:nth-child(4) {
+            height: 375px !important;
+        }
+        &:nth-child(5) {
+            height: 325px !important;
+        }
+    }
+}

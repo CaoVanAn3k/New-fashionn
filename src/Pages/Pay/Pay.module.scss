@@ -1,13 +1,27 @@
 .pay-home {
-    width: 100%;
     background: whitesmoke;
     & > .pay-home-main {
-        margin-bottom: 5rem;
-        width: 87%;
-        margin: 0 auto;
+        width: 100%;
+        & > .pay-main-list {
+            margin-bottom: 5rem;
+            width: 87%;
+            margin: 0 auto;
+        }
     }
 }
+
+.pay-home-border {
+    width: 100%;
+    height: 100px;
+    background-color: #000000;
+    margin-top: 5rem;
+}
 .pay-main-information {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
     margin-top: 1.8rem;
     & > .pay-information-add {
         background: #fff;
@@ -25,6 +39,7 @@
         & > .information-add-list {
             display: flex;
             align-items: center;
+            cursor: pointer;
             color: #000bff;
             & > i {
                 margin: 0 10px;
@@ -40,6 +55,10 @@
     & > .information-product-title {
         display: grid;
         grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+        & > h3 {
+            text-align: left;
+            margin-left: 2rem;
+        }
         & > p {
             font-size: 17px;
             color: #000000;
@@ -95,16 +114,15 @@
     border-bottom: 1px solid #ccc;
     & > .information-last-input {
         display: flex;
-        width: 40%;
+        width: 35%;
         align-items: center;
-        justify-content: space-around;
-        margin-left: 3rem;
-
+        justify-content: space-between;
         & > p {
             margin-right: 12px;
+            margin-left: 2rem;
         }
         & > input {
-            width: 60%;
+            width: 69%;
             padding: 10px 5px;
             border: 1px solid #ccc;
             border-radius: 8px;
@@ -117,6 +135,9 @@
         & > .information-fee-left {
             color: #000000;
             opacity: 0.7;
+        }
+        & > .information-fee-right {
+            text-align: right;
         }
     }
 }
@@ -136,5 +157,59 @@
             font-size: 18px;
             font-weight: 700;
         }
+    }
+}
+.pay-order-main {
+    display: flex;
+    background: #fff;
+    margin-top: 5rem;
+    flex-direction: column;
+    padding-bottom: 3rem;
+    & > .order-main-title {
+        display: flex;
+        margin-left: 2rem;
+    }
+    & > .order-main-fee {
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        margin-left: 2rem;
+        & > p {
+            margin-right: 2rem;
+            text-decoration: underline;
+        }
+        & > span {
+            color: #000000;
+            opacity: 0.7;
+            font-size: 15px;
+        }
+    }
+}
+.order-main-total {
+    border-bottom: 1px solid #ccc;
+    & > .order-total-list {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-right: 6rem;
+        & > .order-list-right {
+            margin-left: 11rem;
+            text-align: right;
+        }
+    }
+}
+.order-main-button {
+    text-align: right;
+    margin-top: 3rem;
+    & > button {
+        width: 200px;
+        height: 45px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+        background: var(--color-red78);
+        margin-right: 6rem;
     }
 }

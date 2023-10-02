@@ -36,8 +36,8 @@
 
     & > .main-left-title {
         position: absolute;
-        right: 10rem;
-        top: -5rem;
+        right: 13rem;
+        top: -2rem;
         font-family: 'Felipa', cursive;
         color: var(--back-ground-red);
         font-size: 10rem;
@@ -103,7 +103,7 @@
         & > .main-right-title {
             position: absolute;
             left: 5rem;
-            top: -5rem;
+            top: -2rem;
             color: var(--color-fff);
             font-family: 'Felipa', cursive;
             font-size: 10rem;
@@ -177,4 +177,28 @@
     position: absolute;
     width: 100%;
     top: 11rem;
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+    .page-heading-img {
+        width: 425px !important;
+    }
+    .main-left-title {
+        font-size: 9rem !important;
+        top: -1rem !important;
+    }
+    .main-right-title {
+        font-size: 9rem !important;
+    }
+    .main-left-information {
+        margin-left: 2rem !important;
+    }
+    .main-left-information {
+        display: flex !important;
+        flex-direction: column;
+        width: 48%;
+        top: 4rem !important;
+    }
 }
