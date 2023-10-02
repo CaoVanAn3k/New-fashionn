@@ -2,6 +2,8 @@ import classNames from 'classnames/bind';
 import styles from './Pay.module.scss';
 import MenuLink from '../../components/Menu/MenuLink';
 import img1 from '../../components/Images/Product/Green.png';
+import FormAddress from './FormAddress';
+import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 const menuLink = [
@@ -18,11 +20,40 @@ const menuLink = [
         icon: '',
     },
 ];
+const listPay = [
+    {
+        id: 1,
+        img: img1,
+        title: 'Sản phẩm mẫu số 1',
+        color: 'Màu:Xanh Pastel',
+        size: 'Size:XL',
+        price: '400.000VNĐ',
+        quantity: '1',
+        total: '400.000VNĐ',
+    },
+    {
+        id: 2,
+        img: img1,
+        title: 'Sản phẩm mẫu số 1',
+        color: 'Màu:Xanh Pastel',
+        size: 'Size:XL',
+        price: '400.000VNĐ',
+        quantity: '1',
+        total: '400.000VNĐ',
+    },
+];
 function Pay() {
+    const [onAdd, setOnAdd] = useState(false);
+    const handleOnAdd = () => {
+        setOnAdd(true);
+    };
+    const handleOffAdd = () => {
+        setOnAdd(false);
+    };
     return (
         <div className={cx('pay-home')}>
             <div className={cx('pay-home-main')}>
-                <div className={cx('pay-main-link')}>
+                <div className={cx('pay-main-list')}>
                     <MenuLink children={menuLink} />
                     <div className={cx('pay-main-information')}>
                         <div className={cx('pay-information-add')}>
@@ -30,11 +61,12 @@ function Pay() {
                                 <i className={cx('fa-solid fa-location-dot')}></i>
                                 <p>Địa Chỉ Nhận Hàng</p>
                             </div>
-                            <div className={cx('information-add-list')}>
+                            <div className={cx('information-add-list')} onClick={handleOnAdd}>
                                 <i className={cx('fa-solid fa-plus')}></i>
                                 <p>Nhập địa chỉ nhận hàng</p>
                             </div>
                         </div>
+                        <FormAddress onAdd={onAdd} handleOffAdd={handleOffAdd} />
                         <div className={cx('pay-information-product')}>
                             <div className={cx('information-product-main')}>
                                 <div className={cx('information-product-title')}>
@@ -45,52 +77,33 @@ function Pay() {
                                     <p>Thành tiền</p>
                                 </div>
                                 <div className={cx('information-product-list')}>
-                                    <div className={cx('product-list-item')}>
-                                        <div className={cx('product-item-img')}>
-                                            <img src={img1} alt="logo" />
-                                        </div>
-                                        <div className={cx('product-item-data')}>
-                                            <div className={cx('product-data-left')}>
-                                                <h3>Sản phẩm mẫu số 1</h3>
-                                                <p>Màu:Xanh Pastel</p>
+                                    {listPay.map((list, index) => {
+                                        return (
+                                            <div className={cx('product-list-item')} key={index}>
+                                                <div className={cx('product-item-img')}>
+                                                    <img src={list.img} alt="logo" />
+                                                </div>
+                                                <div className={cx('product-item-data')}>
+                                                    <div className={cx('product-data-left')}>
+                                                        <h3>{list.title}</h3>
+                                                        <p>{list.color}</p>
+                                                    </div>
+                                                    <div className={cx('product-data-right')}>
+                                                        <p>{list.size}</p>
+                                                    </div>
+                                                </div>
+                                                <div className={cx('product-item-price')}>
+                                                    <p>{list.price}</p>
+                                                </div>
+                                                <div className={cx('product-item-quantity')}>
+                                                    <p>{list.quantity}</p>
+                                                </div>
+                                                <div className={cx('product-item-price')}>
+                                                    <p>{list.total}</p>
+                                                </div>
                                             </div>
-                                            <div className={cx('product-data-right')}>
-                                                <p>Size:XL</p>
-                                            </div>
-                                        </div>
-                                        <div className={cx('product-item-price')}>
-                                            <p>400.000 VNĐ</p>
-                                        </div>
-                                        <div className={cx('product-item-quantity')}>
-                                            <p>1</p>
-                                        </div>
-                                        <div className={cx('product-item-price')}>
-                                            <p>400.000VNĐ</p>
-                                        </div>
-                                    </div>
-                                    <div className={cx('product-list-item')}>
-                                        <div className={cx('product-item-img')}>
-                                            <img src={img1} alt="logo" />
-                                        </div>
-                                        <div className={cx('product-item-data')}>
-                                            <div className={cx('product-data-left')}>
-                                                <h3>Sản phẩm mẫu số 1</h3>
-                                                <p>Màu:Xanh Pastel</p>
-                                            </div>
-                                            <div className={cx('product-data-right')}>
-                                                <p>Size:XL</p>
-                                            </div>
-                                        </div>
-                                        <div className={cx('product-item-price')}>
-                                            <p>400.000 VNĐ</p>
-                                        </div>
-                                        <div className={cx('product-item-quantity')}>
-                                            <p>1</p>
-                                        </div>
-                                        <div className={cx('product-item-price')}>
-                                            <p>400.000VNĐ</p>
-                                        </div>
-                                    </div>
+                                        );
+                                    })}
                                 </div>
                                 <div className={cx('information-product-last')}>
                                     <div className={cx('information-last-input')}>
@@ -104,7 +117,7 @@ function Pay() {
                                         </div>
                                         <div className={cx('information-fee-right')}>
                                             <p>30.000 VNĐ</p>
-                                            <p>0 VNĐ</p>
+                                            <span>0 VNĐ</span>
                                         </div>
                                     </div>
                                 </div>
@@ -130,23 +143,26 @@ function Pay() {
                                         <div className={cx('order-list-left')}>
                                             <p>Tổng tiền hàng:</p>
                                             <p>Phí vận chuyển:</p>
-                                            <p>Phiếu giiamr giá:</p>
+                                            <p>Phiếu giảm giá:</p>
                                             <p>Tổng thanh toán:</p>
                                         </div>
                                         <div className={cx('order-list-right')}>
                                             <p>400.000 VNĐ</p>
                                             <p>30.000 VNĐ</p>
-                                            <p>0 VNĐ</p>
+                                            <span>0 VNĐ</span>
                                             <p>430.000 VNĐ</p>
                                         </div>
                                     </div>
                                 </div>
-                                <button className={cx('order-main-button')}>ĐẶT HÀNG</button>
+                                <div className={cx('order-main-button')}>
+                                    <button>ĐẶT HÀNG</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div className={cx('pay-home-border')}></div>
         </div>
     );
 }
