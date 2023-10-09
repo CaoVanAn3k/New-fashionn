@@ -7,7 +7,9 @@ import img1 from '../../components/Images/Product/Blue.png';
 import img3 from '../../components/Images/Product/Black3.png';
 import img4 from '../../components/Images/Product/White.png';
 import img5 from '../../components/Images/Product/Green.png';
-
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { useEffect } from 'react';
+import { findProductHome } from '../../redux/products/products';
 const cx = classNames.bind(styles);
 
 const imgSlider = [
@@ -37,8 +39,23 @@ const imgSlider = [
         backgroundColor: '#788028 ',
     },
 ];
+function isObjectEmpty(obj: Object) {
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            return false;
+        }
+    }
+    return true;
+}
 
 const Home = () => {
+    const dispatch = useAppDispatch();
+    const { productHomes } = useAppSelector((state) => state.products);
+    useEffect(() => {
+        if (isObjectEmpty(productHomes)) {
+            dispatch(findProductHome());
+        }
+    }, [dispatch, productHomes]);
     return (
         <>
             <div className={cx('home-page')}>
@@ -151,7 +168,6 @@ const Home = () => {
                         <SlickSlider children={imgSlider} />
                     </div>
                 </div>
-
                 <PageProduct />
             </div>
         </>

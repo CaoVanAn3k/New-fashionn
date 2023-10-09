@@ -1,135 +1,133 @@
 import classNames from 'classnames/bind';
 import styles from './PageProduct.module.scss';
-import img1 from '../Images/Product/Blue.png';
-import img3 from '../Images/Product/Green.png';
-import img4 from '../Images/Product/yellow.png';
-import img5 from '../Images/Product/Black3.png';
-// import logo from '../Images/Product/logo.svg';
-
+// import img1 from '../Images/Product/Blue.png';
+// import img3 from '../Images/Product/Green.png';
+// import img4 from '../Images/Product/yellow.png';
+// import img5 from '../Images/Product/Black3.png';
+import { useState, useEffect } from 'react';
 import InformationProduct from './InformationProduct/InformationProduct';
 import ReasonProduct from './ReasonProduct/ReasonProduct';
-// import CommentProduct from './CommentProduct';
 import GoogleMap from '../GoogleMap/GoogleMap';
+import { useAppSelector } from '../../redux/store';
 const cx = classNames.bind(styles);
+// const informationProduct = [
+//     {
+//         id: 1,
+//         titleHead: 'New Collection',
+//         product: [
+//             {
+//                 idd: 1,
+//                 linkimg: img1,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '%20',
+//                 button: 'Mua ngay',
+//             },
+//             {
+//                 idd: 2,
+//                 linkimg: img5,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '',
+//                 button: 'Mua ngay',
+//             },
+//             {
+//                 idd: 3,
+//                 linkimg: img3,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '%20',
+//                 button: 'Mua ngay',
+//             },
+//             {
+//                 idd: 4,
+//                 linkimg: img4,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '',
+//                 button: 'Mua ngay',
+//             },
+//         ],
+//     },
+//     {
+//         id: 2,
+//         titleHead: 'Selling Product',
+//         product: [
+//             {
+//                 idd: 1,
+//                 linkimg: img1,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '%20',
+//                 button: 'Mua ngay',
+//             },
+//             {
+//                 idd: 2,
+//                 linkimg: img5,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '',
+//                 button: 'Mua ngay',
+//             },
+//             {
+//                 idd: 3,
+//                 linkimg: img3,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '%20',
+//                 button: 'Mua ngay',
+//             },
+//             {
+//                 idd: 4,
+//                 linkimg: img4,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '',
 
-const informationProduct = [
-    {
-        id: 1,
-        titleHead: 'New Collection',
-        product: [
-            {
-                idd: 1,
-                linkimg: img1,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '%20',
-                button: 'Mua ngay',
-            },
-            {
-                idd: 2,
-                linkimg: img5,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '',
-                button: 'Mua ngay',
-            },
-            {
-                idd: 3,
-                linkimg: img3,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '%20',
-                button: 'Mua ngay',
-            },
-            {
-                idd: 4,
-                linkimg: img4,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '',
-                button: 'Mua ngay',
-            },
-        ],
-    },
-    {
-        id: 2,
-        titleHead: 'Selling Product',
-        product: [
-            {
-                idd: 1,
-                linkimg: img1,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '%20',
-                button: 'Mua ngay',
-            },
-            {
-                idd: 2,
-                linkimg: img5,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '',
-                button: 'Mua ngay',
-            },
-            {
-                idd: 3,
-                linkimg: img3,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '%20',
-                button: 'Mua ngay',
-            },
-            {
-                idd: 4,
-                linkimg: img4,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '',
+//                 button: 'Mua ngay',
+//             },
+//         ],
+//     },
+//     {
+//         id: 3,
+//         titleHead: 'Featured Product',
+//         product: [
+//             {
+//                 idd: 1,
+//                 linkimg: img1,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '%20',
+//                 button: 'Mua ngay',
+//             },
+//             {
+//                 idd: 2,
+//                 linkimg: img5,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '',
+//                 button: 'Mua ngay',
+//             },
+//             {
+//                 idd: 3,
+//                 linkimg: img3,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '%20',
 
-                button: 'Mua ngay',
-            },
-        ],
-    },
-    {
-        id: 3,
-        titleHead: 'Featured Product',
-        product: [
-            {
-                idd: 1,
-                linkimg: img1,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '%20',
-                button: 'Mua ngay',
-            },
-            {
-                idd: 2,
-                linkimg: img5,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '',
-                button: 'Mua ngay',
-            },
-            {
-                idd: 3,
-                linkimg: img3,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '%20',
-
-                button: 'Mua ngay',
-            },
-            {
-                idd: 4,
-                linkimg: img4,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '',
-                button: 'Mua ngay',
-            },
-        ],
-    },
-];
+//                 button: 'Mua ngay',
+//             },
+//             {
+//                 idd: 4,
+//                 linkimg: img4,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '',
+//                 button: 'Mua ngay',
+//             },
+//         ],
+//     },
+// ];
 const reasonProduct = [
     {
         id: 1,
@@ -234,9 +232,21 @@ const reasonProduct = [
 //     },
 // ];
 const PageProduct: React.FC = () => {
+    const { productHomes } = useAppSelector((state) => state.products);
+    const [product, setProduct] = useState([]);
+    useEffect(() => {
+        if (productHomes) {
+            const convertArray: any = Object.entries(productHomes).map(([key, value]) => {
+                return {
+                    product: value,
+                };
+            });
+            setProduct(convertArray);
+        }
+    }, [productHomes]);
     return (
         <div className={cx('home-page-product')}>
-            <InformationProduct children={informationProduct} />
+            <InformationProduct children={product} />
             <ReasonProduct children={reasonProduct} />
             <GoogleMap />
         </div>

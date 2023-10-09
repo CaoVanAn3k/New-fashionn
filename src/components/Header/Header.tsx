@@ -15,23 +15,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { logout } from '../../redux/Authentication/Authentication';
+import { Link as ScrollLink } from 'react-scroll';
 import waiting from '../../util/waiting';
 import logo from '../Images/Product/logo.svg';
 const cx = classNames.bind(styles);
-const menuList = [
-    {
-        title: 'Trang Chủ',
-        paths: '/',
-    },
-    {
-        title: 'Cửa hàng',
-        paths: '/shop',
-    },
-    {
-        title: 'Thông tin',
-        paths: '',
-    },
-];
 const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -88,13 +75,22 @@ const Header = () => {
                 <div className={cx('header-main-right')}>
                     <div className={cx('main-right-body')}>
                         <ul className={cx('main-right-list')}>
-                            {menuList.map((menu, index) => {
-                                return (
-                                    <li key={index}>
-                                        <Link to={menu.paths}>{menu.title}</Link>
-                                    </li>
-                                );
-                            })}
+                            <li>
+                                <Link to="/">Trang Chủ</Link>
+                            </li>
+                            <li>
+                                <Link to="/shop">Cửa Hàng</Link>
+                            </li>
+                            <li>
+                                <ScrollLink
+                                    to="information-shop"
+                                    smooth={true}
+                                    duration={1000}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    Thông Tin
+                                </ScrollLink>
+                            </li>
                         </ul>
                         <ul className={cx('main-right-icon')}>
                             <li onClick={handleSearchOn}>

@@ -26,7 +26,7 @@ const ReasonProduct: React.FC<ReasonChildren> = ({ children }) => {
         setInformationStates(newStates);
     };
     return (
-        <div className={cx('reason-product')}>
+        <div className={cx('reason-product')} id="information-shop">
             <div className={cx('reason-product-main')}>
                 <div className={cx('header-reason-product')}>
                     <h1>VÌ SAO BẠN NÊN CHỌN SẢN PHẨM CỦA CHÚNG TÔI ?</h1>

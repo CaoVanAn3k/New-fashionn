@@ -2,12 +2,11 @@ import classNames from 'classnames/bind';
 import styles from './Shop.module.scss';
 import SlickSlider from './SlickSliderShop/SlickSliderShop';
 import img1 from '../../components/Images/Product/329137040_566142755554780_5549970150105642125_n.jpg';
-import img2 from '../../components/Images/Product/Green.png';
+// import img2 from '../../components/Images/Product/Green.png';
 import img3 from '../../components/Images/Product/Green.png';
 import img4 from '../../components/Images/Product/yellow.png';
 import img5 from '../../components/Images/Product/Black3.png';
 import logo from '../../components/Images/Product/logo.svg';
-
 import MenuShop from '../../components/Menu/MenuShop';
 import InformationShop from './InformationShop';
 import CommentProduct from '../../components/Products/CommentProduct';
@@ -27,92 +26,92 @@ const imgSlider = [
         img: img1,
     },
 ];
-const informationShop = [
-    {
-        id: 1,
-        linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 124444444421424325534',
-        price: '$50.00',
-        discount: '%20',
-    },
-    {
-        id: 2,
-        linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-        price: '$50.00',
-        discount: '%20',
-    },
-    {
-        id: 3,
-        linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-        price: '$50.00',
-        discount: '%20',
-    },
-    {
-        id: 4,
-        linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-        price: '$50.00',
-        discount: '%20',
-    },
-    {
-        id: 5,
-        linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-        price: '$50.00',
-        discount: '%20',
-    },
-    {
-        id: 6,
-        linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-        price: '$50.00',
-        discount: '%20',
-    },
-    {
-        id: 7,
-        linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-        price: '$50.00',
-        discount: '%20',
-    },
-    {
-        id: 8,
-        linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-        price: '$50.00',
-        discount: '%20',
-    },
-    {
-        id: 9,
-        linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-        price: '$50.00',
-        discount: '%20',
-    },
-    {
-        id: 10,
-        linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-        price: '$50.00',
-        discount: '%20',
-    },
-    {
-        id: 11,
-        linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-        price: '$50.00',
-        discount: '%20',
-    },
-    {
-        id: 12,
-        linkimg: img2,
-        titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-        price: '$50.00',
-        discount: '%20',
-    },
-];
+
+//     {
+//         id: 1,
+//         linkimg: img2,
+//         titleInformation: 'SẢN PHẨM MẪU SỐ 124444444421424325534',
+//         price: '$50.00',
+//         discount: '%20',
+//     },
+//     {
+//         id: 2,
+//         linkimg: img2,
+//         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//         price: '$50.00',
+//         discount: '%20',
+//     },
+//     {
+//         id: 3,
+//         linkimg: img2,
+//         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//         price: '$50.00',
+//         discount: '%20',
+//     },
+//     {
+//         id: 4,
+//         linkimg: img2,
+//         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//         price: '$50.00',
+//         discount: '%20',
+//     },
+//     {
+//         id: 5,
+//         linkimg: img2,
+//         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//         price: '$50.00',
+//         discount: '%20',
+//     },
+//     {
+//         id: 6,
+//         linkimg: img2,
+//         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//         price: '$50.00',
+//         discount: '%20',
+//     },
+//     {
+//         id: 7,
+//         linkimg: img2,
+//         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//         price: '$50.00',
+//         discount: '%20',
+//     },
+//     {
+//         id: 8,
+//         linkimg: img2,
+//         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//         price: '$50.00',
+//         discount: '%20',
+//     },
+//     {
+//         id: 9,
+//         linkimg: img2,
+//         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//         price: '$50.00',
+//         discount: '%20',
+//     },
+//     {
+//         id: 10,
+//         linkimg: img2,
+//         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//         price: '$50.00',
+//         discount: '%20',
+//     },
+//     {
+//         id: 11,
+//         linkimg: img2,
+//         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//         price: '$50.00',
+//         discount: '%20',
+//     },
+//     {
+//         id: 12,
+//         linkimg: img2,
+//         titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//         price: '$50.00',
+//         discount: '%20',
+//     },
+// ];
 const commentProduct = [
     {
         id: 1,
@@ -169,7 +168,7 @@ const Shop = () => {
             <SlickSlider children={imgSlider} />
             <div className={cx('page-main-tag')}></div>
             <MenuShop />
-            <InformationShop chidren={informationShop} />
+            <InformationShop />
             <CommentProduct children={commentProduct} />
         </div>
     );

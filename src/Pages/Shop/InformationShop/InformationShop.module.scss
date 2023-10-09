@@ -8,6 +8,19 @@
         margin-top: 4rem;
         width: 100%;
     }
+    & > .custom-loader {
+        --d: 25px;
+        width: 2px;
+        height: 2px;
+        border-radius: 50%;
+        color: var(--color-red);
+        margin: 10rem auto;
+        box-shadow: calc(1 * var(--d)) calc(0 * var(--d)) 0 0, calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 2px,
+            calc(0 * var(--d)) calc(1 * var(--d)) 0 4px, calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 6px,
+            calc(-1 * var(--d)) calc(0 * var(--d)) 0 8px, calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 10px,
+            calc(0 * var(--d)) calc(-1 * var(--d)) 0 12px;
+        animation: s7 1s infinite steps(8);
+    }
     & > .load-more {
         margin-top: 5rem;
         & > .button {
@@ -49,6 +62,7 @@
         position: absolute;
         top: 12px;
         left: 17px;
+        z-index: 1;
         border-radius: 50%;
         font-size: 12px;
         background: #982d41;
@@ -56,13 +70,11 @@
         font-weight: 600;
     }
     & > .list-img {
-        width: 228px;
         height: 316px;
         display: flex;
         justify-content: center;
         align-items: center;
         margin: 1px auto 0px;
-        margin-top: 0.8rem;
         margin-bottom: 3rem;
         overflow: hidden;
         & > img {
@@ -99,7 +111,7 @@
                     font-size: 18px;
                     color: var(--color-red);
                     text-align: start;
-                    margin: 0;
+                    margin: 0 0 1rem 0;
                 }
                 & > .information-icon {
                     text-align: start;
@@ -141,4 +153,21 @@
 .information-padding {
     background-color: #000;
     height: 100px;
+}
+.skeleton-container {
+    & > .skeleton {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+        justify-content: center;
+        margin-top: 50px;
+        & > div > div > span.Skeleton-image {
+            height: 350px;
+        }
+    }
+}
+@keyframes s7 {
+    100% {
+        transform: rotate(1turn);
+    }
 }

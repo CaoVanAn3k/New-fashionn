@@ -47,46 +47,46 @@ const CartList = [
         total: '400000VNĐ',
     },
 ];
-const informationCart = [
-    {
-        id: 1,
-        titleHead: '',
-        product: [
-            {
-                idd: 1,
-                linkimg: img1,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '%20',
-                button: 'Mua ngay',
-            },
-            {
-                idd: 2,
-                linkimg: img2,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '',
-                button: 'Mua ngay',
-            },
-            {
-                idd: 3,
-                linkimg: img1,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '%20',
-                button: 'Mua ngay',
-            },
-            {
-                idd: 4,
-                linkimg: img2,
-                titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-                price: '$50.00',
-                discount: '',
-                button: 'Mua ngay',
-            },
-        ],
-    },
-];
+// const informationCart = [
+//     {
+//         id: 1,
+//         titleHead: '',
+//         product: [
+//             {
+//                 idd: 1,
+//                 linkimg: img1,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '%20',
+//                 button: 'Mua ngay',
+//             },
+//             {
+//                 idd: 2,
+//                 linkimg: img2,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '',
+//                 button: 'Mua ngay',
+//             },
+//             {
+//                 idd: 3,
+//                 linkimg: img1,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '%20',
+//                 button: 'Mua ngay',
+//             },
+//             {
+//                 idd: 4,
+//                 linkimg: img2,
+//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
+//                 price: '$50.00',
+//                 discount: '',
+//                 button: 'Mua ngay',
+//             },
+//         ],
+//     },
+// ];
 
 function Cart() {
     const [checkInputList, setCheckInputList] = useState(CartList.map(() => false));
@@ -246,7 +246,7 @@ function Cart() {
                 </div>
                 <div className={cx('cart-main-watched')}>
                     <h1>ĐÃ XEM GẦN ĐÂY</h1>
-                    <InformationProduct children={informationCart} />
+                    {/* <InformationProduct children={informationCart} /> */}
                 </div>
             </div>
         </div>

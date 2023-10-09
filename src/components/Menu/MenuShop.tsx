@@ -1,8 +1,21 @@
 import classNames from 'classnames/bind';
 import styles from './MenuShop.module.scss';
+import { useEffect } from 'react';
+import { getAllCategory } from '../../redux/products/products';
+import { useAppSelector, useAppDispatch } from '../../redux/store';
 const cx = classNames.bind(styles);
-
+interface ResponseCategory {
+    id: number;
+    name: string;
+}
 function MenuShop() {
+    const dispatch = useAppDispatch();
+    const { categories } = useAppSelector((state) => state.products);
+    useEffect(() => {
+        if (categories.length === 0) {
+            dispatch(getAllCategory());
+        }
+    }, [categories.length, dispatch]);
     return (
         <div className={cx('menu-shop')}>
             <div className={cx('menu-shop-main')}>
@@ -12,41 +25,16 @@ function MenuShop() {
                 </div>
                 <div className={cx('menu-main-information')}>
                     <div className={cx('main-information-left')}>
-                        <select className={cx('information-item-left')}>
-                            <option className={cx('selected-option')}>Jumsuit liền thân</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 1</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 2</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 3</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 4</option>
-                        </select>
-                        <select className={cx('information-item-left')}>
-                            <option className={cx('selected-option')}>Jumsuit liền thân</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 1</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 2</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 3</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 4</option>
-                        </select>
-                        <select className={cx('information-item-left')}>
-                            <option className={cx('selected-option')}>Jumsuit liền thân</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 1</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 2</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 3</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 4</option>
-                        </select>
-                        <select className={cx('information-item-left')}>
-                            <option className={cx('selected-option')}>Jumsuit liền thân</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 1</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 2</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 3</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 4</option>
-                        </select>
-                        <select className={cx('information-item-left')}>
-                            <option className={cx('selected-option')}>Jumsuit liền thân</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 1</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 2</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 3</option>
-                            <option className={cx('selected-option')}>Jumsuit liền 4</option>
-                        </select>
+                        <ul className={cx('main-information-list')}>
+                            {categories &&
+                                categories.map((item: ResponseCategory, index: number) => {
+                                    return (
+                                        <li className={cx('main-information-item')} key={index}>
+                                            <span>{item.name}</span>
+                                        </li>
+                                    );
+                                })}
+                        </ul>
                     </div>
                     <div className={cx('main-information-right')}>
                         <select className={cx('information-item-right')}>

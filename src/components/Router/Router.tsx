@@ -16,7 +16,7 @@ const RouterPublic = () => [
         component: Shop,
     },
     {
-        path: '/detail',
+        path: '/product/:id',
         component: DetailShop,
     },
     {
