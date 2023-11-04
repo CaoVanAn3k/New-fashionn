@@ -275,3 +275,29 @@
         }
     }
 }
+
+@media only screen and (max-width: 600px) {
+}
+@media (min-width: 601px) and (max-width: 1023px) {
+    .container {
+        & > .box {
+            width: 65% !important;
+        }
+    }
+    .box-left {
+        & > .title {
+            & > h2 {
+                font-size: 2.5rem !important;
+            }
+        }
+        & > .paragraph {
+            & > p {
+                font-size: 17px !important;
+            }
+        }
+    }
+
+    .button-OTP {
+        padding: 10px 10px !important;
+    }
+}

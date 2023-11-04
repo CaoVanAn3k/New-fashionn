@@ -1,0 +1,126 @@
+.favourite-information-main {
+    width: 94%;
+    margin: 0 auto;
+    margin-bottom: 5rem;
+}
+.favourite-information-list {
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    & > .favourite-list-left {
+        display: flex;
+        width: 80%;
+    }
+}
+
+.list-item-logo {
+    display: flex;
+    width: 30%;
+    justify-content: space-around;
+    & > .left-discount {
+        width: 30px;
+        height: 30px;
+        background: #982d41;
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        margin-top: 10px;
+    }
+    & > .left-img {
+        width: 223px;
+        height: 264px;
+    }
+    & > .left-icon {
+        font-size: 20px;
+        margin-top: 10px;
+        color: red;
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.list-item-data {
+    margin-left: 4rem;
+    text-align: left;
+    width: 46%;
+    & > h3 {
+        font-size: 22px;
+        color: var(--color-red78);
+        font-weight: 700;
+    }
+    & > .list-data-information {
+        display: flex;
+        justify-content: space-between;
+        color: var(--color-red78);
+        opacity: 0.7;
+        margin: 24px 0;
+        & > p {
+            font-size: 16px;
+        }
+    }
+}
+.fa-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 4rem;
+    & > button {
+        background: transparent;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 8px 0px;
+    }
+}
+.fa-check {
+    width: 200px;
+    height: 39px;
+}
+.favourite-list-item {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    & > .favourite-item-left {
+        background: var(--color-red78);
+        margin-right: 2.5rem;
+    }
+    & > .favourite-item-right {
+        margin-right: 5rem;
+        & > .list-data-price {
+            text-align: right;
+            & > p {
+                font-size: 15px;
+                margin: 0px 0;
+                text-decoration: line-through;
+                color: var(--color-red78);
+            }
+            & > h4 {
+                margin: 15px 0;
+                font-size: 20px;
+                color: red;
+            }
+        }
+        & > .favourite-item-button {
+            width: 130px;
+            height: 39px;
+            background: var(--color-red78);
+        }
+        & > .favourite-item-check {
+            background-color: #228120;
+            cursor: auto !important;
+            opacity: 0.6;
+            user-select: none;
+            & > button {
+                cursor: auto !important;
+            }
+        }
+    }
+}

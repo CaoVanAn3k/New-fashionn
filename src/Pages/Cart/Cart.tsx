@@ -4,7 +4,7 @@ import img1 from '../../components/Images/Product/Green.png';
 import img2 from '../../components/Images/Product/Blue.png';
 
 import MenuLink from '../../components/Menu/MenuLink';
-import InformationProduct from '../../components/Products/InformationProduct/InformationProduct';
+// import InformationProduct from '../../components/Products/InformationProduct/InformationProduct';
 import { useState } from 'react';
 const cx = classNames.bind(styles);
 const menuLink = [

@@ -10,8 +10,8 @@ function App() {
         <div className="App">
             <Routes>
                 {PublicRouter.map((router, index) => {
-                    const Page = router.component;
-                    return <Route key={index} path={router.path} element={<Page />} />;
+                    const Pages = router.component;
+                    return <Route key={index} path={router.path} element={<Pages />} />;
                 })}
             </Routes>
             <ToastContainer />

@@ -18,6 +18,7 @@ import { logout } from '../../redux/Authentication/Authentication';
 import { Link as ScrollLink } from 'react-scroll';
 import waiting from '../../util/waiting';
 import logo from '../Images/Product/logo.svg';
+import MenuHeader from './MenuHeader';
 const cx = classNames.bind(styles);
 const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -71,6 +72,9 @@ const Header = () => {
                             <h3>Bich Thuan Stote</h3>
                         </div>
                     </Link>
+                </div>
+                <div className={cx('menu-drawer')}>
+                    <MenuHeader />
                 </div>
                 <div className={cx('header-main-right')}>
                     <div className={cx('main-right-body')}>

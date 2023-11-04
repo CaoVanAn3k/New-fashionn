@@ -178,3 +178,79 @@
         margin: 0 12px;
     }
 }
+
+@media only screen and (max-width: 600px) {
+    .footer-main-body {
+        display: block !important;
+    }
+    .footer-trademark-main {
+        text-align: center;
+        margin-left: 6.5rem;
+    }
+    .footer-register {
+        display: none;
+    }
+    .footer-link-main {
+        display: flex;
+        justify-content: space-between;
+        width: 300px;
+        display: flex;
+        flex-direction: row;
+    }
+    .link-item {
+        & > button {
+            & > i {
+                font-size: 28px !important;
+            }
+        }
+    }
+}
+@media (min-width: 601px) and (max-width: 1023px) {
+    .footer-main {
+        width: 94% !important;
+    }
+    .footer-main-body {
+        gap: 25px !important;
+    }
+
+    .title-logo {
+        margin-left: 5px !important;
+    }
+    .title-list {
+        margin-left: 6px !important;
+        & > h2 {
+            font-size: 15px !important;
+            margin: 0 !important;
+        }
+        & > p {
+            margin: 5px 0 !important;
+        }
+    }
+    .address-list {
+        & > .list-item {
+            margin-left: 0;
+            & > p {
+                font-size: 15px;
+            }
+        }
+    }
+    .information-button {
+        margin-top: 3px !important;
+        padding: 0 !important;
+        & > button {
+            & > p {
+                font-size: 10px !important;
+            }
+        }
+    }
+    .information-title {
+        margin-top: 0 !important;
+    }
+    .link-item {
+        display: flex !important;
+        flex-direction: column;
+        & > button:nth-child(2) {
+            margin: 10px 12px;
+        }
+    }
+}

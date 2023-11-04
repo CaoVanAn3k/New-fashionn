@@ -1,0 +1,117 @@
+.menu-list-bar {
+    background-color: #fff;
+
+    height: 75px;
+    & > div {
+        & > button {
+            color: var(--back-ground-red);
+            & > svg {
+                font-size: 25px;
+            }
+            &:hover {
+                color: var(--back-ground-red);
+            }
+        }
+    }
+}
+
+.menu-main-left {
+    background-color: var(--back-ground-fff);
+    // width: 50%;
+    & > .menu-left-body {
+        display: flex;
+        width: 97%;
+        margin: auto;
+        text-decoration: none;
+        & > .menu-left-logo {
+            width: 5.7rem;
+            height: 6.8rem;
+        }
+        & > .menu-left-title {
+            display: flex;
+            align-items: center;
+            margin-left: 2rem;
+            & > h3 {
+                font-size: 3.1rem;
+                margin: 0;
+                color: var(--back-ground-red);
+                font-family: 'Felipa', cursive;
+            }
+        }
+    }
+}
+
+.icon-button {
+    margin-top: 18px;
+}
+.icon-button-close {
+    padding: 5px 5px !important;
+    margin-top: -20px !important;
+    & > svg {
+        font-size: 3rem;
+    }
+}
+.title-icon-button {
+    color: var(--back-ground-red) !important;
+    opacity: 0.8;
+    & > svg {
+        font-size: 23px;
+    }
+}
+.icon-button-text {
+    & > span {
+        font-size: 18px !important;
+        color: var(--back-ground-red) !important;
+    }
+}
+.icon-button-next {
+    & > svg {
+        font-size: 21px;
+        color: var(--back-ground-red);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .menu-list-bar {
+        & > div {
+            padding: 0 15px 0 0;
+        }
+    }
+    .menu-left-logo {
+        width: 4.7rem !important;
+    }
+    .menu-left-title {
+        margin-left: 1rem !important;
+        & > h3 {
+            font-size: 2.4rem !important;
+        }
+    }
+    @media (max-width: 415px) {
+        .menu-left-title {
+            & > h3 {
+                font-size: 2.33rem !important;
+            }
+        }
+    }
+    @media (max-width: 391px) {
+        .menu-left-title {
+            & > h3 {
+                font-size: 2.8rem !important;
+            }
+        }
+    }
+    @media (min-width: 374px) and (max-width: 390px) {
+        .menu-left-title {
+            & > h3 {
+                font-size: 2.5rem !important;
+            }
+        }
+    }
+    @media (min-width: 427px) and (max-width: 431px) {
+        .menu-left-title {
+            & > h3 {
+                font-size: 2.6rem !important;
+            }
+        }
+    }
+}
