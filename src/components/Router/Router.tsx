@@ -24,7 +24,7 @@ const RouterPublic = () => [
         component: Cart,
     },
     {
-        path: '/favouriteshop',
+        path: '/favourite-shop',
         component: FavouriteShop,
     },
     {

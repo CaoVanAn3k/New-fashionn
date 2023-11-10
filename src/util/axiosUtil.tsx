@@ -1,20 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
 import Cookies from 'js-cookie';
-import jwtDecode from 'jwt-decode';
-import { logout } from '../redux/Authentication/Authentication';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import waiting from './waiting';
 const Api_url = process.env.REACT_APP_API_URL;
 interface response {
     token: string;
     refreshToken: string;
-}
-interface token {
-    exp: any;
-    iat: any;
-    roles: Array<string>;
-    sub: string;
 }
 export const axiosInstance: AxiosInstance = axios.create({
     baseURL: Api_url,
@@ -24,39 +13,13 @@ export const axiosInstance: AxiosInstance = axios.create({
     },
     withCredentials: true,
 });
-
 axiosInstance.interceptors.request.use(
-    async (config) => {
-        const accessToken: any = Cookies.get('accessToken');
-        const refreshToken: any = Cookies.get('refreshToken');
-        if (!accessToken && !refreshToken) {
+    (config) => {
+        const accessToken: string | undefined = Cookies.get('accessToken');
+        if (accessToken === undefined || accessToken.length === 0) {
             config.headers.Authorization = null;
         } else {
-            try {
-                const decodedAccessToken: token = jwtDecode(accessToken);
-                const decodedRefreshToken: token = jwtDecode(refreshToken);
-                const currentTime = new Date().getTime() / 1000;
-                if (decodedAccessToken.exp <= currentTime && decodedRefreshToken.exp > currentTime) {
-                    const data = {
-                        token: accessToken,
-                        refreshToken: refreshToken,
-                    };
-                    const res = await axiosInstance.post<void, response>('/auth/refreshToken', data);
-                    config.headers.Authorization = `Bearer ${res.token}`;
-                } else if (decodedAccessToken.exp <= currentTime && decodedRefreshToken.exp <= currentTime) {
-                    const dispatch = useDispatch<any>();
-                    const navigate = useNavigate();
-                    dispatch(logout(decodedAccessToken.sub));
-                    await waiting(1000);
-                    navigate('/login');
-                    throw new Error('Both tokens expired, please log in again');
-                } else {
-                    config.headers.Authorization = `Bearer ${accessToken}`;
-                }
-            } catch (err) {
-                console.log(err);
-                return Promise.reject(err);
-            }
+            config.headers.Authorization = `Bearer ${accessToken}`;
         }
         return config;
     },
@@ -67,7 +30,21 @@ axiosInstance.interceptors.request.use(
 );
 axiosInstance.interceptors.response.use(
     (res) => res.data,
-    (err) => {
+    async (err) => {
+        if (err.response.status === 403) {
+            const res = await axiosInstance.get<void, response>('/auth/refreshToken');
+            err.config.headers['Authorization'] = `Bearer ${res.token}`;
+            return axios.request(err.config);
+        }
+        if (err.response.status === 401) {
+            const accessToken: any = Cookies.get('accessToken');
+            if (accessToken !== undefined) {
+                err.response.message = 'phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại';
+                return Promise.reject(err.response);
+            }
+            err.response.message = 'vui lòng đăng nhập lại';
+            return Promise.reject(err.response);
+        }
         if (err.response) {
             return Promise.reject(err.response);
         }

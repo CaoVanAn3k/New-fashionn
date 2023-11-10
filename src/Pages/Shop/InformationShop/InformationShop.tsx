@@ -1,10 +1,13 @@
 import classNames from 'classnames/bind';
 import styles from './InformationShop.module.scss';
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
-import { deleteDataProductId, findAllProductShop } from '../../../redux/products/products';
+import {
+    deleteDataProductId,
+    findAllProductShop,
+    findAllProductShopBySortPrice,
+} from '../../../redux/products/products';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
@@ -22,20 +25,35 @@ interface Product {
     categoryId: number;
     galleryThumbnail: [];
 }
-const InformationShop: React.FC<any> = () => {
+interface PropsData {
+    children: Product[];
+}
+const InformationShop: React.FC<PropsData> = ({ children }) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { products, isLoadingProductShop } = useAppSelector((state) => state.products);
+    const { isLoadingProductShop, isLoadingProductCategory, sortName } = useAppSelector((state) => state.products);
     const [offsetPage, setOffsetPage] = useState(0);
     const [stateLoadMore, setStateLoadMore] = useState(false);
     const fetchProductsMemoized = useCallback(
         (offsetPage: number) => {
-            dispatch(findAllProductShop(offsetPage));
+            if (sortName !== '') {
+                if (offsetPage >= children.length) {
+                    const data = {
+                        sortName: sortName,
+                        offset: offsetPage,
+                    };
+                    dispatch(findAllProductShopBySortPrice(data));
+                }
+            } else {
+                dispatch(findAllProductShop(offsetPage));
+            }
         },
-        [dispatch],
+        [children.length, dispatch, sortName],
     );
     useEffect(() => {
-        fetchProductsMemoized(offsetPage);
+        if (offsetPage !== 0) {
+            fetchProductsMemoized(offsetPage);
+        }
     }, [fetchProductsMemoized, offsetPage]);
     useEffect(() => {
         if (!isLoadingProductShop) {
@@ -47,7 +65,7 @@ const InformationShop: React.FC<any> = () => {
         navigate(`/product/${productId}`);
     };
     const handleClickLoadMore = () => {
-        if (products.length >= offsetPage) {
+        if (children.length >= offsetPage) {
             setStateLoadMore(true);
             setOffsetPage((previous) => previous + 16);
         }
@@ -79,12 +97,13 @@ const InformationShop: React.FC<any> = () => {
     return (
         <div className={cx('information-shop')}>
             <div className={cx('product-main-shop')}>
+                {isLoadingProductCategory && <div className={cx('custom-loader')}></div>}
                 {isLoadingProductShop && !stateLoadMore ? (
                     renderSkeleton()
                 ) : (
                     <div className={cx('main-shop-list')}>
-                        {products.length > 0 &&
-                            products.map((product: Product) => {
+                        {children.length > 0 &&
+                            children.map((product: Product) => {
                                 return (
                                     <div
                                         className={cx('shop-list-item')}
@@ -122,11 +141,6 @@ const InformationShop: React.FC<any> = () => {
                                                             ></i>
                                                             <i className={cx('fa-solid fa-star', 'icon-color')}></i>
                                                         </div>
-                                                    </div>
-                                                    <div className={cx('information-button')}>
-                                                        <button className={cx('information-button-main')}>
-                                                            <AddOutlinedIcon />
-                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>

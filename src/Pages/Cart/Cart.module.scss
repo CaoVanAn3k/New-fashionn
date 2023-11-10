@@ -41,6 +41,21 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+        & > .custom-loader {
+            position: relative;
+            top: 5%;
+            left: 25%;
+            --d: 25px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            color: var(--color-red);
+            box-shadow: calc(1 * var(--d)) calc(0 * var(--d)) 0 0, calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 2px,
+                calc(0 * var(--d)) calc(1 * var(--d)) 0 4px, calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 6px,
+                calc(-1 * var(--d)) calc(0 * var(--d)) 0 8px, calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 10px,
+                calc(0 * var(--d)) calc(-1 * var(--d)) 0 12px;
+            animation: s7 1s infinite steps(8);
+        }
     }
 }
 .information-list-left {
@@ -53,7 +68,8 @@
         & > .left-item-body {
             display: flex;
             align-items: flex-start;
-            width: 45%;
+            // width: 45%;
+            position: relative;
             & > .item-discount {
                 width: 27px;
                 height: 27px;
@@ -67,17 +83,23 @@
                 color: #fff;
                 margin-left: 13px;
                 margin-top: 11px;
+                position: absolute;
+                top: 5px;
+                left: 5px;
             }
             & > .item-img {
                 width: 271px;
                 height: 335px;
             }
-            & > .left-icon {
-                font-size: 20px;
-                margin-top: 11px;
-                color: red;
-                margin-right: 13px;
-            }
+            // & > .left-icon {
+            //     position: absolute;
+            //     top: 5px;
+            //     right: 5px;
+            //     font-size: 20px;
+            //     margin-top: 11px;
+            //     color: red;
+            //     margin-right: 13px;
+            // }
         }
     }
 }
@@ -159,21 +181,47 @@
     }
     & > .main-quantity-right {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
-        width: 44%;
-        & > p {
-            margin-top: 19px;
-            font-size: 17px;
-            color: var(--color-red78);
-            font-weight: 700;
+        & > .total-money {
+            display: flex;
+            justify-content: space-between;
+            & > p {
+                margin-top: 19px;
+                font-size: 17px;
+                color: var(--color-red78);
+                font-weight: 700;
+            }
+        }
+        & > .delete-product {
+            width: max-content;
+            & > button {
+                width: 35px;
+                height: 35px;
+                cursor: pointer;
+                border: 1px solid var(--color-red);
+                border-radius: 50%;
+                transition: all 0.25s ease-in-out;
+                & > svg {
+                    font-size: 2rem;
+                    color: var(--color-red);
+                }
+                &:hover {
+                    background-color: var(--back-ground-red);
+                    & > svg {
+                        color: var(--color-fff1);
+                    }
+                }
+            }
         }
     }
 }
 .information-list-right {
     width: 40%;
-    // background: red;
     height: max-content;
     text-align: left;
+    position: sticky;
+    top: 0;
 }
 .information-right-total {
     padding: 0 12px;
@@ -234,6 +282,7 @@
         justify-content: space-between;
         align-items: center;
         border-top: 1px solid #ccc;
+        cursor: pointer;
         & > .list-item-left {
             display: flex;
             align-items: center;
@@ -247,7 +296,7 @@
         }
     }
 }
-.ight-main-information {
+.right-main-information {
     border-top: 1px solid;
     font-size: 18px;
     padding: 0 12px;
@@ -271,12 +320,19 @@
         text-align: center;
         font-weight: 600;
         color: #fff;
+        transition: all 0.25s ease-in-out;
+    }
+    & > button:nth-child(1):hover {
+        background-color: rgba(116, 6, 6, 0.668);
     }
     & > button:nth-child(2) {
         background-color: #fff;
         color: var(--color-red78);
         margin-top: 2rem;
         border: 1px solid #ccc;
+        &:hover {
+            opacity: 0.8;
+        }
     }
 }
 .cart-main-watched {
@@ -286,5 +342,11 @@
     & > h1 {
         text-align: left;
         color: var(--color-red78);
+    }
+}
+
+@keyframes s7 {
+    100% {
+        transform: rotate(1turn);
     }
 }

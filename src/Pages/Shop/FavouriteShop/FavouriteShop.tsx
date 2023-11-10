@@ -3,6 +3,13 @@ import styles from './FavouriteShop.module.scss';
 import img2 from '../../../components/Images/Product/Green.png';
 import img1 from '../../../components/Images/Product/329137040_566142755554780_5549970150105642125_n.jpg';
 import SlickSlider from '../SlickSliderShop/SlickSliderShop';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import { useState } from 'react';
 const cx = classNames.bind(styles);
 
 const imgSlider = [
@@ -106,6 +113,15 @@ const favouriteList = [
     },
 ];
 function FavouriteShop() {
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     return (
         <div className={cx('favourite-shop')}>
             <SlickSlider children={imgSlider} />
@@ -187,6 +203,9 @@ function FavouriteShop() {
                                         </div>
                                         <div className={cx('favourite-list-right')}>
                                             <button>Xem ngay</button>
+                                            <button onClick={handleClickOpen}>
+                                                <DeleteForeverIcon />
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -196,6 +215,24 @@ function FavouriteShop() {
                 </div>
             </div>
             <div className={cx('favourite-shop-border')}></div>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Bạn có muốn xóa sản phẩm ? ra khỏi danh sách yêu thích?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Hủy Bỏ</Button>
+                    <Button onClick={handleClose} autoFocus>
+                        Đồng Ý
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 }

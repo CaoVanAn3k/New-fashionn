@@ -1,21 +1,66 @@
 import classNames from 'classnames/bind';
 import styles from './MenuShop.module.scss';
 import { useEffect } from 'react';
-import { getAllCategory } from '../../redux/products/products';
+import {
+    getAllCategory,
+    findProductByCategoryId,
+    deleteDataProducts,
+    checkStateGetProductByCategoryId,
+    findAllProductShop,
+    findAllProductShopBySortPrice,
+    updateStateSortName,
+} from '../../redux/products/products';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
+import MenuLink from './MenuLink';
 const cx = classNames.bind(styles);
 interface ResponseCategory {
-    id: number;
+    categoryId: number;
     name: string;
 }
+let menuLink = [
+    {
+        id: 1,
+        title: 'Shop',
+        path: '/shop',
+        icon: 'icon',
+    },
+];
 function MenuShop() {
     const dispatch = useAppDispatch();
-    const { categories } = useAppSelector((state) => state.products);
+    const { categories, checkStateClickCategory } = useAppSelector((state) => state.products);
     useEffect(() => {
         if (categories.length === 0) {
             dispatch(getAllCategory());
         }
     }, [categories.length, dispatch]);
+    const handleClickCategoryItem = (item: ResponseCategory) => {
+        menuLink = menuLink.filter((item) => item.id !== 2);
+        menuLink.push({
+            id: 2,
+            title: `${item.name}`,
+            path: '',
+            icon: '',
+        });
+        Promise.all([
+            dispatch(checkStateGetProductByCategoryId()),
+            dispatch(deleteDataProducts()),
+            dispatch(findProductByCategoryId(item.categoryId)),
+        ]);
+    };
+    const handleChangeSortProduct = async (e: any) => {
+        await dispatch(updateStateSortName(''));
+        if (e.target.value === 'stand-out') {
+            await dispatch(deleteDataProducts());
+            dispatch(findAllProductShop(0));
+        } else {
+            const data = {
+                sortName: e.target.value,
+                offset: 0,
+            };
+            await dispatch(findAllProductShopBySortPrice(data));
+            dispatch(updateStateSortName(e.target.value));
+        }
+    };
     return (
         <div className={cx('menu-shop')}>
             <div className={cx('menu-shop-main')}>
@@ -25,22 +70,37 @@ function MenuShop() {
                 </div>
                 <div className={cx('menu-main-information')}>
                     <div className={cx('main-information-left')}>
-                        <ul className={cx('main-information-list')}>
-                            {categories &&
-                                categories.map((item: ResponseCategory, index: number) => {
-                                    return (
-                                        <li className={cx('main-information-item')} key={index}>
-                                            <span>{item.name}</span>
-                                        </li>
-                                    );
-                                })}
-                        </ul>
+                        {checkStateClickCategory ? (
+                            <MenuLink children={menuLink} />
+                        ) : (
+                            <ul className={cx('main-information-list')}>
+                                {categories.length > 0 &&
+                                    categories.map((item: ResponseCategory, index: number) => {
+                                        return (
+                                            <li
+                                                className={cx('main-information-item', 'active')}
+                                                key={index}
+                                                onClick={() => {
+                                                    handleClickCategoryItem(item);
+                                                }}
+                                            >
+                                                <span>{item.name}</span>
+                                            </li>
+                                        );
+                                    })}
+                            </ul>
+                        )}
                     </div>
                     <div className={cx('main-information-right')}>
-                        <select className={cx('information-item-right')}>
-                            <option>Tiêu biểu</option>
-                            <option>Tiêu biểu 1</option>
-                            <option>Tiêu biểu 2</option>
+                        <select
+                            className={cx('information-item-right')}
+                            onChange={(e) => {
+                                handleChangeSortProduct(e);
+                            }}
+                        >
+                            <option value="stand-out">Nổi Bật</option>
+                            <option value="increase">Sắp xếp theo giá từ thấp đến cao</option>
+                            <option value="decrease">Sắp xếp theo giá từ cao đến thấp</option>
                         </select>
                     </div>
                 </div>

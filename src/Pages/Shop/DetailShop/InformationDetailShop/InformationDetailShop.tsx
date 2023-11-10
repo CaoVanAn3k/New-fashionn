@@ -8,10 +8,24 @@ interface InformationDetail {
     information: string;
     describe: string;
 }
+interface Product {
+    productId: number;
+    name: string;
+    price: number;
+    description: string;
+    image: string;
+    material: string;
+    quantity: number;
+    colorNames: [];
+    sizeNames: [];
+    categoryId: number;
+    galleryImages: [];
+}
 interface DetailChildren {
     children: InformationDetail[];
+    product: Product;
 }
-const InformationDetailShop: React.FC<DetailChildren> = ({ children }) => {
+const InformationDetailShop: React.FC<DetailChildren> = ({ children, product }) => {
     const [informationDetail, setInformationDetail] = useState<boolean[]>(children.map(() => false));
     const handleDetail = (index: number) => {
         const newStates = [...informationDetail];
@@ -23,7 +37,7 @@ const InformationDetailShop: React.FC<DetailChildren> = ({ children }) => {
             <div className={cx('information-detail-main')}>
                 <div className={cx('detail-main-title')}>
                     <h2>MÔ TẢ</h2>
-                    <p>Mã sản phẩm:12345</p>
+                    <p>Mã sản phẩm: {product.productId}</p>
                 </div>
                 <div className={cx('detail-main-list')}>
                     {children.map((child, index) => {

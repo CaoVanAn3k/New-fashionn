@@ -89,7 +89,7 @@
 }
 .information-item-right {
     width: 98%;
-    font-size: 19px;
+    font-size: 1.25rem;
     border-radius: 9px;
     text-align: center;
     padding: 7px;
@@ -97,4 +97,13 @@
     cursor: pointer;
     outline: none;
     border: 3px solid #ccc;
+    color: var(--color-red);
+    & > option {
+        cursor: pointer;
+        background-color: transparent;
+        text-align: center;
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }

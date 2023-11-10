@@ -7,9 +7,20 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { register, userRegister, clearState, login } from '../../redux/Authentication/Authentication';
+import {
+    register,
+    userRegister,
+    clearState,
+    login,
+    logout,
+    checkStateLogin,
+    OAuthExchangeCode,
+} from '../../redux/Authentication/Authentication';
+import { getAllProductInCart } from '../../redux/Cart/cart';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import waiting from '../../util/waiting';
+import Cookies from 'js-cookie';
+import { useGoogleLogin } from '@react-oauth/google';
 interface Person {
     userName: string;
     fullName: string;
@@ -49,7 +60,7 @@ const registerSchema: yup.ObjectSchema<Person> = yup.object({
 });
 const validationSchema: yup.ObjectSchema<LoginData> = yup.object({
     userName: yup.string().required('userName is required'),
-    password: yup.string().min(8, 'Password should be of minimum 8 characters length').required('Password is required'),
+    password: yup.string().required('Password is required'),
 });
 const cx = classNames.bind(styles);
 const Authentication = () => {
@@ -62,20 +73,6 @@ const Authentication = () => {
     const [activeEye, setActiveEye] = useState(false);
     const [translate, setTranslate] = useState(0);
     const [activeFormRegister, SetActiveFormRegister] = useState(false);
-    useEffect(() => {
-        const currentPathname = location.pathname;
-        if (currentPathname === '/register') {
-            setTranslate(105);
-            setTimeout(() => {
-                SetActiveFormRegister(true);
-            }, 700);
-        } else {
-            setTranslate(0);
-            setTimeout(() => {
-                SetActiveFormRegister(false);
-            }, 700);
-        }
-    }, [location.pathname]);
     const formik = useFormik({
         initialValues: {
             userName: '',
@@ -92,14 +89,6 @@ const Authentication = () => {
             dispatch(userRegister());
         },
     });
-    useEffect(() => {
-        if (isRegister) {
-            navigate('/login');
-        }
-        if (isLogined) {
-            navigate('/');
-        }
-    }, [isLogined, isRegister, navigate]);
     const formLogin = useFormik({
         initialValues: {
             userName: '',
@@ -109,9 +98,42 @@ const Authentication = () => {
         onSubmit: async (values: LoginData) => {
             dispatch(login(values));
             await waiting(1000);
-            // dispatch(userLogin());
+            const accessToken: string | undefined = Cookies.get('accessToken');
+            if (accessToken !== undefined && accessToken.length > 0) {
+                Promise.all([dispatch(checkStateLogin()), dispatch(getAllProductInCart())]);
+            }
         },
     });
+    useEffect(() => {
+        const currentPathname = location.pathname;
+        if (currentPathname === '/register') {
+            setTranslate(105);
+            setTimeout(() => {
+                SetActiveFormRegister(true);
+            }, 700);
+        } else {
+            setTranslate(0);
+            setTimeout(() => {
+                SetActiveFormRegister(false);
+            }, 700);
+        }
+    }, [location.pathname]);
+
+    useEffect(() => {
+        if (isRegister) {
+            navigate('/login');
+        }
+        if (isLogined) {
+            navigate('/');
+        }
+    }, [isLogined, isRegister, navigate]);
+    useEffect(() => {
+        const accessToken: string | undefined = Cookies.get('accessToken');
+        if (accessToken !== undefined) {
+            dispatch(logout(accessToken));
+        }
+    }, [dispatch]);
+
     const focusInputUsername = () => {
         if (inputUserName.current) {
             inputUserName.current.focus();
@@ -130,6 +152,7 @@ const Authentication = () => {
     };
     const handleControlRegister = async () => {
         dispatch(clearState());
+        formik.resetForm();
         await waiting(200);
         navigate('/register');
         setTranslate(105);
@@ -138,12 +161,22 @@ const Authentication = () => {
         }, 700);
     };
     const handleControlLogin = () => {
+        formLogin.resetForm();
         navigate('/login');
         setTranslate(0);
         setTimeout(() => {
             SetActiveFormRegister(false);
         }, 700);
     };
+
+    const handleGoogleLogin = useGoogleLogin({
+        onSuccess: (codeResponse) => {
+            console.log(codeResponse);
+            dispatch(OAuthExchangeCode(codeResponse.code));
+        },
+        onError: (errResponse) => console.log(errResponse),
+        flow: 'auth-code',
+    });
     return (
         <div className={cx('container')} style={{ backgroundImage: `url(${BackgroundLogin})` }}>
             <div className={cx('box')}>
@@ -345,9 +378,9 @@ const Authentication = () => {
                                     <i className={cx('fa-brands fa-facebook-f')}></i>
                                     <span>Đăng nhập bằng Facebook</span>
                                 </button>
-                                <button className={cx('login', 'login-google')}>
+                                <button className={cx('login', 'login-google')} onClick={() => handleGoogleLogin()}>
                                     <i className={cx('fa-brands fa-google')}></i>
-                                    <span>Đăng nhập bằng Facebook</span>
+                                    <span>Đăng nhập bằng Google</span>
                                 </button>
                             </div>
                         </>

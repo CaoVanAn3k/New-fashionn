@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import styles from './InformationProduct.module.scss';
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useAppSelector, useAppDispatch } from '../../../redux/store';
 import { deleteDataProductId } from '../../../redux/products/products';
 import Skeleton from '@mui/material/Skeleton';
@@ -8,7 +7,6 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
-
 interface Product {
     productId: number;
     name: string;
@@ -54,6 +52,13 @@ const InformationProduct: React.FC<ChildrenProps> = ({ children }) => {
             behavior: 'smooth',
         });
     };
+    const handleButtonViewAll = () => {
+        navigate('/shop');
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    };
     const { isLoadingProductHome } = useAppSelector((state) => state.products);
     function renderSkeleton() {
         return (
@@ -94,7 +99,7 @@ const InformationProduct: React.FC<ChildrenProps> = ({ children }) => {
                                             <i className={cx('fa-sharp fa-solid fa-star-of-life', 'icon')}></i>
                                         </div>
                                         <div className={cx('header-button')}>
-                                            <button className={cx('button-list')}>
+                                            <button className={cx('button-list')} onClick={handleButtonViewAll}>
                                                 XEM TẨT CẢ
                                                 <i className={cx('fa-solid fa-arrow-right')}></i>
                                             </button>
@@ -160,17 +165,6 @@ const InformationProduct: React.FC<ChildrenProps> = ({ children }) => {
                                                                                     'icon-color',
                                                                                 )}
                                                                             ></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className={cx('content-right')}>
-                                                                        <div className={cx('information-button')}>
-                                                                            <button
-                                                                                className={cx(
-                                                                                    'information-button-main',
-                                                                                )}
-                                                                            >
-                                                                                <AddOutlinedIcon />
-                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                 </div>

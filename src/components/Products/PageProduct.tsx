@@ -1,236 +1,48 @@
 import classNames from 'classnames/bind';
 import styles from './PageProduct.module.scss';
-// import img1 from '../Images/Product/Blue.png';
-// import img3 from '../Images/Product/Green.png';
-// import img4 from '../Images/Product/yellow.png';
-// import img5 from '../Images/Product/Black3.png';
 import { useState, useEffect } from 'react';
 import InformationProduct from './InformationProduct/InformationProduct';
 import ReasonProduct from './ReasonProduct/ReasonProduct';
 import GoogleMap from '../GoogleMap/GoogleMap';
 import { useAppSelector } from '../../redux/store';
 const cx = classNames.bind(styles);
-// const informationProduct = [
-//     {
-//         id: 1,
-//         titleHead: 'New Collection',
-//         product: [
-//             {
-//                 idd: 1,
-//                 linkimg: img1,
-//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-//                 price: '$50.00',
-//                 discount: '%20',
-//                 button: 'Mua ngay',
-//             },
-//             {
-//                 idd: 2,
-//                 linkimg: img5,
-//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-//                 price: '$50.00',
-//                 discount: '',
-//                 button: 'Mua ngay',
-//             },
-//             {
-//                 idd: 3,
-//                 linkimg: img3,
-//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-//                 price: '$50.00',
-//                 discount: '%20',
-//                 button: 'Mua ngay',
-//             },
-//             {
-//                 idd: 4,
-//                 linkimg: img4,
-//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-//                 price: '$50.00',
-//                 discount: '',
-//                 button: 'Mua ngay',
-//             },
-//         ],
-//     },
-//     {
-//         id: 2,
-//         titleHead: 'Selling Product',
-//         product: [
-//             {
-//                 idd: 1,
-//                 linkimg: img1,
-//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-//                 price: '$50.00',
-//                 discount: '%20',
-//                 button: 'Mua ngay',
-//             },
-//             {
-//                 idd: 2,
-//                 linkimg: img5,
-//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-//                 price: '$50.00',
-//                 discount: '',
-//                 button: 'Mua ngay',
-//             },
-//             {
-//                 idd: 3,
-//                 linkimg: img3,
-//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-//                 price: '$50.00',
-//                 discount: '%20',
-//                 button: 'Mua ngay',
-//             },
-//             {
-//                 idd: 4,
-//                 linkimg: img4,
-//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-//                 price: '$50.00',
-//                 discount: '',
-
-//                 button: 'Mua ngay',
-//             },
-//         ],
-//     },
-//     {
-//         id: 3,
-//         titleHead: 'Featured Product',
-//         product: [
-//             {
-//                 idd: 1,
-//                 linkimg: img1,
-//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-//                 price: '$50.00',
-//                 discount: '%20',
-//                 button: 'Mua ngay',
-//             },
-//             {
-//                 idd: 2,
-//                 linkimg: img5,
-//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-//                 price: '$50.00',
-//                 discount: '',
-//                 button: 'Mua ngay',
-//             },
-//             {
-//                 idd: 3,
-//                 linkimg: img3,
-//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-//                 price: '$50.00',
-//                 discount: '%20',
-
-//                 button: 'Mua ngay',
-//             },
-//             {
-//                 idd: 4,
-//                 linkimg: img4,
-//                 titleInformation: 'SẢN PHẨM MẪU SỐ 1',
-//                 price: '$50.00',
-//                 discount: '',
-//                 button: 'Mua ngay',
-//             },
-//         ],
-//     },
-// ];
 const reasonProduct = [
     {
         id: 1,
         title: 'TUỔI ĐỜI THƯƠNG HIỆU CỦA BÍCH THUẬN STORE',
         describe:
             // eslint-disable-next-line no-multi-str
-            ' Được thành lập vào năm 2010, khi thị trường thời trang mặc nhà còn chưa \
-        được chú trọng. Ohlady chính là cái tên đặt bước tiến tiên phong trong\
-        lĩnh vực này. Sau hơn 12 năm phát triển, hiện Ohlady vẫn có tầm nhìn trở\
-        thành Thương hiệu dẫn đầu thị trường dòng thời trang ứng dụng, lifewear\
-        tại Việt Nam.',
+            'Chào mừng bạn đến với Bích Thuận Store - một thương hiệu với hơn 10 năm kinh nghiệm trong ngành thời trang. Chúng tôi tự hào về lịch sử dài lâu và đẳng cấp của mình, mang đến cho bạn những bộ trang phục thời thượng và đáng yêu.',
     },
     {
         id: 2,
         title: 'ĐỘI NGŨ NHÂN VIÊN CHUYÊN NGHIỆP',
         describe:
             // eslint-disable-next-line no-multi-str
-            ' Được thành lập vào năm 2010, khi thị trường thời trang mặc nhà còn chưa được chú trọng. \
-            Ohlady chính là cái tên đặt bước tiến tiên phong trong lĩnh vực này. Sau hơn 12 năm phát triển,\
-             hiện Ohlady vẫn có tầm nhìn trở thành Thương hiệu dẫn đầu thị trường dòng thời trang ứng dụng,\
-              lifewear tại việt Nam..',
+            'Bích Thuận Store luôn tự hào về đội ngũ nhân viên chuyên nghiệp và đầy đam mê. Chúng tôi cam kết đảm bảo bạn có trải nghiệm mua sắm thoải mái và thú vị nhất, với sự tư vấn chuyên nghiệp từ đội ngũ của chúng tôi.',
     },
     {
         id: 3,
         title: 'CHẤT LIỆU SẢN PHẨM ĐẠT CHUẨN',
         describe:
             // eslint-disable-next-line no-multi-str
-            ' Được thành lập vào năm 2010, khi thị trường thời trang mặc nhà còn chưa được chú trọng. \
-            Ohlady chính là cái tên đặt bước tiến tiên phong trong lĩnh vực này. Sau hơn 12 năm phát triển,\
-             hiện Ohlady vẫn có tầm nhìn trở thành Thương hiệu dẫn đầu thị trường dòng thời trang ứng dụng,\
-              lifewear tại việt Nam..',
+            'Sự chất lượng là ưu tiên hàng đầu tại Bích Thuận Store. Tất cả sản phẩm của chúng tôi được lựa chọn kỹ càng và chất lượng sản phẩm đạt chuẩn cao. Chúng tôi cam kết mang đến cho bạn những bộ trang phục không chỉ đẹp mắt mà còn bền đẹp.',
     },
     {
         id: 4,
         title: 'TƯ VẤN THIẾT KẾ NHIỆT TÌNH',
         describe:
             // eslint-disable-next-line no-multi-str
-            ' Được thành lập vào năm 2010, khi thị trường thời trang mặc nhà còn chưa được chú trọng. \
-            Ohlady chính là cái tên đặt bước tiến tiên phong trong lĩnh vực này. Sau hơn 12 năm phát triển,\
-             hiện Ohlady vẫn có tầm nhìn trở thành Thương hiệu dẫn đầu thị trường dòng thời trang ứng dụng,\
-              lifewear tại việt Nam..',
+            'Bạn đang tìm kiếm một bộ trang phục hoàn hảo cho một dịp đặc biệt hay một sự cải tiến cho tủ quần áo của bạn? Chúng tôi sẽ tư vấn với tâm huyết và nhiệt tình, giúp bạn chọn lựa những thiết kế phù hợp nhất với phong cách và sở thích của bạn.',
     },
     {
         id: 5,
         title: 'HỖ TRỢ KHÁCH HÀNG 24/7',
         describe:
             // eslint-disable-next-line no-multi-str
-            ' Được thành lập vào năm 2010, khi thị trường thời trang mặc nhà còn chưa được chú trọng. \
-            Ohlady chính là cái tên đặt bước tiến tiên phong trong lĩnh vực này. Sau hơn 12 năm phát triển,\
-             hiện Ohlady vẫn có tầm nhìn trở thành Thương hiệu dẫn đầu thị trường dòng thời trang ứng dụng,\
-              lifewear tại việt Nam..',
+            'Tại Bích Thuận Store, chúng tôi luôn lắng nghe và đồng hành cùng bạn. Với dịch vụ hỗ trợ khách hàng 24/7, chúng tôi sẵn sàng trả lời mọi câu hỏi, giải quyết mọi vấn đề, và đảm bảo bạn luôn hài lòng với trải nghiệm mua sắm của mình.',
     },
 ];
-// const commentProduct = [
-//     {
-//         id: 1,
-//         imgClient: img3,
-//         titleClient: 'Nguyễn Văn Hiếu',
-//         commentClient: ' Tư vấn rất nhiệt tình, chất liệu mình thấy khá oke, mua về tặng vợ rất hợp lý =))',
-//         like: '26',
-//         commentShops: [
-//             {
-//                 idd: 1,
-//                 logoShop: logo,
-//                 titleShop: 'Bích Thuận Store',
-//                 commentShop:
-//                     'Cảm ơn bạn đã quan tâm và ủng hộ Shop, Nếu có bất kì thắc mắc, liên hệ với Shop qua Hotline 0989.696.393.',
-//             },
-//         ],
-//     },
-//     {
-//         id: 2,
-//         imgClient: img4,
-//         titleClient: 'Nguyễn Huy',
-//         commentClient: ' Tư vấn rất nhiệt tình, chất liệu mình thấy khá oke, mua về tặng vợ rất hợp lý =))',
-//         like: '26',
-//         commentShops: [],
-//     },
-//     {
-//         id: 3,
-//         imgClient: img5,
-//         titleClient: 'Tuấn Vỹ',
-//         commentClient: ' Tư vấn rất nhiệt tình, chất liệu mình thấy khá oke, mua về tặng vợ rất hợp lý =))',
-//         like: '26',
-//         commentShops: [
-//             {
-//                 idd: 1,
-//                 logoShop: logo,
-//                 titleShop: 'Bích Thuận Store',
-//                 commentShop:
-//                     'Cảm ơn bạn đã quan tâm và ủng hộ Shop, Nếu có bất kì thắc mắc, liên hệ với Shop qua Hotline 0989.696.393.',
-//             },
-//         ],
-//     },
-//     {
-//         id: 4,
-//         imgClient: img3,
-//         titleClient: 'Nguyễn Văn Hiếu',
-//         commentClient: ' Tư vấn rất nhiệt tình, chất liệu mình thấy khá oke, mua về tặng vợ rất hợp lý =))',
-//         like: '26',
-//         commentShops: [],
-//     },
-// ];
 const PageProduct: React.FC = () => {
     const { productHomes } = useAppSelector((state) => state.products);
     const [product, setProduct] = useState([]);

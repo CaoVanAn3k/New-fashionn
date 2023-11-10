@@ -2,17 +2,19 @@ import classNames from 'classnames/bind';
 import styles from './DetailShop.module.scss';
 import Slider from 'react-slick';
 import MenuLink from '../../../components/Menu/MenuLink';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import InformationDetailShop from './InformationDetailShop';
 import IconEvaluate from '../../../components/IconEvaluate';
 import CommentDetailShop from './CommentDetailShop';
 import { useAppSelector, useAppDispatch } from '../../../redux/store';
 import { deleteDataProductId, getProductById } from '../../../redux/products/products';
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import { addToCart } from '../../../redux/Cart/cart';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useParams, useNavigate } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
+// import WebSocket from '../../../util/webSocket';
 const cx = classNames.bind(styles);
 interface galleryThumbnail {
     id: number;
@@ -68,21 +70,21 @@ const informationDetail = [
         title: 'Tổng quan',
         information: 'KHỞI NGUỒN VẺ ĐẸP THANH LỊCH,HIỆN ĐẠI',
         describe:
-            "Từ chối những rập khuôn về thời trang hay tiêu chuẩn đương thời quen thuộc,Oh ' Lady Boutique tái định vị triết lý sáng tạo cùng bộ suil trứ danh với phiên bản đặc biệt mới  mẻ.Trong mạnh mẽ có dịu dàng,nữ tính-trong rắn rỏi có nét rực rỡ,tươi trẻ.",
+            'Bích Thuận Store tự hào giới thiệu một bộ sưu tập đa dạng và phong cách về thời trang. Chúng tôi hiểu rằng mỗi người đều có phong cách và sở thích riêng, vì vậy chúng tôi cung cấp cho bạn nhiều lựa chọn, từ trang phục hàng ngày đến các bộ trang phục đặc biệt cho những dịp quan trọng. Sản phẩm của chúng tôi được thiết kế với sự tỉ mỉ và tâm huyết để đảm bảo bạn luôn tự tin và thời trang.',
     },
     {
         id: 2,
         title: 'Chất liệu',
-        information: 'KHỞI NGUỒN VẺ ĐẸP THANH LỊCH,HIỆN ĐẠI',
+        information: 'Chất liệu co dãn',
         describe:
-            "Từ chối những rập khuôn về thời trang hay tiêu chuẩn đương thời quen thuộc,Oh ' Lady Boutique tái định vị triết lý sáng tạo cùng bộ suil trứ danh với phiên bản đặc biệt mới  mẻ.Trong mạnh mẽ có dịu dàng,nữ tính-trong rắn rỏi có nét rực rỡ,tươi trẻ.",
+            'Chất lượng là giá trị hàng đầu tại Bích Thuận Store. Chúng tôi lựa chọn chất liệu tốt nhất cho sản phẩm của mình, đảm bảo rằng bạn sẽ có trải nghiệm thoải mái và đáng tin cậy. Từ cotton mềm mịn đến lụa sang trọng, chúng tôi cam kết rằng sản phẩm của chúng tôi sẽ đáp ứng các tiêu chuẩn cao nhất về chất lượng và bền đẹp.',
     },
     {
         id: 3,
         title: 'Chính sách hoàn trả',
-        information: 'KHỞI NGUỒN VẺ ĐẸP THANH LỊCH,HIỆN ĐẠI',
+        information: 'Hoàn trả 100%  số tiền tương đương với sản phẩm',
         describe:
-            "Từ chối những rập khuôn về thời trang hay tiêu chuẩn đương thời quen thuộc,Oh ' Lady Boutique tái định vị triết lý sáng tạo cùng bộ suil trứ danh với phiên bản đặc biệt mới  mẻ.Trong mạnh mẽ có dịu dàng,nữ tính-trong rắn rỏi có nét rực rỡ,tươi trẻ.",
+            'Tại Bích Thuận Store, chúng tôi cam kết đảm bảo sự hài lòng của khách hàng. Nếu bạn không hoàn toàn hài lòng với sản phẩm mua từ cửa hàng của chúng tôi, chúng tôi sẽ tự hào hoàn tiền hoặc đổi sản phẩm cho bạn. Chính sách hoàn trả của chúng tôi dễ dàng và linh hoạt, với thời hạn hợp lý để bạn có đủ thời gian để kiểm tra và quyết định. Chúng tôi cam kết đảm bảo mọi giao dịch mua sắm với chúng tôi đều là một trải nghiệm thoải mái và không có rủi ro.',
     },
 ];
 const iconEvaluate = [
@@ -179,9 +181,18 @@ const DetailShop = () => {
     const { id } = useParams<string>();
     const navigate = useNavigate();
     const { productById, isLoadingProductById, productSame } = useAppSelector((state) => state.products);
+    // const { userName } = useAppSelector((state) => state.users);
+    const [selectedSize, setSelectedSize] = useState('');
+    const [selectedColor, setSelectedColor] = useState('');
+    const [selectedQuantity, setSelectedQuantity] = useState(1);
     const [sizeState, setSizeState] = useState<boolean[]>(
         productById.productId !== undefined && productById.sizeNames.length > 0
             ? productById.sizeNames.map(() => false)
+            : [],
+    );
+    const [colorState, setColorState] = useState<boolean[]>(
+        productById.productId !== undefined && productById.colorNames.length > 0
+            ? productById.colorNames.map(() => false)
             : [],
     );
     const [isProductAddedToMenuLink, setIsProductAddedToMenuLink] = useState(false);
@@ -206,8 +217,6 @@ const DetailShop = () => {
                 icon: '',
             });
             setIsProductAddedToMenuLink(true);
-        } else {
-            setIsProductAddedToMenuLink(false);
         }
     }, [isProductAddedToMenuLink, productById.name]);
     function renderSkeleton() {
@@ -236,24 +245,51 @@ const DetailShop = () => {
             </div>
         );
     }
-    const toggleSizeProduct = (index: number) => {
-        const newState = [...sizeState];
-        const findIndexSizeState = sizeState.findIndex((state) => state === true);
-        if (findIndexSizeState !== -1 && findIndexSizeState !== index) {
-            newState[findIndexSizeState] = false;
-        }
-        newState[index] = !newState[index];
-        setSizeState(newState);
-    };
+    const toggleSizeProduct = useCallback((index: number) => {
+        setSizeState((prevState) => {
+            const newState = [...prevState];
+            const findIndexSizeState = prevState.findIndex((state) => state === true);
+            if (findIndexSizeState !== -1 && findIndexSizeState !== index) {
+                newState[findIndexSizeState] = false;
+            }
+            newState[index] = !newState[index];
+            return newState;
+        });
+    }, []);
+    const toggleColorProduct = useCallback((index: number) => {
+        setColorState((prevState) => {
+            const newState = [...prevState];
+            const findIndexSizeState = prevState.findIndex((state) => state === true);
+            if (findIndexSizeState !== -1 && findIndexSizeState !== index) {
+                newState[findIndexSizeState] = false;
+            }
+            newState[index] = !newState[index];
+            return newState;
+        });
+    }, []);
     const handleClickProduct = (productId: number) => {
         dispatch(deleteDataProductId());
+        setIsProductAddedToMenuLink(false);
         navigate(`/product/${productId}`);
         window.scrollTo({
             top: 0,
             behavior: 'smooth',
         });
     };
-
+    const handleClickAddToCart = () => {
+        if (selectedSize !== '' && selectedColor !== '' && productById.productId !== null) {
+            const data = {
+                id: productById.productId,
+                color: selectedColor,
+                size: selectedSize,
+                quantity: selectedQuantity,
+            };
+            dispatch(addToCart(data));
+            // if (userName !== '') {
+            //     WebSocket.updateCartByUserName(userName);
+            // }
+        }
+    };
     return (
         <div className={cx('detail-shop')}>
             <div className={cx('detail-shop-main')}>
@@ -318,8 +354,13 @@ const DetailShop = () => {
                                                 productById.colorNames.map((item: colors, index: number) => {
                                                     return (
                                                         <div
+                                                            className={cx(`${colorState[index] ? 'active' : ''}`)}
                                                             style={{ backgroundColor: `${item.colorCode}` }}
                                                             key={index}
+                                                            onClick={() => {
+                                                                setSelectedColor(item.name);
+                                                                toggleColorProduct(index);
+                                                            }}
                                                         ></div>
                                                     );
                                                 })}
@@ -335,6 +376,7 @@ const DetailShop = () => {
                                                         <div
                                                             key={index}
                                                             onClick={() => {
+                                                                setSelectedSize(size);
                                                                 toggleSizeProduct(index);
                                                             }}
                                                             className={cx(`${sizeState[index] ? 'active' : ''}`)}
@@ -360,15 +402,25 @@ const DetailShop = () => {
                                             <span>Còn {productById.quantity} bộ</span>
                                         </div>
                                         <div className={cx('quantity-bottom-list')}>
-                                            <select>
+                                            <select
+                                                onChange={(e: any) => {
+                                                    setSelectedQuantity(e.target.value);
+                                                }}
+                                            >
                                                 {[...Array.from(Array(productById.quantity))].map((item, index) => {
-                                                    return <option key={index}>{index + 1}</option>;
+                                                    return (
+                                                        <option key={index} value={`${index + 1}`}>
+                                                            {index + 1}
+                                                        </option>
+                                                    );
                                                 })}
                                             </select>
                                         </div>
                                     </div>
                                     <div className={cx('button-control')}>
-                                        <button className={cx('button-cart')}>Thêm Vào Giỏ Hàng</button>
+                                        <button className={cx('button-cart')} onClick={handleClickAddToCart}>
+                                            Thêm Vào Giỏ Hàng
+                                        </button>
                                         <button className={cx('button-payment')}>MUA NGAY</button>
                                     </div>
                                 </div>
@@ -376,7 +428,7 @@ const DetailShop = () => {
                         )}
                     </div>
                 </div>
-                <InformationDetailShop children={informationDetail} />
+                <InformationDetailShop children={informationDetail} product={productById} />
                 <div className={cx('detail-shop-evaluate')}>
                     <div className={cx('shop-evaluate-main')}>
                         <div className={cx('evaluate-main-title')}>
@@ -441,7 +493,7 @@ const DetailShop = () => {
                                                 <div className={cx('content-right')}>
                                                     <div className={cx('information-button')}>
                                                         <button className={cx('information-button-main')}>
-                                                            <AddOutlinedIcon />
+                                                            <FavoriteIcon />
                                                         </button>
                                                     </div>
                                                 </div>

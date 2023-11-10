@@ -50,7 +50,7 @@ export const login = createAsyncThunk<string | any, LoginData>('login', async (d
             return data.userName;
         }
     } catch (err: any) {
-        if (err.status === 403) {
+        if (err.status === 400) {
             toast.error('tài khoản hoặc mật khẩu không đúng!');
             throw new Error('tài khoản hoặc mật khẩu không đúng!');
         }
@@ -61,10 +61,34 @@ export const logout = createAsyncThunk<void, string>('logout', async (data) => {
     try {
         const res: string = await axiosInstance.post('/auth/logout', data);
         if (res) {
-            toast.success(res);
+            return;
         }
     } catch (err: any) {
         toast.error(err);
+        throw new Error(err);
+    }
+});
+export const checkStateLogin = createAsyncThunk<string | any>('checkStateLogin', async () => {
+    try {
+        const res = await axiosInstance.get('/auth/checkStateLogin');
+        if (res.data) {
+            return res.data;
+        }
+        return res;
+    } catch (err: any) {
+        throw new Error(err);
+    }
+});
+export const OAuthExchangeCode = createAsyncThunk<any, string>('OAuthExchangeCode', async (data: string) => {
+    try {
+        const res: string | undefined = await axiosInstance.post('/auth/oauth2/google', data);
+        if (res !== undefined) {
+            toast.success('đăng nhập thành công');
+            return res;
+        }
+    } catch (err: any) {
+        console.log(err);
+        toast.error(err.message);
         throw new Error(err);
     }
 });
@@ -90,15 +114,20 @@ const AuthenTicationSlice = createSlice({
         builder
             .addCase(register.pending, (state) => {
                 state.loading = true;
-                state.error = '';
             })
             .addCase(login.pending, (state) => {
                 state.loading = true;
-                state.error = '';
             })
             .addCase(logout.pending, (state) => {
                 state.loading = true;
-                state.error = '';
+            })
+            .addCase(checkStateLogin.pending, (state) => {
+                state.loading = true;
+                state.userName = '';
+            })
+            .addCase(OAuthExchangeCode.pending, (state) => {
+                state.loading = true;
+                state.userName = '';
             })
             .addCase(register.fulfilled, (state, action: PayloadAction<void>) => {
                 state.loading = false;
@@ -113,6 +142,16 @@ const AuthenTicationSlice = createSlice({
                 state.isLogined = false;
                 state.userName = '';
             })
+            .addCase(checkStateLogin.fulfilled, (state, action: PayloadAction<string>) => {
+                state.loading = false;
+                state.isLogined = true;
+                state.userName = action.payload;
+            })
+            .addCase(OAuthExchangeCode.fulfilled, (state, action: PayloadAction<string>) => {
+                state.loading = false;
+                state.isLogined = true;
+                state.userName = action.payload;
+            })
             .addCase(register.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || 'Registration failed';
@@ -126,6 +165,16 @@ const AuthenTicationSlice = createSlice({
                 state.loading = false;
                 state.isLogined = false;
                 state.error = action.error.message || 'Logout failed';
+            })
+            .addCase(checkStateLogin.rejected, (state, action) => {
+                state.loading = false;
+                state.isLogined = false;
+                state.error = action.error.message || 'session is expires';
+            })
+            .addCase(OAuthExchangeCode.rejected, (state, action) => {
+                state.loading = false;
+                state.isLogined = false;
+                state.error = action.error.message || 'OAuth2 is failed';
             });
     },
 });

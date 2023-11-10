@@ -10,6 +10,9 @@ import logo from '../../components/Images/Product/logo.svg';
 import MenuShop from '../../components/Menu/MenuShop';
 import InformationShop from './InformationShop';
 import CommentProduct from '../../components/Products/CommentProduct';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { findAllProductShop, deleteDataProductByCategoryId } from '../../redux/products/products';
+import { useEffect } from 'react';
 const cx = classNames.bind(styles);
 
 const imgSlider = [
@@ -163,12 +166,17 @@ const commentProduct = [
     },
 ];
 const Shop = () => {
+    const dispatch = useAppDispatch();
+    const { products, productCategoryId } = useAppSelector((state) => state.products);
+    useEffect(() => {
+        Promise.all([dispatch(deleteDataProductByCategoryId()), dispatch(findAllProductShop(0))]);
+    }, [dispatch]);
     return (
         <div className={cx('shop-main')}>
             <SlickSlider children={imgSlider} />
             <div className={cx('page-main-tag')}></div>
             <MenuShop />
-            <InformationShop />
+            <InformationShop children={productCategoryId.length > 0 ? productCategoryId : products} />
             <CommentProduct children={commentProduct} />
         </div>
     );

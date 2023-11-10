@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import ProductsReducer from './products/products';
 import AuthenticationProvider from './Authentication/Authentication';
+import CartsProvider from './Cart/cart';
 import { useDispatch, useSelector } from 'react-redux';
 export const store = configureStore({
     reducer: {
         products: ProductsReducer,
         users: AuthenticationProvider,
+        carts: CartsProvider,
     },
 });
 export type AppDispatch = typeof store.dispatch;
