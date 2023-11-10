@@ -95,6 +95,19 @@
             display: none;
         }
     }
+    @media (max-width: 321px) {
+        .slide-slick-img {
+            &:nth-child(2) {
+                height: 340px !important;
+            }
+            &:nth-child(3) {
+                height: 370px !important;
+            }
+            &:nth-child(4) {
+                height: 340px !important;
+            }
+        }
+    }
 }
 @media (min-width: 601px) and (max-width: 1023px) {
     .slide-slick-img {

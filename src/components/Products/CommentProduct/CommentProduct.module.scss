@@ -278,8 +278,54 @@
 @media only screen and (max-width: 600px) {
 }
 @media (min-width: 601px) and (max-width: 1023px) {
+    .client-list-logo {
+        width: 9rem !important;
+        height: 7rem !important;
+    }
+    .information-name {
+        & > h4 {
+            font-size: 22px;
+        }
+    }
+    .information-comment {
+        & > p {
+            font-size: 19px;
+        }
+    }
+    .information-icon {
+        & > i {
+            font-size: 2rem !important;
+        }
+    }
+    .information-feedback {
+        width: 72% !important;
+        & > .feedback-left {
+            & > p {
+                font-size: 18px !important;
+            }
+        }
+        & > .feedback-between {
+            font-size: 18px !important;
+            margin: 0 10px !important;
+        }
+        & > .feedback-right {
+            font-size: 18px !important;
+        }
+    }
+    .information-feedback-shop {
+        & > .feedback-left {
+            & > p {
+                font-size: 18px !important;
+            }
+        }
+    }
+    @media (max-width: 769px) {
+    }
     .comment-product-main {
         width: 94% !important;
+    }
+    .comment-head {
+        width: 100% !important;
     }
     .shop-list-logo {
         width: 66px !important;

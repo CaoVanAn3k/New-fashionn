@@ -171,6 +171,7 @@
     & > .information-describe {
         color: #aa747e;
         font-weight: 400;
+        font-size: 17px;
     }
 }
 .page-slide-slick {
@@ -180,22 +181,76 @@
 }
 
 @media only screen and (max-width: 600px) {
+    .home-page-main {
+        height: 600px !important;
+    }
     .page-heading-img {
-        top: 6rem;
+        width: 300px !important;
+        top: 0rem;
         height: 66.1rem !important;
     }
     .main-left-title {
-        font-size: 4rem !important;
-        top: 3rem !important;
-        right: 11.5rem !important;
+        font-size: 4.39rem !important;
+        top: 1rem !important;
+        right: 8.5rem !important;
     }
     .main-right-title {
-        font-size: 4rem !important;
-        top: 3rem !important;
+        font-size: 4.39rem !important;
+        top: 1rem !important;
         left: 4.5rem !important;
     }
     .main-left-information {
         display: none;
+    }
+    .information-describe {
+        font-size: 16px !important;
+    }
+    @media (max-width: 321px) {
+        .home-page-main {
+            height: 580px !important;
+        }
+        .page-heading-img {
+            width: 280px !important;
+        }
+        .main-left-title {
+            font-size: 3.45rem !important;
+            right: 7.55rem !important;
+        }
+        .main-right-title {
+            font-size: 3.45rem !important;
+        }
+        .information-describe {
+            font-size: 12px !important;
+        }
+    }
+    @media (min-width: 359px) and (max-width: 361px) {
+        .main-left-title {
+            font-size: 4rem !important;
+            right: 7.55rem !important;
+        }
+        .main-right-title {
+            font-size: 4rem !important;
+        }
+    }
+
+    @media (min-width: 374px) and (max-width: 391px) {
+        .main-left-title {
+            font-size: 4.2rem !important;
+        }
+        .main-right-title {
+            font-size: 4.2rem !important;
+        }
+        .information-describe {
+            font-size: 14.55px !important;
+        }
+    }
+    @media (min-width: 412px) and (max-width: 415px) {
+        .main-left-title {
+            font-size: 4.5rem !important;
+        }
+        .main-right-title {
+            font-size: 4.5rem !important;
+        }
     }
 }
 @media (min-width: 601px) and (max-width: 1023px) {
@@ -220,10 +275,13 @@
         margin-left: 2rem !important;
         & > .left-information-title {
             font-size: 16px;
-            margin: 5rem 0 10px;
+            margin: 4rem 0 10px;
         }
     }
     .left-information-describe {
-        font-size: 14px !important;
+        font-size: 15px !important;
+    }
+    .information-describe {
+        font-size: 2rem !important;
     }
 }

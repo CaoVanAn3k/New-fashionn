@@ -10,3 +10,10 @@
         width: 90%;
     }
 }
+@media only screen and (max-width: 600px) {
+    .home-page-product {
+        margin-top: 3rem !important;
+    }
+}
+@media (min-width: 601px) and (max-width: 1023px) {
+}

@@ -21,3 +21,13 @@
         opacity: 0.9;
     }
 }
+@media (min-width: 427px) and (max-width: 428px) {
+    .scroll-to-top {
+        bottom: 1% !important;
+    }
+}
+@media (max-width: 321px) {
+    .scroll-to-top {
+        bottom: 9% !important;
+    }
+}

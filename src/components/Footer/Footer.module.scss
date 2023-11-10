@@ -37,9 +37,12 @@
     & > .list-item {
         display: flex;
         align-items: center;
-        margin-left: 10px;
         & > p {
             margin-left: 10px;
+            font-size: 16px;
+        }
+        & > i {
+            font-size: 16px;
         }
     }
 }
@@ -59,9 +62,9 @@
         & > .list-item {
             display: flex;
             align-items: center;
-            margin-left: 10px;
             & > p {
                 margin-left: 10px;
+                font-size: 16px;
             }
         }
     }
@@ -123,19 +126,21 @@
 .title-list {
     margin-left: 1.2rem;
     & > h2 {
-        font-size: 17px;
+        font-size: 19px;
         margin-bottom: 0;
     }
     & > p {
         display: flex;
         justify-content: space-between;
         width: 100%;
+        margin: 5px 0;
+        font-size: 15px;
     }
 }
 .information-button {
     display: flex;
     justify-content: space-between;
-    margin-top: 5rem;
+    margin-top: 7rem;
     padding: 0 15px;
     & > button {
         display: flex;
@@ -193,7 +198,8 @@
     .footer-link-main {
         display: flex;
         justify-content: space-between;
-        width: 300px;
+        align-items: center;
+        width: 310px;
         display: flex;
         flex-direction: row;
     }
@@ -204,13 +210,56 @@
             }
         }
     }
+    .address-list,
+    .trademark-list {
+        & > .list-item {
+            & > p {
+                font-size: 15px !important;
+            }
+        }
+    }
+    // .footer-trademark-main {
+    //     margin-left: 1.5rem !important;
+    // }
+    .footer-trademark-main {
+        text-align: start !important;
+        margin-left: 0 !important;
+    }
+    @media (max-width: 321px) {
+        .footer-trademark-main {
+            text-align: start !important;
+            margin-left: 0 !important;
+        }
+    }
+    @media (min-width: 359px) and (max-width: 376px) {
+        .footer-link-main {
+            margin-left: -7px !important;
+        }
+        .footer-trademark-main {
+            margin-left: 2.5rem !important;
+        }
+        .footer-trademark-main {
+            text-align: start !important;
+            margin-left: 0 !important;
+        }
+    }
+    @media (min-width: 389px) and (max-width: 391px) {
+        // .footer-trademark-main {
+        //     margin-left: 2.5rem !important;
+        // }
+    }
 }
 @media (min-width: 601px) and (max-width: 1023px) {
     .footer-main {
         width: 94% !important;
+        margin-top: 3rem !important;
+        & > h1 {
+            font-size: 25px !important;
+        }
     }
     .footer-main-body {
-        gap: 25px !important;
+        gap: 20px !important;
+        grid-template-columns: 1.1fr 0.7fr 1.5fr 0.7fr !important;
     }
 
     .title-logo {
@@ -229,13 +278,13 @@
     .address-list {
         & > .list-item {
             margin-left: 0;
-            & > p {
-                font-size: 15px;
-            }
+            // & > p {
+            //     font-size: 15px;
+            // }
         }
     }
     .information-button {
-        margin-top: 3px !important;
+        margin-top: 15px !important;
         padding: 0 !important;
         & > button {
             & > p {
@@ -246,11 +295,27 @@
     .information-title {
         margin-top: 0 !important;
     }
-    .link-item {
-        display: flex !important;
-        flex-direction: column;
-        & > button:nth-child(2) {
-            margin: 10px 12px;
+    .link-list {
+        & > .link-item {
+            display: flex !important;
+            flex-direction: column;
+            & > button:nth-child(2) {
+                margin: 10px 12px;
+            }
+        }
+    }
+    .trademark-list {
+        & > .list-item {
+            & > p {
+                margin-left: 6px !important;
+                font-size: 17px !important;
+            }
+        }
+    }
+
+    @media (min-width: 799px) and (max-width: 835px) {
+        .information-button {
+            margin-top: 21px !important;
         }
     }
 }

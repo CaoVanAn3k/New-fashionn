@@ -100,6 +100,13 @@
             }
         }
     }
+    @media (min-width: 359px) and (max-width: 361px) {
+        .menu-left-title {
+            & > h3 {
+                font-size: 2.23rem !important;
+            }
+        }
+    }
     @media (min-width: 374px) and (max-width: 390px) {
         .menu-left-title {
             & > h3 {
