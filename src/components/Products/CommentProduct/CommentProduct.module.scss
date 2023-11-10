@@ -274,3 +274,18 @@
         }
     }
 }
+
+@media only screen and (max-width: 600px) {
+}
+@media (min-width: 601px) and (max-width: 1023px) {
+    .comment-product-main {
+        width: 94% !important;
+    }
+    .shop-list-logo {
+        width: 66px !important;
+        height: 40px !important;
+    }
+    .information-border {
+        margin-left: 0;
+    }
+}

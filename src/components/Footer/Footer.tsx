@@ -82,7 +82,7 @@ function Footer() {
                                                     </button>
                                                     <button>
                                                         <i className={cx('fa-solid fa-share-nodes')}></i>
-                                                        Chia sẻ
+                                                        <p> Chia sẻ</p>
                                                     </button>
                                                 </div>
                                             </div>

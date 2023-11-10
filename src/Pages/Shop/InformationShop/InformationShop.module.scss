@@ -171,3 +171,21 @@
         transform: rotate(1turn);
     }
 }
+
+@media only screen and (max-width: 600px) {
+}
+@media (min-width: 601px) and (max-width: 1023px) {
+    .product-main-shop {
+        width: 94% !important;
+    }
+    .main-shop-list {
+        grid-template-columns: 1fr 1fr 1fr !important;
+        gap: 2rem !important;
+    }
+    .list-img {
+        margin-bottom: 0 !important;
+    }
+    .information-button-main {
+        width: 60px !important;
+    }
+}

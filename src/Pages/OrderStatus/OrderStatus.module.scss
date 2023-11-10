@@ -1,0 +1,38 @@
+.order-status {
+    width: 100%;
+    background: whitesmoke;
+    & > .order-status-main {
+        margin-bottom: 5rem;
+        & > .order-main-link {
+            width: 87%;
+            margin: 0 auto;
+        }
+    }
+}
+
+.order-main-status {
+    width: 100%;
+    & > .main-status-list {
+        // width: 94%;
+        margin: 0 auto;
+    }
+}
+.status-button-main {
+    & > div {
+        & > div {
+            & > div {
+                margin-top: 2.5rem;
+                background-color: #fff;
+                justify-content: space-around;
+                & > button {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+.order-status-bader {
+    width: 100%;
+    background-color: #000;
+    height: 70px;
+}

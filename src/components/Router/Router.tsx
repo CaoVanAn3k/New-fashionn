@@ -5,6 +5,7 @@ import Shop from '../../Pages/Shop';
 import DetailShop from '../../Pages/Shop/DetailShop';
 import FavouriteShop from '../../Pages/Shop/FavouriteShop';
 import Authentication from '../../Pages/Authentication/Authentication';
+import OrderStatus from '../../Pages/OrderStatus';
 
 const RouterPublic = () => [
     {
@@ -38,6 +39,10 @@ const RouterPublic = () => [
     {
         path: '/register',
         component: Authentication,
+    },
+    {
+        path: '/orderstatus',
+        component: OrderStatus,
     },
 ];
 export default RouterPublic;
