@@ -124,7 +124,7 @@ const InformationProduct: React.FC<ChildrenProps> = ({ children }) => {
                                                                 <h2 className={cx('information-title')}>
                                                                     {product.name}
                                                                 </h2>
-                                                                <div className={cx('bottom')}>
+                                                                <div className={cx('bottom-infor')}>
                                                                     <div className={cx('content-left')}>
                                                                         <p className={cx('information-price')}>
                                                                             {product.price / 1000.0}.000 vnđ

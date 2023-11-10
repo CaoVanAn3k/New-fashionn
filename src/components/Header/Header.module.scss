@@ -274,4 +274,25 @@
     .main-right-icon {
         padding: 0 !important;
     }
+    .head-search-main {
+        width: 94% !important;
+    }
+    .search-input-top {
+        & > i {
+            font-size: 16px;
+        }
+        & > input {
+            font-size: 19px;
+        }
+    }
+    .search-input-bottom {
+        width: 60% !important;
+        margin-left: 8.5rem !important;
+        & > p {
+            font-size: 16px;
+        }
+    }
+    .search-right {
+        font-size: 18px;
+    }
 }

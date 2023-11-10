@@ -122,7 +122,7 @@
             line-height: 50px;
             margin: 0;
         }
-        & > .bottom {
+        & > .bottom-infor {
             width: 100%;
             display: flex;
             align-items: center;
@@ -180,9 +180,75 @@
         }
     }
 }
-@media (min-width: 576px) and (max-width: 767px) {
+@media only screen and (max-width: 600px) {
+    .product-main-header {
+        width: 96% !important;
+        padding: 0 !important;
+        align-items: center;
+    }
+    .header-title {
+        & > h1 {
+            font-size: 27px !important;
+            padding: 0;
+        }
+    }
+    .button-list {
+        width: 16.4rem !important;
+    }
+    .product-main-shop {
+        width: 99% !important;
+        & > .main-shop-list {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 1.5rem !important;
+            height: max-content !important;
+            width: 98% !important;
+            margin: 0 auto;
+            margin-top: 2rem !important;
+        }
+    }
+    .shop-list-item {
+        width: 200px !important;
+        & > .list-img {
+            width: 200px !important;
+            height: 265px !important;
+            margin: 0 !important;
+        }
+    }
+    .information-main {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+    .information-title {
+        padding: 0 4px !important;
+    }
+    .bottom-infor {
+        padding: 0 4px !important;
+    }
+    .information-icon {
+        margin-bottom: 5px !important;
+    }
+
+    .information-button-main {
+        width: 55px !important;
+    }
+    @media (min-width: 389px) and (max-width: 391px) {
+        .product-main-shop {
+            & > .main-shop-list {
+                gap: 1.3rem !important;
+            }
+        }
+        .shop-list-item {
+            width: 180px !important ;
+            & > .list-img {
+                width: 180px !important ;
+                height: 265px !important;
+            }
+        }
+    }
+    @media (min-width: 374px) and (max-width: 376px) {
+    }
 }
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 601px) and (max-width: 1023px) {
     .main-shop-list {
         display: grid !important;
         grid-template-columns: 1fr 1fr 1fr !important;
