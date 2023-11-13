@@ -57,9 +57,9 @@ export const login = createAsyncThunk<string | any, LoginData>('login', async (d
         throw err;
     }
 });
-export const logout = createAsyncThunk<void, string>('logout', async (data) => {
+export const logout = createAsyncThunk<void>('logout', async () => {
     try {
-        const res: string = await axiosInstance.post('/auth/logout', data);
+        const res: string = await axiosInstance.get('/auth/logout');
         if (res) {
             return;
         }
@@ -109,6 +109,9 @@ const AuthenTicationSlice = createSlice({
         clearState: (state) => {
             state.isRegister = false;
         },
+        clearStateWhenLogout: (state) => {
+            state.isLogined = false;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -139,7 +142,6 @@ const AuthenTicationSlice = createSlice({
             })
             .addCase(logout.fulfilled, (state, action: PayloadAction<void>) => {
                 state.loading = false;
-                state.isLogined = false;
                 state.userName = '';
             })
             .addCase(checkStateLogin.fulfilled, (state, action: PayloadAction<string>) => {
@@ -178,5 +180,5 @@ const AuthenTicationSlice = createSlice({
             });
     },
 });
-export const { userRegister, clearState } = AuthenTicationSlice.actions;
+export const { userRegister, clearState, clearStateWhenLogout } = AuthenTicationSlice.actions;
 export default AuthenTicationSlice.reducer;

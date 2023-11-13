@@ -14,7 +14,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
-import { logout, checkStateLogin } from '../../redux/Authentication/Authentication';
+import { logout, checkStateLogin, clearStateWhenLogout } from '../../redux/Authentication/Authentication';
 import { findProductBySearching, clearSearching } from '../../redux/products/products';
 import { clearState } from '../../redux/Cart/cart';
 import { Link as ScrollLink } from 'react-scroll';
@@ -147,10 +147,12 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
         navigate('/register');
     };
     const handleClickLogout = async () => {
-        dispatch(logout(userName));
-        dispatch(clearState());
-        await waiting(1000);
-        navigate('/login');
+        const accessToken: string | undefined = Cookies.get('accessToken');
+        if (accessToken !== undefined && accessToken.length > 0) {
+            Promise.all([dispatch(clearState()), dispatch(clearStateWhenLogout()), dispatch(logout())]);
+            await waiting(1000);
+            navigate('/login');
+        }
     };
     const [searchClick, setSearchClick] = useState(false);
     const handleSearchOn = () => {
@@ -201,165 +203,155 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
                     className={cx('header-main-right')}
                     style={{ backgroundColor: `${isChangeBackgroundHeader ? '#ffffff' : '#742433'}` }}
                 >
-                    <div className={cx('header-main-right')}>
-                        <div className={cx('main-right-body')}>
-                            <ULLeft
-                                className={cx('main-right-list')}
-                                $isChangeBackgroundHeader={isChangeBackgroundHeader}
-                            >
-                                <li>
-                                    <Link to="/">Trang Chủ</Link>
-                                </li>
-                                <li>
-                                    <Link to="/shop">Cửa Hàng</Link>
-                                </li>
-                                <li>
-                                    <ScrollLink
-                                        onClick={() => {
-                                            navigate('/');
-                                        }}
-                                        to={`${isChangeBackgroundHeader ? '' : 'information-shop'}`}
-                                        smooth={true}
-                                        duration={1000}
-                                        style={{ cursor: 'pointer' }}
+                    <div className={cx('main-right-body')}>
+                        <ULLeft className={cx('main-right-list')} $isChangeBackgroundHeader={isChangeBackgroundHeader}>
+                            <li>
+                                <Link to="/">Trang Chủ</Link>
+                            </li>
+                            <li>
+                                <Link to="/shop">Cửa Hàng</Link>
+                            </li>
+                            <li>
+                                <ScrollLink
+                                    onClick={() => {
+                                        navigate('/');
+                                    }}
+                                    to={`${isChangeBackgroundHeader ? '' : 'information-shop'}`}
+                                    smooth={true}
+                                    duration={1000}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    Thông Tin
+                                </ScrollLink>
+                            </li>
+                        </ULLeft>
+                        <ULRight className={cx('main-right-icon')} $isChangeBackgroundHeader={isChangeBackgroundHeader}>
+                            <li onClick={handleSearchOn}>
+                                <SearchIcon />
+                            </li>
+                            <li className={cx('right-cart')}>
+                                <BootstrapTooltip
+                                    title={`Cart ${productCarts.length > 0 ? handleQuantityCart() : 0} items`}
+                                    placement="bottom-start"
+                                    onClick={() => handleClickCart()}
+                                >
+                                    <Badge
+                                        color="secondary"
+                                        badgeContent={productCarts.length > 0 && handleQuantityCart()}
+                                        className={cx('custom-badge')}
+                                        invisible={productCarts.length === 0 ? true : false}
                                     >
-                                        Thông Tin
-                                    </ScrollLink>
-                                </li>
-                            </ULLeft>
-                            <ULRight
-                                className={cx('main-right-icon')}
-                                $isChangeBackgroundHeader={isChangeBackgroundHeader}
-                            >
-                                <li onClick={handleSearchOn}>
-                                    <SearchIcon />
-                                </li>
-                                <li className={cx('right-cart')}>
-                                    <BootstrapTooltip
-                                        title={`Cart ${productCarts.length > 0 ? handleQuantityCart() : 0} items`}
-                                        placement="bottom-start"
-                                        onClick={() => handleClickCart()}
+                                        <LocalMallOutlinedIcon />
+                                    </Badge>
+                                </BootstrapTooltip>
+                            </li>
+                            <li className={cx('right-person', 'dropdown')} onClick={() => handleClickPerson()}>
+                                <PersonIcon />
+                                {activeMenu && (
+                                    <ULDropDown
+                                        className={cx('dropdown-menu')}
+                                        $isChangeBackgroundHeader={isChangeBackgroundHeader}
                                     >
-                                        <Badge
-                                            color="secondary"
-                                            badgeContent={productCarts.length > 0 && handleQuantityCart()}
-                                            className={cx('custom-badge')}
-                                            invisible={productCarts.length === 0 ? true : false}
-                                        >
-                                            <LocalMallOutlinedIcon />
-                                        </Badge>
-                                    </BootstrapTooltip>
-                                </li>
-                                <li className={cx('right-person', 'dropdown')} onClick={() => handleClickPerson()}>
-                                    <PersonIcon />
-                                    {activeMenu && (
-                                        <ULDropDown
-                                            className={cx('dropdown-menu')}
-                                            $isChangeBackgroundHeader={isChangeBackgroundHeader}
-                                        >
-                                            {isLogined ? (
-                                                <>
-                                                    <li>
-                                                        <AccountBoxIcon />
-                                                        <span>chào {userName}</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>Sản phẩm yêu thích</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>Lịch sử mua hàng</span>
-                                                    </li>
-                                                    <li onClick={handleClickLogout}>
-                                                        <LogoutIcon />
-                                                        <span>Đăng xuất</span>
-                                                    </li>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <li onClick={() => handleClickLogin()}>
-                                                        <LoginIcon />
-                                                        <span>đăng nhập</span>
-                                                    </li>
-                                                    <li onClick={() => handleClickRegister()}>
-                                                        <PersonAddAlt1Icon />
-                                                        <span>đăng kí</span>
-                                                    </li>
-                                                </>
-                                            )}
-                                        </ULDropDown>
-                                    )}
-                                </li>
-                            </ULRight>
-                        </div>
-                    </div>
-                </div>
-                {searchClick && (
-                    <div className={cx('header-main-search')}>
-                        <div className={cx('head-search-main')}>
-                            <div className={cx('head-search-left')}>
-                                <div className={cx('search-left')}>
-                                    <img src={logo} alt="logo" />
-                                </div>
-                                <div className={cx('search-input')}>
-                                    <div className={cx('search-input-main')}>
-                                        <div className={cx('search-input-top')}>
-                                            <i className={cx('fa-solid fa-magnifying-glass')}></i>
-                                            <input
-                                                type="text"
-                                                placeholder="Tìm kiếm"
-                                                onChange={(e) => handleChangeInput(e)}
-                                            />
-                                        </div>
-                                        {isSearching ? (
-                                            <div className={cx('custom-loader')}></div>
+                                        {isLogined ? (
+                                            <>
+                                                <li>
+                                                    <AccountBoxIcon />
+                                                    <span>chào {userName}</span>
+                                                </li>
+                                                <li>
+                                                    <span>Sản phẩm yêu thích</span>
+                                                </li>
+                                                <li>
+                                                    <span>Lịch sử mua hàng</span>
+                                                </li>
+                                                <li onClick={handleClickLogout}>
+                                                    <LogoutIcon />
+                                                    <span>Đăng xuất</span>
+                                                </li>
+                                            </>
                                         ) : (
                                             <>
-                                                {productSearches.length > 0 ? (
-                                                    <>
-                                                        <div className={cx('search-result')}>
-                                                            <p>Kết quả tìm kiếm</p>
-                                                            <ul>
-                                                                {productSearches.map((product: Product) => {
-                                                                    return (
-                                                                        <li
-                                                                            key={product.productId}
-                                                                            onClick={() =>
-                                                                                handleClickProductName(
-                                                                                    product.productId,
-                                                                                )
-                                                                            }
-                                                                        >
-                                                                            {product.name}
-                                                                        </li>
-                                                                    );
-                                                                })}
-                                                            </ul>
-                                                        </div>
-                                                    </>
-                                                ) : (
-                                                    <div className={cx('search-result')}>
-                                                        <p>Cụm từ tìm kiếm phổ biến</p>
-                                                        <ul>
-                                                            <li>JUMSUIT Liền thân</li>
-                                                            <li>Đầm ngắn</li>
-                                                            <li>Đầm dài</li>
-                                                            <li>Set bộ rời</li>
-                                                            <li>Vest</li>
-                                                        </ul>
-                                                    </div>
-                                                )}
+                                                <li onClick={() => handleClickLogin()}>
+                                                    <LoginIcon />
+                                                    <span>đăng nhập</span>
+                                                </li>
+                                                <li onClick={() => handleClickRegister()}>
+                                                    <PersonAddAlt1Icon />
+                                                    <span>đăng kí</span>
+                                                </li>
                                             </>
                                         )}
+                                    </ULDropDown>
+                                )}
+                            </li>
+                        </ULRight>
+                    </div>
+                </div>
+            </div>
+            {searchClick && (
+                <div className={cx('header-main-search')}>
+                    <div className={cx('head-search-main')}>
+                        <div className={cx('head-search-left')}>
+                            <div className={cx('search-left')}>
+                                <img src={logo} alt="logo" />
+                            </div>
+                            <div className={cx('search-input')}>
+                                <div className={cx('search-input-main')}>
+                                    <div className={cx('search-input-top')}>
+                                        <i className={cx('fa-solid fa-magnifying-glass')}></i>
+                                        <input
+                                            type="text"
+                                            placeholder="Tìm kiếm"
+                                            onChange={(e) => handleChangeInput(e)}
+                                        />
                                     </div>
+                                    {isSearching ? (
+                                        <div className={cx('custom-loader')}></div>
+                                    ) : (
+                                        <>
+                                            {productSearches.length > 0 ? (
+                                                <>
+                                                    <div className={cx('search-result')}>
+                                                        <p>Kết quả tìm kiếm</p>
+                                                        <ul>
+                                                            {productSearches.map((product: Product) => {
+                                                                return (
+                                                                    <li
+                                                                        key={product.productId}
+                                                                        onClick={() =>
+                                                                            handleClickProductName(product.productId)
+                                                                        }
+                                                                    >
+                                                                        {product.name}
+                                                                    </li>
+                                                                );
+                                                            })}
+                                                        </ul>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <div className={cx('search-result')}>
+                                                    <p>Cụm từ tìm kiếm phổ biến</p>
+                                                    <ul>
+                                                        <li>JUMSUIT Liền thân</li>
+                                                        <li>Đầm ngắn</li>
+                                                        <li>Đầm dài</li>
+                                                        <li>Set bộ rời</li>
+                                                        <li>Vest</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </>
+                                    )}
                                 </div>
-                                <div className={cx('search-right')} onClick={handleSearchOff}>
-                                    <p>Tắt tìm kiếm</p>
-                                </div>
+                            </div>
+                            <div className={cx('search-right')} onClick={handleSearchOff}>
+                                <p>Tắt tìm kiếm</p>
                             </div>
                         </div>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     );
 };

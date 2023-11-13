@@ -7,6 +7,8 @@ import {
     deleteDataProductId,
     findAllProductShop,
     findAllProductShopBySortPrice,
+    findAllProductByCategoryName,
+    updateStateOffset,
 } from '../../../redux/products/products';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
@@ -31,8 +33,9 @@ interface PropsData {
 const InformationShop: React.FC<PropsData> = ({ children }) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { isLoadingProductShop, isLoadingProductCategory, sortName } = useAppSelector((state) => state.products);
-    const [offsetPage, setOffsetPage] = useState(0);
+    const { isLoadingProductShop, isLoadingProductCategory, sortName, categoryName, offsetState } = useAppSelector(
+        (state) => state.products,
+    );
     const [stateLoadMore, setStateLoadMore] = useState(false);
     const fetchProductsMemoized = useCallback(
         (offsetPage: number) => {
@@ -44,17 +47,23 @@ const InformationShop: React.FC<PropsData> = ({ children }) => {
                     };
                     dispatch(findAllProductShopBySortPrice(data));
                 }
+            } else if (categoryName !== '') {
+                const data = {
+                    categoryName: categoryName,
+                    offset: offsetPage,
+                };
+                dispatch(findAllProductByCategoryName(data));
             } else {
                 dispatch(findAllProductShop(offsetPage));
             }
         },
-        [children.length, dispatch, sortName],
+        [categoryName, children.length, dispatch, sortName],
     );
     useEffect(() => {
-        if (offsetPage !== 0) {
-            fetchProductsMemoized(offsetPage);
+        if (offsetState !== 0) {
+            fetchProductsMemoized(offsetState);
         }
-    }, [fetchProductsMemoized, offsetPage]);
+    }, [fetchProductsMemoized, offsetState]);
     useEffect(() => {
         if (!isLoadingProductShop) {
             setStateLoadMore(false);
@@ -65,9 +74,9 @@ const InformationShop: React.FC<PropsData> = ({ children }) => {
         navigate(`/product/${productId}`);
     };
     const handleClickLoadMore = () => {
-        if (children.length >= offsetPage) {
+        if (children.length >= offsetState) {
             setStateLoadMore(true);
-            setOffsetPage((previous) => previous + 16);
+            dispatch(updateStateOffset());
         }
     };
 

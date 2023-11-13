@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './MenuLink.module.scss';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../../redux/store';
-import { findAllProductShop } from '../../../redux/products/products';
+import { findAllProductShop, deleteDataProductByCategoryId } from '../../../redux/products/products';
 const cx = classNames.bind(styles);
 
 interface MenuLinkProps {
@@ -18,7 +18,7 @@ const MenuLink: React.FC<MenuLinkChildren> = ({ children }) => {
     const dispatch = useAppDispatch();
     const handleClick = (path: string) => {
         if (path === '/shop') {
-            dispatch(findAllProductShop(0));
+            Promise.all([dispatch(deleteDataProductByCategoryId()), dispatch(findAllProductShop(0))]);
         }
     };
     return (

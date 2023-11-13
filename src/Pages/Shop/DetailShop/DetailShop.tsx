@@ -9,7 +9,6 @@ import CommentDetailShop from './CommentDetailShop';
 import { useAppSelector, useAppDispatch } from '../../../redux/store';
 import { deleteDataProductId, getProductById } from '../../../redux/products/products';
 import { addToCart } from '../../../redux/Cart/cart';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useParams, useNavigate } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
@@ -306,9 +305,9 @@ const DetailShop = () => {
                                         alt={`${productById.name}`}
                                     />
                                 </div>
-                                <div className={cx('information-left-icon')}>
+                                {/* <div className={cx('information-left-icon')}>
                                     <i className={cx('fa-solid fa-heart')}></i>
-                                </div>
+                                </div> */}
                                 <div className={cx('information-left-slide')}>
                                     <Slider {...settings}>
                                         {productById.productId !== undefined &&
@@ -488,13 +487,6 @@ const DetailShop = () => {
                                                         <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>
                                                         <i className={cx('fa-solid fa-star', 'icon-color-yellow')}></i>
                                                         <i className={cx('fa-solid fa-star', 'icon-color')}></i>
-                                                    </div>
-                                                </div>
-                                                <div className={cx('content-right')}>
-                                                    <div className={cx('information-button')}>
-                                                        <button className={cx('information-button-main')}>
-                                                            <FavoriteIcon />
-                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>

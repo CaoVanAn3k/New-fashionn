@@ -130,7 +130,7 @@ const Authentication = () => {
     useEffect(() => {
         const accessToken: string | undefined = Cookies.get('accessToken');
         if (accessToken !== undefined) {
-            dispatch(logout(accessToken));
+            dispatch(logout());
         }
     }, [dispatch]);
 

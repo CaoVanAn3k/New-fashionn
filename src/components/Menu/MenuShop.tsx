@@ -42,7 +42,7 @@ function MenuShop() {
             icon: '',
         });
         Promise.all([
-            dispatch(checkStateGetProductByCategoryId()),
+            dispatch(checkStateGetProductByCategoryId(item.name)),
             dispatch(deleteDataProducts()),
             dispatch(findProductByCategoryId(item.categoryId)),
         ]);

@@ -30,6 +30,7 @@
         }
         & > label {
             cursor: pointer;
+            font-size: 1.5rem;
         }
     }
 }
@@ -130,6 +131,7 @@
         & > .data-main-list {
             color: var(--color-red78);
             opacity: 0.8;
+            font-size: 1.5rem;
             & > :first-child {
                 margin: 0;
             }
@@ -150,8 +152,12 @@
     justify-content: space-between;
     width: 95%;
     & > .main-quantity-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         & > h3 {
             color: var(--color-red78);
+            margin: 0;
         }
         & > .main-left-icon {
             display: flex;
@@ -183,11 +189,17 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        gap: 1rem;
         & > .total-money {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            & > h3 {
+                margin: 0;
+            }
             & > p {
-                margin-top: 19px;
+                margin: 0;
                 font-size: 17px;
                 color: var(--color-red78);
                 font-weight: 700;
@@ -227,6 +239,7 @@
     padding: 0 12px;
     border: 1px solid #ccc;
     color: var(--color-red78);
+    font-size: 1.5rem;
     & > .right-total-title {
         & > h2 {
             margin-bottom: 0;

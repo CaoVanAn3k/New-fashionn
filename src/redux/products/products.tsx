@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { axiosInstance } from '../../util/axiosUtil';
+import { toast } from 'react-toastify';
 interface ResponseProductHome {
     products_news: Array<{}>;
     products_featured: Array<{}>;
@@ -7,6 +8,10 @@ interface ResponseProductHome {
 }
 interface SortData {
     sortName: string;
+    offset: number;
+}
+interface CategoryData {
+    categoryName: string;
     offset: number;
 }
 interface Product {
@@ -42,6 +47,8 @@ interface initState {
     productCategoryId: Product[];
     productSearches: Product[];
     sortName: string;
+    categoryName: string;
+    offsetState: number;
     error: string;
 }
 export const findProductHome = createAsyncThunk<any>('findProductHome', async () => {
@@ -122,6 +129,22 @@ export const findProductBySearching = createAsyncThunk<any, string>('findProduct
         throw new Error(err);
     }
 });
+export const findAllProductByCategoryName = createAsyncThunk<any, CategoryData>(
+    'findAllProductByCategoryName',
+    async (data: CategoryData) => {
+        try {
+            const res = await axiosInstance.get(
+                `/shop/products/category?categoryName=${data.categoryName}&offset=${data.offset}&limit=16`,
+            );
+            if (res) {
+                return res;
+            }
+        } catch (error: any) {
+            toast.error(error.data);
+            throw new Error(error);
+        }
+    },
+);
 const initialState: initState = {
     categories: [],
     products: [],
@@ -139,6 +162,8 @@ const initialState: initState = {
     checkStateClickCategory: false,
     isSearching: false,
     sortName: '',
+    categoryName: '',
+    offsetState: 0,
 };
 
 const ProductsSlice: any = createSlice({
@@ -152,18 +177,24 @@ const ProductsSlice: any = createSlice({
         deleteDataProducts: (state) => {
             state.products = [];
         },
-        checkStateGetProductByCategoryId: (state) => {
+        checkStateGetProductByCategoryId: (state, action) => {
             state.checkStateClickCategory = true;
+            state.categoryName = action.payload;
         },
         deleteDataProductByCategoryId: (state) => {
             state.productCategoryId = [];
             state.checkStateClickCategory = false;
+            state.categoryName = '';
+            state.offsetState = 0;
         },
         clearSearching: (state) => {
             state.productSearches = [];
         },
         updateStateSortName: (state, action) => {
             state.sortName = action.payload;
+        },
+        updateStateOffset: (state) => {
+            state.offsetState = state.offsetState + 16;
         },
     },
     extraReducers: (builder) => {
@@ -190,6 +221,9 @@ const ProductsSlice: any = createSlice({
             })
             .addCase(findProductBySearching.pending, (state) => {
                 state.isSearching = true;
+            })
+            .addCase(findAllProductByCategoryName.pending, (state) => {
+                state.isLoadingProductShop = true;
             })
             .addCase(findProductHome.fulfilled, (state, action: PayloadAction<ResponseProductHome>) => {
                 state.isLoadingProductHome = false;
@@ -237,6 +271,13 @@ const ProductsSlice: any = createSlice({
                 state.isSearching = false;
                 state.productSearches = action.payload;
             })
+            .addCase(findAllProductByCategoryName.fulfilled, (state, action: PayloadAction<any>) => {
+                state.isLoadingProductShop = false;
+                const newArr: Product[] = [...state.productCategoryId, ...action.payload];
+                state.productCategoryId = newArr.filter((item, index, self) => {
+                    return self.findIndex((t) => t.productId === item.productId) === index;
+                });
+            })
             .addCase(findProductHome.rejected, (state) => {
                 state.error = 'error when get product';
                 state.isLoadingProductHome = false;
@@ -264,6 +305,10 @@ const ProductsSlice: any = createSlice({
             .addCase(findProductBySearching.rejected, (state) => {
                 state.error = 'error when get products by search';
                 state.isSearching = false;
+            })
+            .addCase(findAllProductByCategoryName.rejected, (state) => {
+                state.error = 'error when get products by search';
+                state.isLoadingProductShop = false;
             });
     },
 });
@@ -274,5 +319,6 @@ export const {
     deleteDataProductByCategoryId,
     clearSearching,
     updateStateSortName,
+    updateStateOffset,
 } = ProductsSlice.actions;
 export default ProductsSlice.reducer;
