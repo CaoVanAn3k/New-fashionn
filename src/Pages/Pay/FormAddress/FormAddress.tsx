@@ -95,21 +95,33 @@ const FormAddress: React.FC<Props> = (props) => {
                                 <div className={cx('form-add-input-address')}>
                                     <TextField id="outlined-select-currency" select defaultValue="TINH">
                                         {province.map((option) => (
-                                            <MenuItem key={option.value} value={option.value}>
+                                            <MenuItem
+                                                key={option.value}
+                                                value={option.value}
+                                                className={cx('input-text')}
+                                            >
                                                 {option.label}
                                             </MenuItem>
                                         ))}
                                     </TextField>
                                     <TextField id="outlined-select-currency" select defaultValue="HUYEN">
                                         {district.map((option) => (
-                                            <MenuItem key={option.value} value={option.value}>
+                                            <MenuItem
+                                                key={option.value}
+                                                value={option.value}
+                                                className={cx('input-text')}
+                                            >
                                                 {option.label}
                                             </MenuItem>
                                         ))}
                                     </TextField>
                                     <TextField id="outlined-select-currency" select defaultValue="XA">
                                         {commune.map((option) => (
-                                            <MenuItem key={option.value} value={option.value}>
+                                            <MenuItem
+                                                key={option.value}
+                                                value={option.value}
+                                                className={cx('input-text')}
+                                            >
                                                 {option.label}
                                             </MenuItem>
                                         ))}

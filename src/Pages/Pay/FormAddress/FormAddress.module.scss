@@ -87,3 +87,114 @@
         background: red;
     }
 }
+@media only screen and (max-width: 600px) {
+    .form-add {
+        width: 98% !important;
+        left: 4px !important;
+    }
+    .form-add-title {
+        & > h3 {
+            font-size: 19px;
+        }
+    }
+    .form-add-input-address {
+        width: 100% !important;
+        margin-top: 1rem !important;
+        & > div {
+            width: 33% !important;
+            margin: 0px 3px;
+            & > div {
+                font-size: 16px !important;
+                & > div {
+                    padding-right: 19px !important;
+                }
+                & > svg {
+                    font-size: 19px !important;
+                }
+            }
+        }
+    }
+    .input-text {
+        font-size: 13px !important;
+    }
+    .form-add-input-note {
+        margin-top: 1rem !important;
+        & > textarea {
+            width: 99% !important;
+            margin-top: 2px;
+        }
+    }
+    .form-add-input-check {
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+        align-items: center;
+        & > input {
+            height: 20px;
+            width: 20px;
+        }
+        & > label {
+            font-size: 19px;
+        }
+    }
+    @media (max-width: 376px) {
+        .form-add-main {
+            padding: 0 !important;
+        }
+    }
+}
+@media (min-width: 601px) and (max-width: 1023px) {
+    .form-add {
+        width: 85% !important;
+        left: 7rem !important;
+    }
+    .form-add-title {
+        & > h3 {
+            font-size: 22px;
+        }
+    }
+    .add-input-name {
+        height: 60px !important;
+        & > input {
+            font-size: 19px !important;
+            width: 100% !important;
+        }
+    }
+    .form-add-input-address {
+        & > div {
+            width: 31% !important;
+            & > div {
+                font-size: 20px !important;
+                & > svg {
+                    font-size: 30px !important;
+                }
+            }
+        }
+    }
+    .input-text {
+        font-size: 19px !important;
+    }
+    .form-add-input-note {
+        & > textarea {
+            font-size: 22px;
+        }
+    }
+    .form-add-input-check {
+        height: 40px;
+        align-items: center;
+        & > input {
+            height: 41px;
+            width: 25px;
+        }
+        & > label {
+            font-size: 20px;
+        }
+    }
+    .form-add-button {
+        width: 100% !important;
+        & > button {
+            width: 165px !important;
+            height: 50px !important;
+            font-size: 20px !important;
+        }
+    }
+}

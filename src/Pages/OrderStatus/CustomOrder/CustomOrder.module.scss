@@ -124,3 +124,55 @@
         }
     }
 }
+@media only screen and (max-width: 600px) {
+    .home-page-product {
+        margin-top: 3rem !important;
+    }
+}
+@media (min-width: 601px) and (max-width: 1023px) {
+    .favourite-information-main {
+        width: 100% !important;
+    }
+    .list-item-logo {
+        width: 40% !important;
+        & > .left-discount {
+            width: 45px !important;
+            height: 35px !important;
+            font-size: 19px;
+        }
+        & > .left-icon {
+            font-size: 23px !important;
+        }
+    }
+    .list-data-information {
+        flex-direction: column !important;
+        & > p {
+            font-size: 19px !important;
+        }
+    }
+    .fa-button {
+        width: 140px !important;
+        height: 56px !important;
+        margin-bottom: 2rem !important;
+        & > button {
+            font-size: 22px !important;
+            padding: 7px 0px !important;
+        }
+    }
+    .favourite-item-right {
+        margin-right: 1rem !important;
+    }
+    .list-data-price {
+        & > p {
+            font-size: 20px !important;
+        }
+        & > h4 {
+            font-size: 24px !important;
+        }
+    }
+    .favourite-item-button {
+        & > button {
+            margin-top: 9px !important;
+        }
+    }
+}

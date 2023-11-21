@@ -69,7 +69,7 @@ function Pay() {
                         <FormAddress onAdd={onAdd} handleOffAdd={handleOffAdd} />
                         <div className={cx('pay-information-product')}>
                             <div className={cx('information-product-main')}>
-                                <div className={cx('information-product-title')}>
+                                <div className={cx('information-product-title', 'font-22')}>
                                     <h3>SẢN PHẨM</h3>
                                     <div></div>
                                     <p>Đơn giá</p>
@@ -84,21 +84,21 @@ function Pay() {
                                                     <img src={list.img} alt="logo" />
                                                 </div>
                                                 <div className={cx('product-item-data')}>
-                                                    <div className={cx('product-data-left')}>
+                                                    <div className={cx('product-data-left', 'font-20')}>
                                                         <h3>{list.title}</h3>
                                                         <p>{list.color}</p>
                                                     </div>
-                                                    <div className={cx('product-data-right')}>
+                                                    <div className={cx('product-data-right', 'font-20')}>
                                                         <p>{list.size}</p>
                                                     </div>
                                                 </div>
-                                                <div className={cx('product-item-price')}>
+                                                <div className={cx('product-item-price', 'font-20')}>
                                                     <p>{list.price}</p>
                                                 </div>
-                                                <div className={cx('product-item-quantity')}>
+                                                <div className={cx('product-item-quantity', 'font-20')}>
                                                     <p>{list.quantity}</p>
                                                 </div>
-                                                <div className={cx('product-item-price')}>
+                                                <div className={cx('product-item-price', 'font-20')}>
                                                     <p>{list.total}</p>
                                                 </div>
                                             </div>
@@ -111,18 +111,18 @@ function Pay() {
                                         <input placeholder="Lưu ý cho Người bán" />
                                     </div>
                                     <div className={cx('information-last-fee')}>
-                                        <div className={cx('information-fee-left')}>
+                                        <div className={cx('information-fee-left', 'font-22')}>
                                             <p>Phí vận chuyển:</p>
                                             <p>Phiếu giảm giá:</p>
                                         </div>
-                                        <div className={cx('information-fee-right')}>
+                                        <div className={cx('information-fee-right', 'font-22')}>
                                             <p>30.000 VNĐ</p>
                                             <span>0 VNĐ</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className={cx('information-product-total')}>
-                                    <div className={cx('information-total-left')}>
+                                    <div className={cx('information-total-left', 'font-22')}>
                                         <p>Tổng số tiền(2 sản phẩm):</p>
                                         <p>430.000 VNĐ</p>
                                     </div>
@@ -134,19 +134,19 @@ function Pay() {
                                 <div className={cx('order-main-title')}>
                                     <h3> PHƯƠNG THỨC THANH TOÁN</h3>
                                 </div>
-                                <div className={cx('order-main-fee')}>
+                                <div className={cx('order-main-fee', 'font-22')}>
                                     <p>Thanh toán khi nhận hàng</p>
                                     <span>Phí thu hộ :0 VNĐ</span>
                                 </div>
                                 <div className={cx('order-main-total')}>
                                     <div className={cx('order-total-list')}>
-                                        <div className={cx('order-list-left')}>
+                                        <div className={cx('order-list-left', 'font-22')}>
                                             <p>Tổng tiền hàng:</p>
                                             <p>Phí vận chuyển:</p>
                                             <p>Phiếu giảm giá:</p>
                                             <p>Tổng thanh toán:</p>
                                         </div>
-                                        <div className={cx('order-list-right')}>
+                                        <div className={cx('order-list-right', 'font-22')}>
                                             <p>400.000 VNĐ</p>
                                             <p>30.000 VNĐ</p>
                                             <span>0 VNĐ</span>
