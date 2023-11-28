@@ -141,15 +141,22 @@
             }
         }
     }
-
+    .favourite-information-list {
+        flex-direction: column;
+        justify-content: center !important;
+    }
     .favourite-list-left {
-        width: 74%;
+        width: 98%;
         justify-content: space-between;
         & > .list-item-logo {
             width: 50% !important;
             justify-content: space-between;
             & > .left-discount {
                 font-size: 12px !important;
+                height: 26px !important;
+            }
+            & > .left-icon {
+                margin-right: 6px;
             }
         }
     }
@@ -193,6 +200,7 @@
         width: max-content;
         margin-right: 1rem !important;
         margin-bottom: 1rem !important;
+        margin: 0 auto;
         & > button {
             width: 40px;
             height: 40px;
