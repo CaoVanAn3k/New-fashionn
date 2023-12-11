@@ -14,6 +14,11 @@
     }
 }
 @media only screen and (max-width: 600px) {
+    .detail-link-main {
+        & > i {
+            margin: 0 6px !important;
+        }
+    }
 }
 @media (min-width: 601px) and (max-width: 1023px) {
     .detail-link-main {
