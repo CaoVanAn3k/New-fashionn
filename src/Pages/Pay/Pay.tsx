@@ -308,8 +308,8 @@ function Pay() {
                                         <div className={cx('information-product-total')}>
                                             <div className={cx('information-total-left')}>
                                                 <p>
-                                                    Tổng số tiền({productsPayment.length > 0 && productsPayment.length}{' '}
-                                                    sản phẩm):
+                                                    Tổng số tiền(
+                                                    {productsPayment.length > 0 && productsPayment.length} sản phẩm):
                                                 </p>
                                                 <p>{handleTotalBeforeMinusFreeShip()} VNĐ</p>
                                             </div>

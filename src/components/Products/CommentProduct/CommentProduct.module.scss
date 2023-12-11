@@ -276,10 +276,77 @@
 }
 
 @media only screen and (max-width: 600px) {
+    .comment-product-main {
+        width: 96% !important;
+    }
+    .comment-head {
+        width: 100% !important;
+    }
+    .comment-body {
+        width: 92% !important;
+    }
+    .client-list-logo {
+        width: 80px !important;
+    }
+    .information-name {
+        & > h4 {
+            font-size: 18px;
+        }
+    }
+    .information-feedback {
+        width: 77% !important;
+    }
+    .comment-right-shop {
+        margin-left: 5rem !important;
+    }
+    .shop-list-logo {
+        width: 12.6rem !important;
+        height: 5rem !important;
+    }
+    .shop-information-client {
+        margin-left: 1.5rem !important;
+    }
+    .information-feedback-shop {
+        width: 60% !important;
+    }
+    .information-border {
+        margin-left: 0;
+    }
+    .button-control {
+        width: 326px !important;
+    }
+    @media (min-width: 359px) and (max-width: 391px) {
+        .information-feedback {
+            width: 92% !important;
+        }
+        .feedback-between {
+            margin: 0 5px;
+        }
+        .shop-list-logo {
+            width: 15.5rem !important;
+        }
+        .information-feedback-shop {
+            width: 75% !important;
+        }
+    }
 }
 @media (min-width: 601px) and (max-width: 1023px) {
+    .head-product-left {
+        & > p {
+            font-size: 22px;
+        }
+    }
+    .product-right-sort {
+        & > p {
+            font-size: 22px !important;
+        }
+    }
+    .comment-body {
+        width: 96% !important;
+        margin: 0 auto;
+    }
     .client-list-logo {
-        width: 9rem !important;
+        width: 6.9rem !important;
         height: 7rem !important;
     }
     .information-name {
@@ -298,7 +365,7 @@
         }
     }
     .information-feedback {
-        width: 72% !important;
+        width: 50% !important;
         & > .feedback-left {
             & > p {
                 font-size: 18px !important;
@@ -319,8 +386,7 @@
             }
         }
     }
-    @media (max-width: 769px) {
-    }
+
     .comment-product-main {
         width: 94% !important;
     }
@@ -328,10 +394,25 @@
         width: 100% !important;
     }
     .shop-list-logo {
-        width: 66px !important;
-        height: 40px !important;
+        width: 97px !important;
+        height: 60px !important;
     }
     .information-border {
         margin-left: 0;
+    }
+    .comment-paging {
+        & > .paging {
+            & > span {
+                height: 50px !important;
+                width: 50px !important;
+                font-size: 24px;
+                display: flex;
+                justify-content: center;
+                align-items: center !important;
+            }
+        }
+    }
+    .button-control {
+        width: 420px !important;
     }
 }

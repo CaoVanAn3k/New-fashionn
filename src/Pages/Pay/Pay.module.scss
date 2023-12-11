@@ -49,12 +49,16 @@
             & > i {
                 margin: 0 10px;
             }
+            & > p {
+                font-size: 14px;
+            }
         }
         & > .information-add-list {
             display: flex;
             align-items: center;
             cursor: pointer;
             color: #000bff;
+            font-size: 14px;
             width: max-content;
             & > i {
                 margin: 0 10px;
@@ -130,6 +134,7 @@
         text-align: left;
         flex: 1;
         & > h3 {
+            font-size: 17px;
             max-width: 200px;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -138,12 +143,14 @@
         & > p {
             color: #000000;
             opacity: 0.7;
+            font-size: 14px;
         }
     }
     & > .product-data-right {
         & > p {
             color: #000000;
             opacity: 0.7;
+            font-size: 13px;
         }
     }
 }
@@ -151,11 +158,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    & > p {
+        font-size: 14px;
+    }
 }
 .product-item-quantity {
     display: flex;
     align-items: center;
     justify-content: center;
+    & > p {
+        font-size: 15px;
+    }
 }
 .information-product-last {
     display: flex;
@@ -170,6 +183,7 @@
         & > p {
             margin-right: 12px;
             margin-left: 2rem;
+            font-size: 14px;
         }
         & > input {
             width: 69%;
@@ -184,10 +198,12 @@
         justify-content: space-around;
         & > .information-fee-left {
             color: #000000;
+            font-size: 15px;
             opacity: 0.7;
         }
         & > .information-fee-right {
             text-align: right;
+            font-size: 15px;
         }
     }
 }
@@ -198,6 +214,7 @@
         margin-right: 6rem;
         justify-content: flex-end;
         align-items: center;
+        font-size: 16px;
         & > p:first-child {
             margin-right: 4rem;
             color: #000000;
@@ -219,6 +236,7 @@
     & > .order-main-title {
         display: flex;
         margin-left: 2rem;
+        font-size: 15px;
     }
     & > .order-main-fee {
         display: flex;
@@ -229,6 +247,7 @@
         & > p {
             margin-right: 2rem;
             text-decoration: underline;
+            font-size: 15px;
         }
         & > span {
             color: #000000;
@@ -244,6 +263,8 @@
         justify-content: flex-end;
         align-items: center;
         margin-right: 6rem;
+        font-size: 14px;
+
         & > .order-list-right {
             margin-left: 11rem;
             text-align: right;
@@ -269,10 +290,163 @@
     }
 }
 @media only screen and (max-width: 600px) {
+    .pay-main-list {
+        width: 92% !important;
+    }
+    .information-product-title {
+        grid-template-columns: 1.2fr 1.8fr 1fr 1fr 1fr !important;
+        & > h3 {
+            margin-left: 0rem !important;
+            font-size: 15px;
+            margin-top: 22px;
+        }
+    }
+    .product-list-item {
+        grid-template-columns: 1fr 2.2fr 1fr 0.8fr 1fr !important;
+        & > .product-item-img {
+            width: 70px !important;
+            height: 70px !important;
+        }
+    }
+    .product-data-left {
+        margin-left: 6px !important;
+        & > h3 {
+            margin: 0;
+            font-size: 16px !important;
+        }
+        & > p {
+            margin-top: 0 !important;
+        }
+    }
+    .product-data-right {
+        display: none;
+    }
+    .information-last-input {
+        width: 45% !important;
+        justify-content: flex-start !important;
+        flex-direction: column;
+        & > p {
+            margin-left: 0 !important;
+            margin-top: 12px !important;
+            font-size: 16px !important;
+        }
+        & > input {
+            width: 95% !important;
+            padding: 16px 5px !important;
+        }
+    }
+    .information-last-fee {
+        width: 48% !important;
+        & > .information-fee-left {
+            text-align: left !important;
+        }
+    }
+    .information-total-left {
+        margin-right: 0 !important;
+    }
+    .order-main-title {
+        margin-left: 0 !important;
+    }
+    .order-main-fee {
+        margin-left: 0 !important;
+        justify-content: space-around;
+    }
+    .order-total-list {
+        margin-right: 0 !important;
+        justify-content: space-around !important;
+    }
+    .order-main-button {
+        & > button {
+            margin-right: 2rem !important;
+        }
+    }
+    @media (min-width: 374px) and (max-width: 415px) {
+        .information-product-title {
+            grid-template-columns: 1.4fr 1.6fr 1fr 1fr 1fr !important;
+        }
+    }
 }
 @media (min-width: 601px) and (max-width: 1023px) {
     .pay-main-list {
-        width: 92% !important;
+        width: 95% !important;
+    }
+    .information-add-title {
+        & > p {
+            margin: 15px 0;
+            font-size: 23px !important;
+        }
+        & > i {
+            font-size: 23px !important;
+        }
+    }
+    .information-add-list {
+        font-size: 19px !important;
+        & > p {
+            margin: 5px 0;
+        }
+    }
+    .product-list-item {
+        grid-template-columns: 1fr 2.2fr 1fr 0.7fr 1fr !important;
+        & > .product-item-img {
+            width: 96px !important;
+            height: 96px !important;
+        }
+    }
+    .product-data-left {
+        & > h3 {
+            font-size: 22px !important;
+            margin: 15px 0;
+        }
+    }
+    .font-20 {
+        & > p {
+            font-size: 20px !important;
+        }
+    }
+    .font-22 {
+        & > h3 {
+            font-size: 19px !important;
+        }
+        & > p {
+            font-size: 22px !important;
+        }
+        & > span {
+            font-size: 22px !important;
+        }
+    }
+
+    .information-last-input {
+        width: 55% !important;
+        & > p {
+            font-size: 21px !important;
+        }
+        & > input {
+            width: 72% !important;
+            font-size: 18px;
+            padding: 19px 5px !important;
+        }
+    }
+    .information-last-fee {
+        width: 38% !important;
+    }
+
+    .order-main-title {
+        & > h3 {
+            font-size: 23px !important;
+        }
+    }
+    .information-total-left {
+        margin-right: 1rem !important;
+    }
+    .order-total-list {
+        margin-right: 1rem !important;
+    }
+    .order-main-button {
+        & > button {
+            font-size: 24px !important;
+            height: 65px !important;
+            margin-right: 2rem !important;
+        }
     }
 }
 @keyframes s7 {

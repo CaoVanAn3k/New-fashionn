@@ -55,7 +55,7 @@
     & > .main-shop-list {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        gap: 3rem;
+        gap: 2rem;
         margin-top: 2rem;
         width: 100%;
         height: 500px;
@@ -93,7 +93,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 1px auto 0px;
+        // margin: 1px auto 0px;
         margin-bottom: 3rem;
         overflow: hidden;
         border-radius: 1rem 1rem 0 0;
@@ -190,17 +190,18 @@
     .header-title {
         & > h1 {
             font-size: 27px !important;
-            padding: 0;
+            padding: 0 !important;
         }
     }
     .button-list {
         width: 16.4rem !important;
+        padding: 1.2rem 1rem !important;
     }
     .product-main-shop {
         width: 99% !important;
         & > .main-shop-list {
             grid-template-columns: 1fr 1fr !important;
-            gap: 1.5rem !important;
+            gap: 1.5rem;
             height: max-content !important;
             width: 98% !important;
             margin: 0 auto;
@@ -242,14 +243,52 @@
             width: 180px !important ;
             & > .list-img {
                 width: 180px !important ;
-                height: 265px !important;
+                height: 250px !important;
             }
         }
     }
     @media (min-width: 374px) and (max-width: 376px) {
+        .main-shop-list {
+            gap: 0.7rem !important;
+            & > .shop-list-item {
+                width: 175px !important;
+                & > .list-img {
+                    width: 175px !important;
+                    height: 250px !important;
+                    margin: 0 !important;
+                }
+            }
+        }
+    }
+    @media (min-width: 359px) and (max-width: 361px) {
+        .main-shop-list {
+            gap: 0.7rem !important;
+            & > .shop-list-item {
+                width: 170px !important;
+                & > .list-img {
+                    height: 260px !important;
+                    width: 170px !important;
+                }
+            }
+        }
+    }
+    @media (min-width: 413px) and (max-width: 415px) {
+        .main-shop-list {
+            gap: 0.7rem !important;
+            & > .shop-list-item {
+                width: 195px !important;
+                & > .list-img {
+                    height: 260px !important;
+                    width: 195px !important;
+                }
+            }
+        }
     }
 }
 @media (min-width: 601px) and (max-width: 1023px) {
+    .product-main-header {
+        width: 96% !important;
+    }
     .main-shop-list {
         display: grid !important;
         grid-template-columns: 1fr 1fr 1fr !important;

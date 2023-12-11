@@ -142,37 +142,6 @@ function FavouriteShop() {
                         </div>
                     </div>
                     <div className={cx('favourite-list-information')}>
-                        {/* <div className={cx('favourite-information-main')}>
-                            <div className={cx('favourite-information-list')}>
-                                <div className={cx('favourite-list-left')}>
-                                    <div className={cx('list-item-logo')}>
-                                        <div className={cx('left-discount')}>20%</div>
-                                        <div className={cx('left-img')}>
-                                            <img src={img2} alt="logo" />
-                                        </div>
-                                        <div className={cx('left-icon')}>
-                                            <i className={cx('fa-solid fa-heart')}></i>
-                                        </div>
-                                    </div>
-                                    <div className={cx('list-item-data')}>
-                                        <h3>SẢN PHẨM MẪU SỐ 1</h3>
-                                        <div className={cx('list-data-information')}>
-                                            <p>Mã sản phẩm:12345</p>
-                                            <p>Màu sắc:color</p>
-                                            <p>Kích cỡ:L</p>
-                                        </div>
-                                        <div className={cx('list-data-price')}>
-                                            <p>500.000 VNĐ</p>
-                                            <h4>400.000 VNĐ</h4>
-                                        </div>
-                                        <p>Giảm giá đến ngày 20/12/2023</p>
-                                    </div>
-                                </div>
-                                <div className={cx('favourite-list-right')}>
-                                    <button>Xem ngay</button>
-                                </div>
-                            </div>
-                        </div> */}
                         {favouriteList.map((list, index) => {
                             return (
                                 <div className={cx('favourite-information-main')} key={index}>

@@ -14,6 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -95,6 +96,19 @@ const MenuItem = [
         title: 'Tìm kiếm',
         icon: <SearchIcon />,
     },
+    {
+        title: 'Hi,Hiếu',
+        icon: <AccountCircleIcon />,
+    },
+    {
+        title: 'Lịch sử mua hàng',
+        icon: <SearchIcon />,
+    },
+
+    {
+        title: 'Login out',
+        icon: <AccountCircleIcon />,
+    },
 ];
 export default function MenuHeader() {
     const theme = useTheme();
@@ -166,9 +180,13 @@ export default function MenuHeader() {
                                     <ListItemButton>
                                         <ListItemIcon className={cx('title-icon-button')}>{text.icon}</ListItemIcon>
                                         <ListItemText className={cx('icon-button-text')} primary={text.title} />
-                                        <IconButton className={cx('icon-button-next')}>
-                                            {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                                        </IconButton>
+                                        {index > 4 ? (
+                                            ''
+                                        ) : (
+                                            <IconButton className={cx('icon-button-next')}>
+                                                {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                                            </IconButton>
+                                        )}
                                     </ListItemButton>
                                 </ListItem>
                             </div>

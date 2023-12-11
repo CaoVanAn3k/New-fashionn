@@ -262,10 +262,10 @@
         margin-top: 10px !important;
     }
     .main-right-list {
-        gap: 4rem !important;
+        gap: 3rem !important;
         padding: 0;
         & > li {
-            font-size: 14px !important;
+            font-size: 20px !important;
         }
     }
     .right-cart {
@@ -297,6 +297,11 @@
     }
     .search-right {
         font-size: 18px;
+    }
+    @media (min-width: 767px) and (max-width: 769px) {
+        .main-right-list {
+            gap: 2rem !important;
+        }
     }
 }
 
