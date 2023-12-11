@@ -12,11 +12,11 @@ import LoginIcon from '@mui/icons-material/Login';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { logout, checkStateLogin, clearStateWhenLogout } from '../../redux/Authentication/Authentication';
 import { findProductBySearching, clearSearching } from '../../redux/products/products';
-import { clearState } from '../../redux/Cart/cart';
+import { clearState, getAllProductInCart } from '../../redux/Cart/cart';
 import { Link as ScrollLink } from 'react-scroll';
 import waiting from '../../util/waiting';
 import logo from '../Images/Product/logo.svg';
@@ -133,6 +133,21 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
     const handleClickCart = () => {
         navigate('/cart');
     };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if (!isLogined) {
+                    await dispatch(checkStateLogin());
+                }
+                if (isLogined) {
+                    await dispatch(getAllProductInCart());
+                }
+            } catch (error) {
+                console.error('Error in fetchData:', error);
+            }
+        };
+        fetchData();
+    }, [dispatch, isLogined]);
     const handleClickPerson = () => {
         const accessToken: string | undefined = Cookies.get('accessToken');
         if (accessToken !== undefined && accessToken.length > 0 && userName === '') {
@@ -153,6 +168,9 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
             await waiting(1000);
             navigate('/login');
         }
+    };
+    const handleClickOrderHistory = () => {
+        navigate('/order-history');
     };
     const [searchClick, setSearchClick] = useState(false);
     const handleSearchOn = () => {
@@ -258,10 +276,7 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
                                                     <AccountBoxIcon />
                                                     <span>chào {userName}</span>
                                                 </li>
-                                                <li>
-                                                    <span>Sản phẩm yêu thích</span>
-                                                </li>
-                                                <li>
+                                                <li onClick={handleClickOrderHistory}>
                                                     <span>Lịch sử mua hàng</span>
                                                 </li>
                                                 <li onClick={handleClickLogout}>

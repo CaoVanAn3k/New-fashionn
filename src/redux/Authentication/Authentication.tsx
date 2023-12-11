@@ -23,6 +23,15 @@ interface ResponseUser {
     token: string;
     refreshToken: string;
 }
+interface RequestAddress {
+    address: string;
+    districtName: string;
+    wardName: string;
+    provinceName: string;
+    status: boolean | undefined;
+    phonePayment: string;
+    namePayment: string;
+}
 export const register = createAsyncThunk<void, Person>('register', async (data: Person) => {
     const values = {
         userName: data.userName,
@@ -92,6 +101,19 @@ export const OAuthExchangeCode = createAsyncThunk<any, string>('OAuthExchangeCod
         throw new Error(err);
     }
 });
+export const saveAddress = createAsyncThunk<any, RequestAddress>('saveAddress', async (data: RequestAddress) => {
+    try {
+        const res: string | undefined = await axiosInstance.post('/auth/update-address', data);
+        if (res !== undefined) {
+            toast.success(res);
+        }
+    } catch (err: any) {
+        if (err.status === 400) {
+            toast.error(err.message);
+        }
+        return err.message;
+    }
+});
 const initialState: AuthState = {
     loading: false,
     isLogined: false,
@@ -132,6 +154,9 @@ const AuthenTicationSlice = createSlice({
                 state.loading = true;
                 state.userName = '';
             })
+            .addCase(saveAddress.pending, (state) => {
+                state.loading = true;
+            })
             .addCase(register.fulfilled, (state, action: PayloadAction<void>) => {
                 state.loading = false;
             })
@@ -153,6 +178,9 @@ const AuthenTicationSlice = createSlice({
                 state.loading = false;
                 state.isLogined = true;
                 state.userName = action.payload;
+            })
+            .addCase(saveAddress.fulfilled, (state, action: PayloadAction<string>) => {
+                state.loading = false;
             })
             .addCase(register.rejected, (state, action) => {
                 state.loading = false;
@@ -177,6 +205,10 @@ const AuthenTicationSlice = createSlice({
                 state.loading = false;
                 state.isLogined = false;
                 state.error = action.error.message || 'OAuth2 is failed';
+            })
+            .addCase(saveAddress.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || 'save address is failed';
             });
     },
 });

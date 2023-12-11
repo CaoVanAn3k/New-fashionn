@@ -292,19 +292,103 @@
     padding: 0 12px;
     & > .main-list-item {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-top: 1px solid #ccc;
-        cursor: pointer;
-        & > .list-item-left {
+        flex-direction: column;
+        overflow: hidden;
+        & > .main-list-item-wrapper {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            & > i {
-                font-size: 21px;
+            border-top: 1px solid #ccc;
+            cursor: pointer;
+            & > .list-item-left {
+                display: flex;
+                align-items: center;
+                & > i {
+                    font-size: 21px;
+                }
+                & > p {
+                    font-size: 2rem;
+                    margin-left: 10px;
+                }
             }
-            & > p {
+            & > .list-item-right {
+                & > i {
+                    padding: 10px;
+                    transition: transform 0.5s ease;
+                }
+                &.selectedVoucher > i,
+                &.selected > i {
+                    animation: rotateIcon 0.3s linear;
+                    transform: rotate(90deg);
+                }
+            }
+        }
+        & > .main-list-item-voucher {
+            width: 100%;
+            overflow: hidden;
+            max-height: 150px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+            &::-webkit-scrollbar {
+                width: 6px;
+            }
+            &::-webkit-scrollbar-thumb {
+                background-color: var(--back-ground-red);
+            }
+            & > span {
+                color: var(--color-red);
                 font-size: 2rem;
+            }
+            & > i {
                 margin-left: 10px;
+                color: var(--color-red);
+                font-size: 2rem;
+            }
+            & > ul {
+                display: flex;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+                gap: 1rem;
+                & > li {
+                    width: 100%;
+                    & > .wrapper {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        width: 85%;
+                        height: 50px;
+                        background-color: #fff;
+                        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                        cursor: pointer;
+                        & > .information {
+                            display: flex;
+                            align-items: center;
+                            gap: 0.5rem;
+                            height: 100%;
+                            & > .thumbnail {
+                                background-color: #00bfa5;
+                                height: 100%;
+                                & > h3 {
+                                    height: 100%;
+                                    line-height: 50px;
+                                    margin: 0;
+                                    padding: 0 10px;
+                                    font-family: 'Montserrat', sans-serif;
+                                    color: #ffffff;
+                                }
+                            }
+                            & > .information-voucher {
+                                display: flex;
+                                flex-direction: column;
+                                color: var(--color-red);
+                            }
+                        }
+                        & > .radio-button {
+                            padding-right: 10px;
+                        }
+                    }
+                }
             }
         }
     }
@@ -426,5 +510,13 @@
         & > h1 {
             font-size: 18px !important;
         }
+    }
+}
+@keyframes rotateIcon {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(90deg);
     }
 }

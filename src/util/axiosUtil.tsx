@@ -13,6 +13,18 @@ export const axiosInstance: AxiosInstance = axios.create({
     },
     withCredentials: true,
 });
+let isRefreshing = false;
+let refreshPromise: Promise<void> | null = null;
+const callRefreshToken = async (): Promise<void> => {
+    if (!isRefreshing) {
+        isRefreshing = true;
+        const res = await axiosInstance.get<void, response>('/auth/refreshToken');
+        isRefreshing = false;
+
+        // Lưu AccessToken mới vào Cookies hoặc nơi lưu trữ khác
+        Cookies.set('accessToken', res.token);
+    }
+};
 axiosInstance.interceptors.request.use(
     (config) => {
         const accessToken: string | undefined = Cookies.get('accessToken');
@@ -32,8 +44,17 @@ axiosInstance.interceptors.response.use(
     (res) => res.data,
     async (err) => {
         if (err.response.status === 403) {
-            const res = await axiosInstance.get<void, response>('/auth/refreshToken');
-            err.config.headers['Authorization'] = `Bearer ${res.token}`;
+            if (!refreshPromise) {
+                // Gọi refreshToken và lưu promise vào biến refreshPromise
+                refreshPromise = callRefreshToken();
+            }
+            // Chờ refreshToken hoàn thành trước khi thực hiện lại request gốc
+            await refreshPromise;
+
+            // Sau khi refreshToken hoàn thành, reset biến refreshPromise
+            refreshPromise = null;
+
+            // Gọi lại API gốc với AccessToken mới
             return axios.request(err.config);
         }
         if (err.response.status === 401) {

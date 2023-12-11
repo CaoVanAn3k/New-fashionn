@@ -180,6 +180,9 @@ const ProductsSlice: any = createSlice({
         checkStateGetProductByCategoryId: (state, action) => {
             state.checkStateClickCategory = true;
             state.categoryName = action.payload;
+            if (state.sortName !== '') {
+                state.sortName = '';
+            }
         },
         deleteDataProductByCategoryId: (state) => {
             state.productCategoryId = [];
@@ -191,6 +194,9 @@ const ProductsSlice: any = createSlice({
             state.productSearches = [];
         },
         updateStateSortName: (state, action) => {
+            if (state.categoryName !== '') {
+                state.categoryName = '';
+            }
             state.sortName = action.payload;
         },
         updateStateOffset: (state) => {

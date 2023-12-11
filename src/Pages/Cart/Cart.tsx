@@ -9,9 +9,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 // import InformationProduct from '../../components/Products/InformationProduct/InformationProduct';
-import { useState } from 'react';
+import { useEffect, useState, useRef, MutableRefObject, useCallback } from 'react';
 import { incrementProductCart, decrementProductCart, deleteProductCart } from '../../redux/Cart/cart';
+import { updateProductNeedPayment } from '../../redux/payment/payment';
+import { getAllVoucherOfUser } from '../../redux/voucher/voucher';
 import waiting from '../../util/waiting';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
 interface ProductCart {
     productCartId: number;
@@ -22,6 +26,29 @@ interface ProductCart {
     price: number;
     image: string;
     quantity: number;
+}
+interface VoucherData {
+    freeShippingCodeId: number;
+    code: string;
+    discountPercent: number;
+    discountUnit: string;
+    expires: Date;
+    isUsed: boolean;
+}
+interface DataProductOrder {
+    orderId: number;
+    productId: number;
+    nameProduct: string;
+    priceProduct: number;
+    moneyPersonPay: number;
+    color: string;
+    size: string;
+    image: string;
+    quantity: number;
+}
+interface ResponseDataRender {
+    orderId: number | null;
+    data: DataProductOrder[];
 }
 const menuLink = [
     {
@@ -39,9 +66,23 @@ const menuLink = [
 ];
 function Cart() {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const { voucherList } = useAppSelector((state) => state.voucher);
+    const freeShipRef: MutableRefObject<HTMLParagraphElement | null> = useRef(null);
     const { productCarts, loading } = useAppSelector((state) => state.carts);
-    const [checkInputList, setCheckInputList] = useState(productCarts.length > 0 ? productCarts.map(() => false) : []);
+    const [checkInputList, setCheckInputList] = useState<boolean[]>([]);
     const [totalPayment, setTotalPayment] = useState<ProductCart[]>([]);
+    const [selectedFreeShipping, setSelectedFreeShipping] = useState(false);
+    const [selectedVoucher, setSelectedVoucher] = useState(false);
+    const [voucherSelected, setVoucherSelected] = useState<VoucherData>({
+        freeShippingCodeId: 0,
+        code: '',
+        discountPercent: 0,
+        discountUnit: '',
+        expires: new Date(),
+        isUsed: false,
+    });
+    const [selectRadioFreeShipping, setSelectRadioFreeShipping] = useState<boolean[]>([]);
     const [product, setProduct] = useState<ProductCart>({
         productCartId: 0,
         productId: 0,
@@ -53,11 +94,39 @@ function Cart() {
         quantity: 0,
     });
     const [open, setOpen] = useState(false);
+    useEffect(() => {
+        dispatch(getAllVoucherOfUser());
+    }, [dispatch]);
+    useEffect(() => {
+        if (productCarts.length > 0) {
+            setCheckInputList(productCarts.map(() => false));
+        }
+    }, [productCarts]);
+    useEffect(() => {
+        if (productCarts.length > 0) {
+            const jsonProductReOrder = sessionStorage.getItem('productsReOrder');
+            if (jsonProductReOrder !== null) {
+                const productsReOrder: ResponseDataRender = JSON.parse(jsonProductReOrder);
+                const productChecked = productCarts.filter((product: ProductCart) => {
+                    return productsReOrder.data.find((productOrder) => {
+                        return product.productId === productOrder.productId;
+                    });
+                });
+                setCheckInputList(
+                    productCarts.map((item: ProductCart) => {
+                        return productChecked.find((product: ProductCart) => {
+                            return item.productId === product.productId ? true : false;
+                        });
+                    }),
+                );
+                setTotalPayment(productChecked);
+            }
+        }
+    }, [productCarts]);
     const handleClickOpen = (product: ProductCart) => {
         setProduct(product);
         setOpen(true);
     };
-
     const handleClose = () => {
         setOpen(false);
     };
@@ -90,26 +159,81 @@ function Cart() {
         }
         setCheckInputList(updateCheck);
     };
-
     const handleTotalProductCart = () => {
         return totalPayment.reduce((sum: number) => {
             return sum + 1;
         }, 0);
     };
-    const handleTotalMoneyPayment = () => {
-        const totalMoney = totalPayment.reduce((sum: number, product: ProductCart) => {
+    const handleTotalMoneyPayment = useCallback(() => {
+        let totalMoney = totalPayment.reduce((sum: number, product: ProductCart) => {
+            return sum + product.quantity * product.price;
+        }, 0);
+        if (totalPayment.length > 0) totalMoney += 35000;
+        if (voucherSelected.code !== '' && totalPayment.length > 0) {
+            totalMoney -= ((voucherSelected.discountPercent * 35) / 100) * 1000;
+        }
+        const formattedTotalMoney = totalMoney.toLocaleString('vi-VN', {
+            useGrouping: true,
+        });
+        return formattedTotalMoney;
+    }, [totalPayment, voucherSelected.code, voucherSelected.discountPercent]);
+    const handleIncreaseProductCart = (product: ProductCart) => {
+        dispatch(incrementProductCart(product));
+    };
+    const handleDecreaseProductCart = (product: ProductCart) => {
+        dispatch(decrementProductCart(product));
+    };
+    const handleClickPayment = () => {
+        sessionStorage.removeItem('productsReOrder');
+        if (voucherSelected.code !== '') {
+            sessionStorage.setItem(
+                'discountMoney',
+                JSON.stringify(((voucherSelected.discountPercent * 35) / 100).toFixed(3).padEnd(6, '0')),
+            );
+        } else {
+            sessionStorage.setItem('discountMoney', JSON.stringify(0));
+        }
+        if (totalPayment.length > 0) {
+            sessionStorage.setItem('productPayment', JSON.stringify(totalPayment));
+            dispatch(updateProductNeedPayment(totalPayment));
+            navigate('/pay');
+        } else {
+            toast.warning('vui lòng chọn sản phẩm cần thanh toán!');
+        }
+    };
+    const handleClickContinueShopping = () => {
+        navigate('/shop');
+    };
+    const handleClickTagFreeShipping = (index: number) => {
+        const updateListRadioFreeShipping = [...selectRadioFreeShipping];
+        const findStateOfFreeShipping = updateListRadioFreeShipping.findIndex((state) => state === true);
+        if (findStateOfFreeShipping !== -1 && findStateOfFreeShipping !== index) {
+            updateListRadioFreeShipping[findStateOfFreeShipping] = false;
+        }
+        updateListRadioFreeShipping[index] = !updateListRadioFreeShipping[index];
+        if (updateListRadioFreeShipping[index]) {
+            setVoucherSelected(voucherList[index]);
+        } else {
+            setVoucherSelected({
+                freeShippingCodeId: 0,
+                code: '',
+                discountPercent: 0,
+                discountUnit: '',
+                expires: new Date(),
+                isUsed: false,
+            });
+        }
+
+        setSelectRadioFreeShipping(updateListRadioFreeShipping);
+    };
+    const handleTotalBeforeMinusFreeShip = () => {
+        let totalMoney = totalPayment.reduce((sum: number, product: ProductCart) => {
             return sum + product.quantity * product.price;
         }, 0);
         const formattedTotalMoney = totalMoney.toLocaleString('vi-VN', {
             useGrouping: true,
         });
         return formattedTotalMoney;
-    };
-    const handleIncreaseProductCart = (product: ProductCart) => {
-        dispatch(incrementProductCart(product));
-    };
-    const handleDecreaseProductCart = (product: ProductCart) => {
-        dispatch(decrementProductCart(product));
     };
     return (
         <div className={cx('cart')}>
@@ -119,7 +243,12 @@ function Cart() {
                 </div>
                 <div className={cx('cart-main-check')}>
                     <div className={cx('main-check-list')}>
-                        <input id="inputcheck" type="checkbox" onChange={(e) => handleCheckedBtn(e)} />
+                        <input
+                            id="inputcheck"
+                            type="checkbox"
+                            onChange={(e) => handleCheckedBtn(e)}
+                            defaultChecked={false}
+                        />
                         <label htmlFor="inputcheck">Chọn tất cả sản phẩm</label>
                     </div>
                 </div>
@@ -151,10 +280,10 @@ function Cart() {
                                                         <div className={cx('data-main-title')}>
                                                             <h3>{product.name}</h3>
                                                             <input
-                                                                id="inputcheck"
+                                                                id={`inputcheck-${index}`}
                                                                 type="checkbox"
                                                                 onChange={() => handleClickCheckBox(index)}
-                                                                checked={checkInputList[index]}
+                                                                checked={checkInputList[index] || false}
                                                             />
                                                         </div>
                                                         <div className={cx('data-main-list')}>
@@ -238,16 +367,23 @@ function Cart() {
                                             <p>Voucher giảm giá</p>
                                         </div>
                                         <div className={cx('total-add-right')}>
-                                            <h3>{handleTotalMoneyPayment()} VNĐ</h3>
+                                            <h3>{handleTotalBeforeMinusFreeShip()} VNĐ</h3>
                                             <p>35.000 VNĐ</p>
-                                            <p>0 VNĐ</p>
+                                            <p ref={freeShipRef}>
+                                                {voucherSelected.code !== ''
+                                                    ? ((voucherSelected.discountPercent / 100) * 35)
+                                                          .toFixed(3)
+                                                          .padEnd(6, '0')
+                                                    : 0}{' '}
+                                                VNĐ
+                                            </p>
                                             <p>0 VNĐ</p>
                                         </div>
                                     </div>
                                     <div className={cx('right-total-list')}>
                                         <div className={cx('total-list-left')}>
                                             <h1>TỔNG GIÁ TRỊ ĐƠN</h1>
-                                            <p>810.000VNĐ</p>
+                                            <p>{handleTotalMoneyPayment()} VNĐ</p>
                                         </div>
                                     </div>
                                 </div>
@@ -255,22 +391,212 @@ function Cart() {
                                     <div className={cx('right-pay-main')}>
                                         <div className={cx('right-main-list')}>
                                             <div className={cx('main-list-item')}>
-                                                <div className={cx('list-item-left')}>
-                                                    <i className={cx('fa-solid fa-hand-holding-dollar')}></i>
-                                                    <p>Phiếu giảm giá</p>
+                                                <div
+                                                    className={cx('main-list-item-wrapper')}
+                                                    onClick={() => {
+                                                        setSelectedFreeShipping(!selectedFreeShipping);
+                                                    }}
+                                                >
+                                                    <div className={cx('list-item-left')}>
+                                                        <i className={cx('fa-solid fa-hand-holding-dollar')}></i>
+                                                        <p>Phiếu giảm giá</p>
+                                                    </div>
+                                                    <div
+                                                        className={cx('list-item-right', {
+                                                            selected: selectedFreeShipping,
+                                                        })}
+                                                    >
+                                                        <i className={cx('fa-solid fa-chevron-right')}></i>
+                                                    </div>
                                                 </div>
-                                                <div className={cx('list-item-right')}>
-                                                    <i className={cx('fa-solid fa-chevron-right')}></i>
-                                                </div>
+                                                {selectedFreeShipping && (
+                                                    <div
+                                                        className={cx(
+                                                            'main-list-item-voucher',
+                                                            'animate__animated animate__fadeIn',
+                                                        )}
+                                                    >
+                                                        <ul className={cx('list-item-voucher')}>
+                                                            {voucherList.length > 0 &&
+                                                                voucherList.map(
+                                                                    (voucher: VoucherData, index: number) => {
+                                                                        const voucherDate = new Date(voucher.expires);
+                                                                        const now = new Date();
+                                                                        const time =
+                                                                            voucherDate.getTime() - now.getTime();
+                                                                        const day = Math.floor(
+                                                                            time / (1000 * 60 * 60 * 24),
+                                                                        );
+                                                                        const hour = Math.floor(
+                                                                            (time % (1000 * 60 * 60 * 24)) /
+                                                                                (1000 * 60 * 60),
+                                                                        );
+                                                                        const minute = Math.floor(
+                                                                            (time % (1000 * 60 * 60)) / (1000 * 60),
+                                                                        );
+                                                                        return (
+                                                                            <>
+                                                                                {(hour > 0 || minute >= 5) && (
+                                                                                    <li
+                                                                                        className={cx('item-voucher')}
+                                                                                        key={voucher.freeShippingCodeId}
+                                                                                        onClick={() =>
+                                                                                            handleClickTagFreeShipping(
+                                                                                                index,
+                                                                                            )
+                                                                                        }
+                                                                                    >
+                                                                                        <div className={cx('wrapper')}>
+                                                                                            <div
+                                                                                                className={cx(
+                                                                                                    'information',
+                                                                                                )}
+                                                                                            >
+                                                                                                <div
+                                                                                                    className={cx(
+                                                                                                        'thumbnail',
+                                                                                                    )}
+                                                                                                >
+                                                                                                    <h3>free ship</h3>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    className={cx(
+                                                                                                        'information-voucher',
+                                                                                                    )}
+                                                                                                >
+                                                                                                    <span>
+                                                                                                        Giảm tối đa{' '}
+                                                                                                        {
+                                                                                                            voucher.discountUnit
+                                                                                                        }
+                                                                                                    </span>
+                                                                                                    <span>
+                                                                                                        Đơn tối thiểu{' '}
+                                                                                                        {
+                                                                                                            voucher.discountPercent
+                                                                                                        }
+                                                                                                        k
+                                                                                                    </span>
+                                                                                                    <div
+                                                                                                        className={cx(
+                                                                                                            'tag-expires-voucher',
+                                                                                                        )}
+                                                                                                    >
+                                                                                                        <span>
+                                                                                                            còn{' '}
+                                                                                                            {day !==
+                                                                                                                0 &&
+                                                                                                                day +
+                                                                                                                    ' ngày '}
+                                                                                                            {hour} giờ
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                className={cx(
+                                                                                                    'radio-button',
+                                                                                                )}
+                                                                                            >
+                                                                                                <input
+                                                                                                    type="radio"
+                                                                                                    checked={
+                                                                                                        selectRadioFreeShipping[
+                                                                                                            index
+                                                                                                        ] || false
+                                                                                                    }
+                                                                                                    readOnly
+                                                                                                />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                )}
+                                                                            </>
+                                                                        );
+                                                                    },
+                                                                )}
+                                                        </ul>
+                                                    </div>
+                                                )}
                                             </div>
                                             <div className={cx('main-list-item')}>
-                                                <div className={cx('list-item-left')}>
-                                                    <i className={cx('fa-solid fa-gift')}></i>
-                                                    <p>Tuỳ chọn quà tặng</p>
+                                                <div
+                                                    className={cx('main-list-item-wrapper')}
+                                                    onClick={() => {
+                                                        setSelectedVoucher(!selectedVoucher);
+                                                    }}
+                                                >
+                                                    <div className={cx('list-item-left')}>
+                                                        <i className={cx('fa-solid fa-gift')}></i>
+                                                        <p>Voucher sản phẩm</p>
+                                                    </div>
+                                                    <div
+                                                        className={cx('list-item-right', {
+                                                            selectedVoucher: selectedVoucher,
+                                                        })}
+                                                    >
+                                                        <i className={cx('fa-solid fa-chevron-right')}></i>
+                                                    </div>
                                                 </div>
-                                                <div className={cx('list-item-right')}>
-                                                    <i className={cx('fa-solid fa-chevron-right')}></i>
-                                                </div>
+                                                {selectedVoucher && (
+                                                    // <div
+                                                    //     className={cx(
+                                                    //         'main-list-item-voucher',
+                                                    //         'animate__animated animate__fadeIn',
+                                                    //     )}
+                                                    // >
+                                                    //     <ul className={cx('list-item-voucher')}>
+                                                    //         {Array.from([1, 2, 3, 4, 5, 6], (index) => {
+                                                    //             return (
+                                                    //                 <li
+                                                    //                     className={cx('item-voucher')}
+                                                    //                     key={index}
+                                                    //                     onClick={() => handleClickTagVoucher(index)}
+                                                    //                 >
+                                                    //                     <div className={cx('wrapper')}>
+                                                    //                         <div className={cx('information')}>
+                                                    //                             <div className={cx('thumbnail')}>
+                                                    //                                 <h3>free ship</h3>
+                                                    //                             </div>
+                                                    //                             <div
+                                                    //                                 className={cx(
+                                                    //                                     'information-voucher',
+                                                    //                                 )}
+                                                    //                             >
+                                                    //                                 <span>Giảm tối đa 35k</span>
+                                                    //                                 <span>Đơn tối thiểu 0đ</span>
+                                                    //                                 <div
+                                                    //                                     className={cx(
+                                                    //                                         'tag-expires-voucher',
+                                                    //                                     )}
+                                                    //                                 >
+                                                    //                                     <span>còn 23 giờ</span>
+                                                    //                                 </div>
+                                                    //                             </div>
+                                                    //                         </div>
+                                                    //                         <div className={cx('radio-button')}>
+                                                    //                             <input
+                                                    //                                 type="radio"
+                                                    //                                 name="value"
+                                                    //                                 checked={selectRadioVoucher[index]}
+                                                    //                             />
+                                                    //                         </div>
+                                                    //                     </div>
+                                                    //                 </li>
+                                                    //             );
+                                                    //         })}
+                                                    //     </ul>
+                                                    // </div>
+                                                    <div
+                                                        className={cx(
+                                                            'main-list-item-voucher',
+                                                            'animate__animated animate__fadeIn',
+                                                        )}
+                                                    >
+                                                        <span>Hiện chưa có voucher nào!</span>
+                                                        <i className="fa-regular fa-face-smile"></i>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                         <div className={cx('right-main-information')}>
@@ -280,8 +606,8 @@ function Cart() {
                                             </p>
                                         </div>
                                         <div className={cx('right-main-button')}>
-                                            <button>THANH TOÁN</button>
-                                            <button>TIẾP TỤC MUA SẮM</button>
+                                            <button onClick={handleClickPayment}>THANH TOÁN</button>
+                                            <button onClick={handleClickContinueShopping}>TIẾP TỤC MUA SẮM</button>
                                         </div>
                                     </div>
                                 </div>
@@ -290,7 +616,7 @@ function Cart() {
                     </div>
                 </div>
                 <div className={cx('cart-main-watched')}>
-                    <h1>ĐÃ XEM GẦN ĐÂY</h1>
+                    {/* <h1>ĐÃ XEM GẦN ĐÂY</h1> */}
                     {/* <InformationProduct children={informationCart} /> */}
                 </div>
                 <Dialog

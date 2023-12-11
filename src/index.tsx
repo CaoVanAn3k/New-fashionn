@@ -8,8 +8,10 @@ import GlobalStyles from './components/GlobalStyles/GlobalStyles';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import DefaultLayout from './components/DefaultLayouts/DefaultLayout';
-
+import ReactGA from 'react-ga4';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+ReactGA.initialize('G-F9L6MRWQNG');
+ReactGA.send({ hitType: 'pageview', page: '/', title: 'Custom Title' });
 root.render(
     <GlobalStyles>
         <React.StrictMode>

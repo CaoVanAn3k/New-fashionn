@@ -10,9 +10,6 @@ import img5 from '../../components/Images/Product/Green.png';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { useEffect } from 'react';
 import { findProductHome } from '../../redux/products/products';
-import { checkStateLogin } from '../../redux/Authentication/Authentication';
-import { getAllProductInCart } from '../../redux/Cart/cart';
-import Cookies from 'js-cookie';
 const cx = classNames.bind(styles);
 
 const imgSlider = [
@@ -54,18 +51,11 @@ function isObjectEmpty(obj: Object) {
 const Home = () => {
     const dispatch = useAppDispatch();
     const { productHomes } = useAppSelector((state) => state.products);
-    const { productCarts } = useAppSelector((state) => state.carts);
     useEffect(() => {
         if (isObjectEmpty(productHomes)) {
             dispatch(findProductHome());
         }
     }, [dispatch, productHomes]);
-    useEffect(() => {
-        const accessToken: string | undefined = Cookies.get('accessToken');
-        if (accessToken !== undefined && accessToken.length > 0 && productCarts.length <= 0) {
-            Promise.all([dispatch(checkStateLogin()), dispatch(getAllProductInCart())]);
-        }
-    }, [dispatch, productCarts.length]);
     return (
         <>
             <div className={cx('home-page')}>

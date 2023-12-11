@@ -5,7 +5,7 @@ import Shop from '../../Pages/Shop';
 import DetailShop from '../../Pages/Shop/DetailShop';
 import FavouriteShop from '../../Pages/Shop/FavouriteShop';
 import Authentication from '../../Pages/Authentication/Authentication';
-import OrderStatus from '../../Pages/OrderStatus';
+import OrderHistory from '../../Pages/OrderStatus';
 
 const RouterPublic = () => [
     {
@@ -41,8 +41,8 @@ const RouterPublic = () => [
         component: Authentication,
     },
     {
-        path: '/orderstatus',
-        component: OrderStatus,
+        path: '/order-history',
+        component: OrderHistory,
     },
 ];
 export default RouterPublic;
