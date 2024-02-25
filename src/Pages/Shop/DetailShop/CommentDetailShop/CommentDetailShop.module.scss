@@ -45,3 +45,46 @@
         }
     }
 }
+
+@media only screen and (max-width: 600px) {
+    .comment-body-title {
+        & > .title-left {
+            & > p {
+                font-size: 21px;
+                margin-right: 10px;
+            }
+        }
+        & > .title-right {
+            & > p {
+                font-size: 16px;
+            }
+        }
+    }
+}
+@media (min-width: 601px) and (max-width: 1023px) {
+    .title-left {
+        & > p {
+            font-size: 3rem !important;
+        }
+    }
+    .title-right {
+        & > p {
+            font-size: 20px;
+        }
+    }
+    .information-list-title {
+        & > h3 {
+            font-size: 22px !important;
+        }
+        & > p {
+            font-size: 20px !important;
+            margin: 8px 0 !important;
+        }
+    }
+    .information-list-item {
+        & > p {
+            font-size: 20px !important;
+            margin: 8px 0 !important;
+        }
+    }
+}

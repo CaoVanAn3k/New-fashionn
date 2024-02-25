@@ -74,12 +74,32 @@ let menuLink = [
 const settings = {
     focusOnSelect: true,
     infinite: true,
-    slidesToShow: 5,
+    // slidesToShow: 6,
     slidesToScroll: 1,
     speed: 600,
     // autoplay: true,
     // autoplaySpeed: 1000,
     cssEase: 'linear',
+    responsive: [
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2,
+            },
+        },
+        {
+            breakpoint: 1023,
+            settings: {
+                slidesToShow: 3,
+            },
+        },
+        {
+            breakpoint: 9999,
+            settings: {
+                slidesToShow: 6,
+            },
+        },
+    ],
 };
 
 const informationDetail = [
