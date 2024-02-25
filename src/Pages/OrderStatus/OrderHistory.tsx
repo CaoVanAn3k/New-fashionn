@@ -78,6 +78,7 @@ const OrderHistory = () => {
             dispatch(getAllMyOrder(0));
         } else {
             dispatch(getAllMyOrder(Number.parseInt(typeValue)));
+            setValue(Number.parseInt(typeValue));
         }
     }, [dispatch, location.search]);
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -88,106 +89,107 @@ const OrderHistory = () => {
     };
     return (
         <div className={cx('order-status')}>
-            {isLoading ? (
-                <div className={cx('custom-loader')}></div>
-            ) : (
-                <div className={cx('order-status-main')}>
-                    <div className={cx('order-main-link')}>
-                        <MenuLink children={menuLink} />
-                    </div>
-                    <div className={cx('order-main-status')}>
-                        <div className={cx('main-status-list')}>
-                            <Box sx={{ width: '100%' }}>
-                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                    <div className={cx('status-button-main')}>
-                                        <Tabs
-                                            value={value}
-                                            onChange={handleChange}
-                                            textColor="secondary"
-                                            indicatorColor="secondary"
-                                            aria-label="secondary tabs example"
-                                        >
-                                            <Tab
-                                                label="Chờ xác nhận"
-                                                {...a11yProps(0)}
-                                                onClick={() => {
-                                                    handelChangeType(0);
-                                                }}
-                                            />
-                                            <Tab
-                                                label="Chờ lấy hàng"
-                                                {...a11yProps(1)}
-                                                onClick={() => {
-                                                    handelChangeType(1);
-                                                }}
-                                            />
-                                            <Tab
-                                                label="Đang giao"
-                                                {...a11yProps(2)}
-                                                onClick={() => {
-                                                    handelChangeType(2);
-                                                }}
-                                            />
-                                            <Tab
-                                                label="Đã giao"
-                                                {...a11yProps(3)}
-                                                onClick={() => {
-                                                    handelChangeType(3);
-                                                }}
-                                            />
-                                            <Tab
-                                                label="Đã hủy"
-                                                {...a11yProps(4)}
-                                                onClick={() => {
-                                                    handelChangeType(4);
-                                                }}
-                                            />
-                                            <Tab
-                                                label="Trả hàng/Hoàn tiền"
-                                                {...a11yProps(5)}
-                                                onClick={() => {
-                                                    handelChangeType(5);
-                                                }}
-                                            />
-                                        </Tabs>
-                                    </div>
-                                </Box>
-                                <CustomTabPanel value={value} index={0} isCheck={1}>
-                                    {product_w_confirm.length > 0 && (
-                                        <CustomOrder children={product_w_confirm} isCheck={'0'} />
-                                    )}
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value} index={1} isCheck={1}>
-                                    {product_w_delivery.length > 0 && (
-                                        <CustomOrder children={product_w_delivery} isCheck={'1'} />
-                                    )}
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value} index={2} isCheck={1}>
-                                    {product_delivering.length > 0 && (
-                                        <CustomOrder children={product_delivering} isCheck={'1'} />
-                                    )}
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value} index={3} isCheck={1}>
-                                    {product_delivered.length > 0 && (
-                                        <CustomOrder children={product_delivered} isCheck={'2'} />
-                                    )}
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value} index={4} isCheck={1}>
-                                    {product_cancel.length > 0 && (
-                                        <CustomOrder children={product_cancel} isCheck={'3'} />
-                                    )}
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value} index={5} isCheck={1}>
-                                    {product_return.length > 0 && (
-                                        <CustomOrder children={product_return} isCheck={'2'} />
-                                    )}
-                                </CustomTabPanel>
+            <div className={cx('order-status-main')}>
+                <div className={cx('order-main-link')}>
+                    <MenuLink children={menuLink} />
+                </div>
+                <div className={cx('order-main-status')}>
+                    <div className={cx('main-status-list')}>
+                        <Box sx={{ width: '100%' }}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <div className={cx('status-button-main')}>
+                                    <Tabs
+                                        value={value}
+                                        onChange={handleChange}
+                                        textColor="secondary"
+                                        indicatorColor="secondary"
+                                        aria-label="secondary tabs example"
+                                    >
+                                        <Tab
+                                            label="Chờ xác nhận"
+                                            {...a11yProps(0)}
+                                            onClick={() => {
+                                                handelChangeType(0);
+                                            }}
+                                        />
+                                        <Tab
+                                            label="Chờ lấy hàng"
+                                            {...a11yProps(1)}
+                                            onClick={() => {
+                                                handelChangeType(1);
+                                            }}
+                                        />
+                                        <Tab
+                                            label="Đang giao"
+                                            {...a11yProps(2)}
+                                            onClick={() => {
+                                                handelChangeType(2);
+                                            }}
+                                        />
+                                        <Tab
+                                            label="Đã giao"
+                                            {...a11yProps(3)}
+                                            onClick={() => {
+                                                handelChangeType(3);
+                                            }}
+                                        />
+                                        <Tab
+                                            label="Đã hủy"
+                                            {...a11yProps(4)}
+                                            onClick={() => {
+                                                handelChangeType(4);
+                                            }}
+                                        />
+                                        <Tab
+                                            label="Trả hàng/Hoàn tiền"
+                                            {...a11yProps(5)}
+                                            onClick={() => {
+                                                handelChangeType(5);
+                                            }}
+                                        />
+                                    </Tabs>
+                                </div>
                             </Box>
-                        </div>
+                            {isLoading ? (
+                                <div className={cx('custom-loader')}></div>
+                            ) : (
+                                <>
+                                    <CustomTabPanel value={value} index={0} isCheck={1}>
+                                        {product_w_confirm.length > 0 && (
+                                            <CustomOrder children={product_w_confirm} isCheck={'0'} />
+                                        )}
+                                    </CustomTabPanel>
+                                    <CustomTabPanel value={value} index={1} isCheck={1}>
+                                        {product_w_delivery.length > 0 && (
+                                            <CustomOrder children={product_w_delivery} isCheck={'1'} />
+                                        )}
+                                    </CustomTabPanel>
+                                    <CustomTabPanel value={value} index={2} isCheck={1}>
+                                        {product_delivering.length > 0 && (
+                                            <CustomOrder children={product_delivering} isCheck={'1'} />
+                                        )}
+                                    </CustomTabPanel>
+                                    <CustomTabPanel value={value} index={3} isCheck={1}>
+                                        {product_delivered.length > 0 && (
+                                            <CustomOrder children={product_delivered} isCheck={'2'} />
+                                        )}
+                                    </CustomTabPanel>
+                                    <CustomTabPanel value={value} index={4} isCheck={1}>
+                                        {product_cancel.length > 0 && (
+                                            <CustomOrder children={product_cancel} isCheck={'3'} />
+                                        )}
+                                    </CustomTabPanel>
+                                    <CustomTabPanel value={value} index={5} isCheck={1}>
+                                        {product_return.length > 0 && (
+                                            <CustomOrder children={product_return} isCheck={'2'} />
+                                        )}
+                                    </CustomTabPanel>
+                                </>
+                            )}
+                        </Box>
                     </div>
                 </div>
-            )}
-
+            </div>
             <div className={cx('order-status-bader')}></div>
         </div>
     );

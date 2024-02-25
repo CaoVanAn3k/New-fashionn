@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './CustomOrder.module.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -22,9 +22,11 @@ import StarIcon from '@mui/icons-material/Star';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
-import { cancelOrder, handleUpdateStateCancelOrder } from '../../../redux/order/order';
+import { cancelOrder, handleUpdateStateCancelOrder, reOrder } from '../../../redux/order/order';
+import { saveFeedbackProduct, getAllReviewedProduct } from '../../../redux/Comment/comment';
+import { getAllProductInCart } from '../../../redux/Cart/cart';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import TagFacesIcon from '@mui/icons-material/TagFaces';
 const cx = classNames.bind(styles);
 interface DataProductOrder {
@@ -37,6 +39,17 @@ interface DataProductOrder {
     size: string;
     image: string;
     quantity: number;
+}
+interface ResponseFeedbackProduct {
+    commentId: number;
+    productId: number;
+    nameProduct: string;
+    color: string;
+    size: string;
+    descriptionProductQuality: string;
+    descriptionFeature: string;
+    userName: string;
+    active: boolean;
 }
 interface ResponseDataRender {
     orderId: number | null;
@@ -71,6 +84,10 @@ function getLabelText(value: number) {
     return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 const CustomOrder: React.FC<PopStatus> = ({ children, isCheck }) => {
+    const location = useLocation();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const queryParams = new URLSearchParams(location.search);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
     const [error, setError] = useState(false);
@@ -80,12 +97,30 @@ const CustomOrder: React.FC<PopStatus> = ({ children, isCheck }) => {
     const [feedbackDescription, setFeedbackDescription] = useState('');
     const [qualityProductDescription, setQualityProductDescription] = useState('');
     const [isShowUserName, setIsShowUserName] = useState(true);
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
+    const [productFeedback, setProductFeedback] = useState<DataProductOrder>({
+        orderId: 0,
+        productId: 0,
+        nameProduct: '',
+        priceProduct: 0,
+        moneyPersonPay: 0,
+        color: '',
+        size: '',
+        image: '',
+        quantity: 0,
+    });
     const [orderId, setOrderId] = useState<number | null>(null);
     const [openFeedbackForm, setOpenFeedbackForm] = useState(false);
     const { userName } = useAppSelector((state) => state.users);
-    const handleOpenFeedbackForm = () => {
+    const { reviewedProduct } = useAppSelector((state) => state.comment);
+    useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        const type = query.get('type');
+        if (type !== null && type === '3') {
+            dispatch(getAllReviewedProduct());
+        }
+    }, [dispatch, location.search]);
+    const handleOpenFeedbackForm = (data: DataProductOrder) => {
+        setProductFeedback(data);
         setOpenFeedbackForm(true);
     };
     const handleCloseFeedbackForm = () => {
@@ -145,22 +180,45 @@ const CustomOrder: React.FC<PopStatus> = ({ children, isCheck }) => {
         setHelperText(' ');
         setError(false);
     };
-    const handleClickButtonReOrder = (orderId: number | null) => {
+    const handleClickButtonReOrder = async (orderId: number | null) => {
         if (orderId !== null) {
             const productsReOrder = children.find((item) => item.orderId === orderId);
             if (productsReOrder !== undefined) {
-                sessionStorage.setItem('productsReOrder', JSON.stringify(productsReOrder));
-                navigate('/cart');
+                sessionStorage.setItem('productsOrder', JSON.stringify(productsReOrder));
+                await dispatch(reOrder(orderId));
+                await dispatch(getAllProductInCart());
+                navigate(`/cart`);
             }
         } else {
             toast.warning('Vui lòng chọn đơn hàng muốn đặt lại!!');
         }
     };
     const handleSubmitFeedback = () => {
-        if (feedbackDescription !== '' && qualityProductDescription !== '') {
+        if (feedbackDescription !== '' && qualityProductDescription !== '' && productFeedback.nameProduct !== '') {
             setOpenFeedbackForm(false);
+            const data = {
+                productId: productFeedback.productId,
+                rating: starState,
+                descriptionProductQuality: qualityProductDescription,
+                descriptionFeature: feedbackDescription,
+                isShowUserName: isShowUserName,
+                color: productFeedback.color,
+                size: productFeedback.size,
+            };
+            dispatch(saveFeedbackProduct(data));
+            setFeedbackDescription('');
+            setIsShowUserName(true);
+            setQualityProductDescription('');
         } else {
             toast.warning('vui lòng nhập đầy đủ thông tin giúp shop nhé khách!');
+        }
+    };
+    const isReviewedProduct = (data: ResponseFeedbackProduct[], product: DataProductOrder) => {
+        const isProduct = data.find((item) => item.productId === product.productId);
+        if (isProduct) {
+            return true;
+        } else {
+            return false;
         }
     };
     return (
@@ -170,31 +228,87 @@ const CustomOrder: React.FC<PopStatus> = ({ children, isCheck }) => {
                     <div className={cx('favourite-information-main')} key={index}>
                         <div className={cx('favourite-information-list')}>
                             {list.data.length > 0 &&
-                                list.data.map((product: DataProductOrder) => {
+                                list.data.map((product: DataProductOrder, indexKey: number) => {
                                     return (
-                                        <div className={cx('favourite-list-left')} key={product.productId}>
-                                            <div className={cx('list-item-logo')}>
-                                                <div className={cx('left-img')}>
-                                                    <img src={product.image} alt="logo" />
+                                        <>
+                                            <div className={cx('favourite-list-left')} key={indexKey + 1}>
+                                                <div className={cx('list-item-logo')}>
+                                                    <div className={cx('left-img')}>
+                                                        <img src={product.image} alt="logo" />
+                                                    </div>
+                                                </div>
+                                                <div className={cx('list-item-data')}>
+                                                    <h3>{product.nameProduct}</h3>
+                                                    <div className={cx('list-data-information')}>
+                                                        <p>Mã sản phẩm: {product.productId}</p>
+                                                        <p>Màu sắc: {product.color}</p>
+                                                        <p>Kích cỡ: {product.size}</p>
+                                                        <p>
+                                                            Giá:{' '}
+                                                            {product.priceProduct.toLocaleString('vi-VN', {
+                                                                useGrouping: true,
+                                                            })}{' '}
+                                                            VNĐ
+                                                        </p>
+                                                        <p>Số lượng: {product.quantity}</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className={cx('list-item-data')}>
-                                                <h3>{product.nameProduct}</h3>
-                                                <div className={cx('list-data-information')}>
-                                                    <p>Mã sản phẩm: {product.productId}</p>
-                                                    <p>Màu sắc: {product.color}</p>
-                                                    <p>Kích cỡ: {product.size}</p>
-                                                    <p>
-                                                        Giá:{' '}
-                                                        {product.priceProduct.toLocaleString('vi-VN', {
-                                                            useGrouping: true,
-                                                        })}{' '}
-                                                        VNĐ
-                                                    </p>
-                                                    <p>Số lượng: {product.quantity}</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            {queryParams.get('type') !== null &&
+                                                queryParams.get('type') !== 'null' &&
+                                                queryParams.get('type') === '3' && (
+                                                    <div className={cx('favourite-list-item')} key={index + 2}>
+                                                        <div className={cx('favourite-item-right')}>
+                                                            <div className={cx('list-data-price')}>
+                                                                <p>{handleTotalMoney(list.data)} VNĐ</p>
+                                                                <h4>
+                                                                    {list.data[0].moneyPersonPay.toLocaleString(
+                                                                        'vi-VN',
+                                                                        {
+                                                                            useGrouping: true,
+                                                                        },
+                                                                    )}{' '}
+                                                                    VNĐ
+                                                                </h4>
+                                                            </div>
+                                                            {reviewedProduct.length > 0 &&
+                                                            isReviewedProduct(reviewedProduct, product) ? (
+                                                                <div
+                                                                    className={cx(
+                                                                        'favourite-item-check',
+                                                                        'fa-button',
+                                                                        'fa-check',
+                                                                    )}
+                                                                    style={{
+                                                                        display: isCheck === '2' ? 'block' : 'none',
+                                                                    }}
+                                                                    onClick={() => {
+                                                                        handleClickButtonReOrder(list.orderId);
+                                                                    }}
+                                                                >
+                                                                    <button>Mua lại</button>
+                                                                </div>
+                                                            ) : (
+                                                                <div
+                                                                    className={cx(
+                                                                        'favourite-item-check',
+                                                                        'fa-button',
+                                                                        'fa-check',
+                                                                    )}
+                                                                    style={{
+                                                                        display: isCheck === '2' ? 'block' : 'none',
+                                                                    }}
+                                                                    onClick={() => {
+                                                                        handleOpenFeedbackForm(product);
+                                                                    }}
+                                                                >
+                                                                    <button>Góp ý đơn hàng</button>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                        </>
                                     );
                                 })}
                         </div>
@@ -207,15 +321,20 @@ const CustomOrder: React.FC<PopStatus> = ({ children, isCheck }) => {
                             </div>
 
                             <div className={cx('favourite-item-right')}>
-                                <div className={cx('list-data-price')}>
-                                    <p>{handleTotalMoney(list.data)} VNĐ</p>
-                                    <h4>
-                                        {list.data[0].moneyPersonPay.toLocaleString('vi-VN', {
-                                            useGrouping: true,
-                                        })}{' '}
-                                        VNĐ
-                                    </h4>
-                                </div>
+                                {queryParams.get('type') !== null &&
+                                    queryParams.get('type') !== 'null' &&
+                                    queryParams.get('type') !== '3' && (
+                                        <div className={cx('list-data-price')}>
+                                            <p>{handleTotalMoney(list.data)} VNĐ</p>
+                                            <h4>
+                                                {list.data[0].moneyPersonPay.toLocaleString('vi-VN', {
+                                                    useGrouping: true,
+                                                })}{' '}
+                                                VNĐ
+                                            </h4>
+                                        </div>
+                                    )}
+
                                 <div
                                     className={cx('favourite-item-button', 'fa-button')}
                                     style={{
@@ -229,13 +348,15 @@ const CustomOrder: React.FC<PopStatus> = ({ children, isCheck }) => {
                                 >
                                     <button style={{ cursor: isCheck === '0' ? 'pointer' : 'no-drop' }}>Huỷ đơn</button>
                                 </div>
-                                <div
+                                {/* <div
                                     className={cx('favourite-item-check', 'fa-button', 'fa-check')}
                                     style={{ display: isCheck === '2' ? 'block' : 'none' }}
-                                    onClick={handleOpenFeedbackForm}
+                                    onClick={() => {
+                                        handleOpenFeedbackForm(list.data);
+                                    }}
                                 >
                                     <button>Góp ý đơn hàng</button>
-                                </div>
+                                </div> */}
                                 <div
                                     className={cx('favourite-item-check', 'fa-button', 'fa-check')}
                                     style={{ display: isCheck === '3' ? 'block' : 'none' }}
@@ -338,15 +459,17 @@ const CustomOrder: React.FC<PopStatus> = ({ children, isCheck }) => {
                 <DialogContent dividers>
                     <div className={cx('container')}>
                         <div className={cx('product-order')}>
-                            <div className={cx('wrapper')}>
-                                <div className={cx('product-order-image')}>
-                                    <img src="https://ohlady.vn/uploads/san-pham/pic/64_11.png" alt="anh" />
+                            {productFeedback.nameProduct !== '' && (
+                                <div className={cx('wrapper')}>
+                                    <div className={cx('product-order-image')}>
+                                        <img src={productFeedback.image} alt={productFeedback.nameProduct} />
+                                    </div>
+                                    <div className={cx('product-order-info')}>
+                                        <p>{productFeedback.nameProduct}</p>
+                                        <p>Phân loại hàng: {productFeedback.color}</p>
+                                    </div>
                                 </div>
-                                <div className={cx('product-order-info')}>
-                                    <p>Jumbsuit lien than 1</p>
-                                    <p>Phân loại hàng: Black</p>
-                                </div>
-                            </div>
+                            )}
                         </div>
                         <div className={cx('quality-product')}>
                             <p>Đánh giá sản phẩm: </p>

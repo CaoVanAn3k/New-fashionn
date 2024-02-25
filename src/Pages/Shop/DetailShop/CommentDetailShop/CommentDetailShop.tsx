@@ -1,83 +1,66 @@
 import classNames from 'classnames/bind';
 import styles from './CommentDetailShop.module.scss';
-import IconEvaluate from '../../../../components/IconEvaluate';
+import Rating from '@mui/material/Rating';
 const cx = classNames.bind(styles);
-const iconEvaluate = [
-    {
-        id: 1,
-        color: 'yellow',
-        quantity: '',
-    },
-    {
-        id: 2,
-        color: 'yellow',
-        quantity: '',
-    },
-    {
-        id: 3,
-        color: 'yellow',
-        quantity: '',
-    },
-    {
-        id: 4,
-        color: 'yellow',
-        quantity: '',
-    },
-    {
-        id: 5,
-        color: 'yellow',
-        quantity: '',
-    },
-];
-interface CommentDetail {
-    id: number;
-    name: string;
-    date: string;
-    title: string;
+interface ResponseFeedbackProduct {
+    commentId: number;
+    productId: number;
+    nameProduct: string;
     color: string;
     size: string;
-    comment: string;
-    evaluate: string;
-    evaluatecmt: string;
+    rating: number;
+    descriptionProductQuality: string;
+    descriptionFeature: string;
+    userName: string;
+    active: boolean;
+    createdAt: string | undefined;
 }
 interface CommentDetailChildren {
-    children: CommentDetail[];
+    children: ResponseFeedbackProduct[];
 }
 const CommentDetailShop: React.FC<CommentDetailChildren> = ({ children }) => {
     return (
         <div>
-            {children.map((child, index) => {
-                return (
-                    <div className={cx('evaluate-main-comment')} key={index}>
-                        <div className={cx('comment-body')}>
-                            <div className={cx('comment-body-title')}>
-                                <div className={cx('title-left')}>
-                                    <p>{child.name}</p>
-                                    <p>* * * * *</p>
-                                </div>
-                                <div className={cx('title-right')}>
-                                    <p>{child.date}</p>
-                                </div>
-                            </div>
-                            <IconEvaluate children={iconEvaluate} />
-                            <div className={cx('comment-body-information')}>
-                                <div className={cx('comment-information-list')}>
-                                    <div className={cx('information-list-title')}>
-                                        <h3>{child.title}</h3>
-                                        <p>{child.color}</p>
-                                        <p>{child.size}</p>
-                                        <p>{child.comment}</p>
+            {children.length > 0 &&
+                children.map((child, index) => {
+                    const date = child.createdAt ? new Date(child.createdAt) : null;
+                    return (
+                        <div className={cx('evaluate-main-comment')} key={index}>
+                            <div className={cx('comment-body')}>
+                                <div className={cx('comment-body-title')}>
+                                    <div className={cx('title-left')}>
+                                        <p>{child.userName}</p>
+                                        <p>* * * * *</p>
                                     </div>
-                                    <div className={cx('information-list-item')}>
-                                        <p>{child.evaluate}</p>
-                                        <p>{child.evaluatecmt}</p>
+                                    <div className={cx('title-right')}>
+                                        {date !== null && date.toISOString().split('T')[0]}
+                                    </div>
+                                </div>
+                                <Rating
+                                    name="read-only"
+                                    value={child.rating}
+                                    readOnly
+                                    precision={0.5}
+                                    sx={{ display: 'flex', fontSize: '2.5rem', color: '#f0e713' }}
+                                />
+                                <div className={cx('comment-body-information')}>
+                                    <div className={cx('comment-information-list')}>
+                                        <div className={cx('information-list-title')}>
+                                            <h3>Sản phẩm: {child.nameProduct}</h3>
+                                            <p>Màu sắc: {child.color}</p>
+                                            <p>Kích cỡ: {child.size}</p>
+                                            <p>Đánh giá chất lượng: {child.descriptionProductQuality}</p>
+                                        </div>
+                                        <div className={cx('information-list-item')}>
+                                            <p>Đánh giá</p>
+                                            <p>{child.descriptionFeature}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                );
-            })}
+                    );
+                })}
         </div>
     );
 };

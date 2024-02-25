@@ -25,16 +25,6 @@ import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import MenuHeader from './MenuHeader';
 const cx = classNames.bind(styles);
-// interface ResponseProductCart {
-//     productCartId: number;
-//     productId: number;
-//     name: string;
-//     color: string;
-//     size: string;
-//     price: number;
-//     image: string;
-//     quantity: number;
-// }
 const BootstrapTooltip = stylist(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -130,6 +120,7 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
     const { isLogined, userName } = useAppSelector((state) => state.users);
     const { isSearching, productSearches } = useAppSelector((state) => state.products);
     const { productCarts } = useAppSelector((state) => state.carts);
+    const [resultSearching, setResultSearching] = useState(false);
     const handleClickCart = () => {
         navigate('/cart');
     };
@@ -164,7 +155,8 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
     const handleClickLogout = async () => {
         const accessToken: string | undefined = Cookies.get('accessToken');
         if (accessToken !== undefined && accessToken.length > 0) {
-            Promise.all([dispatch(clearState()), dispatch(clearStateWhenLogout()), dispatch(logout())]);
+            await dispatch(logout());
+            Promise.all([dispatch(clearState()), dispatch(clearStateWhenLogout())]);
             await waiting(1000);
             navigate('/login');
         }
@@ -183,8 +175,16 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
     };
     const handleChangeInput = (e: any) => {
         if (e.target.value !== '') {
-            dispatch(findProductBySearching(e.target.value));
+            const hasSpecialCharacters = /[!@#$%^&*()?":{}|<>]/.test(e.target.value);
+            if (!hasSpecialCharacters) {
+                setResultSearching(true);
+                dispatch(findProductBySearching(e.target.value));
+            } else {
+                setResultSearching(true);
+                dispatch(clearSearching());
+            }
         } else {
+            setResultSearching(false);
             dispatch(clearSearching());
         }
     };
@@ -325,36 +325,42 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
                                     ) : (
                                         <>
                                             {productSearches.length > 0 ? (
-                                                <>
-                                                    <div className={cx('search-result')}>
-                                                        <p>Kết quả tìm kiếm</p>
-                                                        <ul>
-                                                            {productSearches.map((product: Product) => {
-                                                                return (
-                                                                    <li
-                                                                        key={product.productId}
-                                                                        onClick={() =>
-                                                                            handleClickProductName(product.productId)
-                                                                        }
-                                                                    >
-                                                                        {product.name}
-                                                                    </li>
-                                                                );
-                                                            })}
-                                                        </ul>
-                                                    </div>
-                                                </>
-                                            ) : (
                                                 <div className={cx('search-result')}>
-                                                    <p>Cụm từ tìm kiếm phổ biến</p>
+                                                    <p>Kết quả tìm kiếm</p>
                                                     <ul>
-                                                        <li>JUMSUIT Liền thân</li>
-                                                        <li>Đầm ngắn</li>
-                                                        <li>Đầm dài</li>
-                                                        <li>Set bộ rời</li>
-                                                        <li>Vest</li>
+                                                        {productSearches.map((product: Product) => {
+                                                            return (
+                                                                <li
+                                                                    key={product.productId}
+                                                                    onClick={() =>
+                                                                        handleClickProductName(product.productId)
+                                                                    }
+                                                                >
+                                                                    {product.name}
+                                                                </li>
+                                                            );
+                                                        })}
                                                     </ul>
                                                 </div>
+                                            ) : (
+                                                <>
+                                                    {resultSearching ? (
+                                                        <div className={cx('search-result')}>
+                                                            <p>Không tìm thấy sản phẩm</p>
+                                                        </div>
+                                                    ) : (
+                                                        <div className={cx('search-result')}>
+                                                            <p>Cụm từ tìm kiếm phổ biến</p>
+                                                            <ul>
+                                                                <li>JUMSUIT Liền thân</li>
+                                                                <li>Đầm ngắn</li>
+                                                                <li>Đầm dài</li>
+                                                                <li>Set bộ rời</li>
+                                                                <li>Vest</li>
+                                                            </ul>
+                                                        </div>
+                                                    )}
+                                                </>
                                             )}
                                         </>
                                     )}

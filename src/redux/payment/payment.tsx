@@ -98,7 +98,7 @@ const initialState: InitialState = {
 };
 export const findAddressDefaultByUser = createAsyncThunk<any>('findAddressDefaultByUser', async () => {
     try {
-        const res: ResponseAddress = await axiosInstance.get(`/address/user`);
+        const res: ResponseAddress = await axiosInstance.get(`/web/address/user`);
         if (res.fullName !== null && res.addresses.length > 0) {
             return res;
         } else {
@@ -112,7 +112,7 @@ export const updateAddressDefault = createAsyncThunk<any, RequestAddress>(
     'updateAddressDefault',
     async (data: RequestAddress) => {
         try {
-            const res: DataAddress = await axiosInstance.put('/address/edit', data);
+            const res: DataAddress = await axiosInstance.put('/web/address/edit', data);
             if (res) {
                 toast.success('cập nhật thành công!');
             }
@@ -126,7 +126,7 @@ export const updateAddressDefault = createAsyncThunk<any, RequestAddress>(
 );
 export const updateAddress = createAsyncThunk<RequestAddress, any>('updateAddress', async (data: any) => {
     try {
-        const res = await axiosInstance.put(`/address/update-address/${data.id}`, data);
+        const res = await axiosInstance.put(`/web/address/update-address/${data.id}`, data);
         if (res) {
             return res;
         }
@@ -139,7 +139,7 @@ export const updateAddress = createAsyncThunk<RequestAddress, any>('updateAddres
 });
 export const orderPayment = createAsyncThunk<any, RequestPayment>('orderPayment', async (data: RequestPayment) => {
     try {
-        const res: string | undefined = await axiosInstance.post('/order/create', data);
+        const res: string | undefined = await axiosInstance.post('/web/order/create', data);
         if (res !== undefined) {
             return res;
         }
@@ -252,6 +252,9 @@ const PaymentSlice = createSlice({
             state.isPayment = false;
             state.productsPayment = [];
         },
+        clearStatusError: (state) => {
+            state.statusError = 0;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -323,5 +326,6 @@ export const {
     updateProductNeedPayment,
     handleActiveLoadingPayment,
     clearStatePayment,
+    clearStatusError,
 } = PaymentSlice.actions;
 export default PaymentSlice.reducer;

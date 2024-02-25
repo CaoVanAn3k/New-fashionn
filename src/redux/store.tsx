@@ -5,6 +5,7 @@ import CartsProvider from './Cart/cart';
 import PaymentProvider from './payment/payment';
 import VoucherProvider from './voucher/voucher';
 import OrderProvider from './order/order';
+import CommentProvider from './Comment/comment';
 import { useDispatch, useSelector } from 'react-redux';
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
         payment: PaymentProvider,
         voucher: VoucherProvider,
         order: OrderProvider,
+        comment: CommentProvider,
     },
 });
 export type AppDispatch = typeof store.dispatch;

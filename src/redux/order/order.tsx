@@ -40,7 +40,7 @@ interface InitialState {
 }
 export const getAllMyOrder = createAsyncThunk<any, number>('getAllMyOrder', async (typeId: number) => {
     try {
-        const res = await axiosInstance.get(`/order/my-order?type=${typeId}`);
+        const res = await axiosInstance.get(`/web/order/my-order?type=${typeId}`);
         if (res.data !== undefined) {
             return res.data;
         }
@@ -54,7 +54,7 @@ export const cancelOrder = createAsyncThunk<any, RequestCancelOrder>(
     async (data: RequestCancelOrder) => {
         try {
             const res: string | undefined = await axiosInstance.delete(
-                `/order/cancel-order?orderId=${data.orderId}&reasonCancel=${data.reasonCancel}`,
+                `/web/order/cancel-order?orderId=${data.orderId}&reasonCancel=${data.reasonCancel}`,
             );
             if (res !== undefined) {
                 toast.success(res);
@@ -66,6 +66,14 @@ export const cancelOrder = createAsyncThunk<any, RequestCancelOrder>(
         }
     },
 );
+export const reOrder = createAsyncThunk<any, number>('reOrder', async (orderId: number) => {
+    try {
+        const res = await axiosInstance.get(`/web/order/re-order?orderId=${orderId}`);
+        console.log(res);
+    } catch (err: any) {
+        throw new Error(err.message);
+    }
+});
 const convertDuplicateOrderId = (response: DataProductOrder[]) => {
     let result: ResponseDataRender[] = [];
     response.forEach((product, index, arr) => {
@@ -107,6 +115,9 @@ const OrderSlice = createSlice({
             .addCase(cancelOrder.pending, (state) => {
                 state.isLoading = true;
             })
+            .addCase(reOrder.pending, (state) => {
+                state.isLoading = true;
+            })
             .addCase(getAllMyOrder.fulfilled, (state, action: PayloadAction<ResponseProductOrder>) => {
                 state.isLoading = false;
                 const response = action.payload;
@@ -134,11 +145,18 @@ const OrderSlice = createSlice({
             .addCase(cancelOrder.fulfilled, (state, action) => {
                 state.isLoading = false;
             })
+            .addCase(reOrder.fulfilled, (state, action) => {
+                state.isLoading = false;
+            })
             .addCase(getAllMyOrder.rejected, (state) => {
                 state.isLoading = false;
                 state.error = 'error';
             })
             .addCase(cancelOrder.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error.message;
+            })
+            .addCase(reOrder.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.error.message;
             });
