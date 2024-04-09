@@ -44,6 +44,13 @@
 .icon-button {
     margin-top: 18px;
 }
+.menu-link-list {
+    & > div {
+        & > a {
+            text-decoration: none;
+        }
+    }
+}
 .icon-button-close {
     padding: 5px 5px !important;
     margin-top: -20px !important;
@@ -70,8 +77,20 @@
         color: var(--back-ground-red);
     }
 }
-
+// .menu-black {
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     background: #000;
+//     opacity: 0.8;
+//     z-index: 1;
+// }
 @media only screen and (max-width: 600px) {
+    .menu-app-bar {
+        top: -1px !important;
+    }
     .menu-list-bar {
         & > div {
             padding: 0 15px 0 0;

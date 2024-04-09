@@ -50,6 +50,7 @@ interface initState {
     categoryName: string;
     offsetState: number;
     error: string;
+    statusSearch: boolean;
 }
 export const findProductHome = createAsyncThunk<any>('findProductHome', async () => {
     try {
@@ -164,6 +165,7 @@ const initialState: initState = {
     sortName: '',
     categoryName: '',
     offsetState: 0,
+    statusSearch: false,
 };
 
 const ProductsSlice: any = createSlice({
@@ -180,10 +182,15 @@ const ProductsSlice: any = createSlice({
         checkStateGetProductByCategoryId: (state, action) => {
             state.checkStateClickCategory = true;
             state.categoryName = action.payload;
+            state.productCategoryId = [];
             if (state.sortName !== '') {
                 state.sortName = '';
             }
         },
+        upStatusSearch: (state, action) => {
+            state.statusSearch = action.payload;
+        },
+
         deleteDataProductByCategoryId: (state) => {
             state.productCategoryId = [];
             state.checkStateClickCategory = false;
@@ -326,5 +333,6 @@ export const {
     clearSearching,
     updateStateSortName,
     updateStateOffset,
+    upStatusSearch,
 } = ProductsSlice.actions;
 export default ProductsSlice.reducer;

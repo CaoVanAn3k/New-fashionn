@@ -1,5 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './MenuShop.module.scss';
+// import React from 'react';
+import Slider from 'react-slick';
 import { useEffect } from 'react';
 import {
     getAllCategory,
@@ -11,7 +13,7 @@ import {
     updateStateSortName,
 } from '../../redux/products/products';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
-import MenuLink from './MenuLink';
+// import MenuLink from './MenuLink';
 const cx = classNames.bind(styles);
 interface ResponseCategory {
     categoryId: number;
@@ -27,7 +29,7 @@ let menuLink = [
 ];
 function MenuShop() {
     const dispatch = useAppDispatch();
-    const { categories, checkStateClickCategory } = useAppSelector((state) => state.products);
+    const { categories } = useAppSelector((state) => state.products);
     useEffect(() => {
         if (categories.length === 0) {
             dispatch(getAllCategory());
@@ -61,6 +63,14 @@ function MenuShop() {
             dispatch(updateStateSortName(e.target.value));
         }
     };
+
+    const settings = {
+        focusOnSelect: true,
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        speed: 500,
+    };
     return (
         <div className={cx('menu-shop')}>
             <div className={cx('menu-shop-main')}>
@@ -69,11 +79,21 @@ function MenuShop() {
                     <h2>SẮP XẾP THEO</h2>
                 </div>
                 <div className={cx('menu-main-information')}>
+                    <div className={cx('main-information-right')}>
+                        <select
+                            className={cx('information-item-right')}
+                            onChange={(e) => {
+                                handleChangeSortProduct(e);
+                            }}
+                        >
+                            <option value="stand-out">Nổi Bật</option>
+                            <option value="increase">Sắp xếp theo giá từ thấp đến cao</option>
+                            <option value="decrease">Sắp xếp theo giá từ cao đến thấp</option>
+                        </select>
+                    </div>
                     <div className={cx('main-information-left')}>
-                        {checkStateClickCategory ? (
-                            <MenuLink children={menuLink} />
-                        ) : (
-                            <ul className={cx('main-information-list')}>
+                        <ul className={cx('main-information-list')}>
+                            <Slider {...settings}>
                                 {categories.length > 0 &&
                                     categories.map((item: ResponseCategory, index: number) => {
                                         return (
@@ -88,20 +108,8 @@ function MenuShop() {
                                             </li>
                                         );
                                     })}
-                            </ul>
-                        )}
-                    </div>
-                    <div className={cx('main-information-right')}>
-                        <select
-                            className={cx('information-item-right')}
-                            onChange={(e) => {
-                                handleChangeSortProduct(e);
-                            }}
-                        >
-                            <option value="stand-out">Nổi Bật</option>
-                            <option value="increase">Sắp xếp theo giá từ thấp đến cao</option>
-                            <option value="decrease">Sắp xếp theo giá từ cao đến thấp</option>
-                        </select>
+                            </Slider>
+                        </ul>
                     </div>
                 </div>
             </div>

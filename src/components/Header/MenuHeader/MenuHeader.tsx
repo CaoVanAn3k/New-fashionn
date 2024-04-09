@@ -19,36 +19,17 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-
-import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { Link, useNavigate } from 'react-router-dom';
 import images from '../../Images';
-
+import { upStatusSearch, clearSearching } from '../../../redux/products/products';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import SearchIcon from '@mui/icons-material/Search';
+import SearchHeader from '../SearchHeader/SearchHeader';
 const drawerWidth = 240;
 const cx = classNames.bind(styles);
-
-// const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
-//     open?: boolean;
-// }>(({ theme, open }) => ({
-//     flexGrow: 1,
-//     padding: theme.spacing(3),
-//     transition: theme.transitions.create('margin', {
-//         easing: theme.transitions.easing.sharp,
-//         duration: theme.transitions.duration.leavingScreen,
-//     }),
-//     marginRight: -drawerWidth,
-//     ...(open && {
-//         transition: theme.transitions.create('margin', {
-//             easing: theme.transitions.easing.easeOut,
-//             duration: theme.transitions.duration.enteringScreen,
-//         }),
-//         marginRight: 0,
-//     }),
-//     position: 'relative',
-// }));
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -83,37 +64,50 @@ const MenuItem = [
     {
         title: 'Trang chủ',
         icon: <HomeIcon />,
+        link: '/',
     },
     {
         title: 'Cửa hàng',
         icon: <ShoppingCartIcon />,
+        link: '/shop',
     },
     {
         title: 'Thông tin',
         icon: <AssignmentIcon />,
+        link: '/',
     },
     {
         title: 'Tìm kiếm',
         icon: <SearchIcon />,
+        link: '/',
     },
     {
         title: 'Hi,Hiếu',
         icon: <AccountCircleIcon />,
+        link: '/',
     },
     {
         title: 'Lịch sử mua hàng',
         icon: <SearchIcon />,
+        link: '/',
     },
 
     {
         title: 'Login out',
         icon: <AccountCircleIcon />,
+        link: '/',
     },
 ];
-export default function MenuHeader() {
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
 
+interface Children {
+    handleSearchOn: () => void;
+}
+const MenuHeader: React.FC<Children> = ({ handleSearchOn }) => {
+    const theme = useTheme();
+    const dispatch = useAppDispatch();
+    const { statusSearch } = useAppSelector((state) => state.products);
+    const [open, setOpen] = React.useState(false);
+    const navigate = useNavigate();
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -121,12 +115,20 @@ export default function MenuHeader() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    const handleStatusSearch = () => {
+        dispatch(upStatusSearch(true));
+        handleSearchOn();
+        setOpen(false);
+    };
+    const handleSearchOffMenu = () => {
+        dispatch(clearSearching());
+    };
 
     return (
         <div className={cx('menu-header')}>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <AppBar position="fixed" open={open}>
+                <AppBar position="fixed" open={open} className={cx('menu-app-bar')}>
                     <div className={cx('menu-list-bar')}>
                         <Toolbar>
                             <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
@@ -173,27 +175,74 @@ export default function MenuHeader() {
                     </DrawerHeader>
 
                     <Divider />
-                    <List>
+                    <List className={cx('menu-link-list')}>
                         {MenuItem.map((text, index) => (
                             <div key={index}>
-                                <ListItem disablePadding>
-                                    <ListItemButton>
-                                        <ListItemIcon className={cx('title-icon-button')}>{text.icon}</ListItemIcon>
-                                        <ListItemText className={cx('icon-button-text')} primary={text.title} />
-                                        {index > 4 ? (
-                                            ''
-                                        ) : (
-                                            <IconButton className={cx('icon-button-next')}>
-                                                {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                                            </IconButton>
-                                        )}
-                                    </ListItemButton>
-                                </ListItem>
+                                {text.title === 'Tìm kiếm' ? (
+                                    <div
+                                        onClick={() => {
+                                            handleStatusSearch();
+                                        }}
+                                    >
+                                        <ListItem disablePadding>
+                                            <ListItemButton>
+                                                <ListItemIcon className={cx('title-icon-button')}>
+                                                    {text.icon}
+                                                </ListItemIcon>
+                                                <ListItemText className={cx('icon-button-text')} primary={text.title} />
+                                                {index > 4 ? (
+                                                    ''
+                                                ) : (
+                                                    <IconButton className={cx('icon-button-next')}>
+                                                        {theme.direction === 'rtl' ? (
+                                                            <ChevronLeftIcon />
+                                                        ) : (
+                                                            <ChevronRightIcon />
+                                                        )}
+                                                    </IconButton>
+                                                )}
+                                            </ListItemButton>
+                                        </ListItem>
+                                    </div>
+                                ) : (
+                                    <li
+                                        onClick={() => {
+                                            handleDrawerClose();
+                                            navigate(text.link);
+                                        }}
+                                    >
+                                        <ListItem disablePadding>
+                                            <ListItemButton>
+                                                <ListItemIcon className={cx('title-icon-button')}>
+                                                    {text.icon}
+                                                </ListItemIcon>
+                                                <ListItemText className={cx('icon-button-text')} primary={text.title} />
+                                                {index > 4 ? (
+                                                    ''
+                                                ) : (
+                                                    <IconButton className={cx('icon-button-next')}>
+                                                        {theme.direction === 'rtl' ? (
+                                                            <ChevronLeftIcon />
+                                                        ) : (
+                                                            <ChevronRightIcon />
+                                                        )}
+                                                    </IconButton>
+                                                )}
+                                            </ListItemButton>
+                                        </ListItem>
+                                    </li>
+                                )}
                             </div>
                         ))}
                     </List>
                 </Drawer>
             </Box>
+            {statusSearch && (
+                <div className={cx('header-main-search')}>
+                    <SearchHeader handleSearchOffMenu={handleSearchOffMenu} />
+                </div>
+            )}
         </div>
     );
-}
+};
+export default MenuHeader;

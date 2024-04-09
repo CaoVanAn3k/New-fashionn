@@ -15,26 +15,17 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { logout, checkStateLogin, clearStateWhenLogout } from '../../redux/Authentication/Authentication';
-import { findProductBySearching, clearSearching } from '../../redux/products/products';
+import { clearSearching } from '../../redux/products/products';
+import { upStatusSearch } from '../../redux/products/products';
 import { clearState, getAllProductInCart } from '../../redux/Cart/cart';
 import { Link as ScrollLink } from 'react-scroll';
 import waiting from '../../util/waiting';
-import logo from '../Images/Product/logo.svg';
 import Badge from '@mui/material/Badge';
 import Cookies from 'js-cookie';
 import styled from 'styled-components';
 import MenuHeader from './MenuHeader';
+import SearchHeader from './SearchHeader';
 const cx = classNames.bind(styles);
-// interface ResponseProductCart {
-//     productCartId: number;
-//     productId: number;
-//     name: string;
-//     color: string;
-//     size: string;
-//     price: number;
-//     image: string;
-//     quantity: number;
-// }
 const BootstrapTooltip = stylist(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -45,10 +36,7 @@ const BootstrapTooltip = stylist(({ className, ...props }: TooltipProps) => (
         backgroundColor: theme.palette.common.black,
     },
 }));
-interface Product {
-    productId: number;
-    name: string;
-}
+
 interface HeaderProps {
     isChangeBackgroundHeader: boolean;
 }
@@ -123,15 +111,18 @@ const ULDropDown = styled.ul<{ $isChangeBackgroundHeader: boolean }>`
         background-color: ${(props) => (props.$isChangeBackgroundHeader ? '#ffffff30' : '#cccccce9')};
     }
 `;
+
 const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [activeMenu, setActiveMenu] = useState(false);
+    const [colorBlack, setColorBlack] = useState(false);
+
     const { isLogined, userName } = useAppSelector((state) => state.users);
-    const { isSearching, productSearches } = useAppSelector((state) => state.products);
     const { productCarts } = useAppSelector((state) => state.carts);
     const handleClickCart = () => {
         navigate('/cart');
+        setActiveMenu(false);
     };
     useEffect(() => {
         const fetchData = async () => {
@@ -153,6 +144,7 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
         if (accessToken !== undefined && accessToken.length > 0 && userName === '') {
             dispatch(checkStateLogin());
         }
+        
         setActiveMenu(!activeMenu);
     };
     const handleClickLogin = () => {
@@ -173,26 +165,15 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
         navigate('/order-history');
     };
     const [searchClick, setSearchClick] = useState(false);
+
     const handleSearchOn = () => {
         dispatch(clearSearching());
         setSearchClick(true);
+        setColorBlack(true);
+        dispatch(upStatusSearch(true));
+        setActiveMenu(false);
     };
-    const handleSearchOff = () => {
-        setSearchClick(false);
-        dispatch(clearSearching());
-    };
-    const handleChangeInput = (e: any) => {
-        if (e.target.value !== '') {
-            dispatch(findProductBySearching(e.target.value));
-        } else {
-            dispatch(clearSearching());
-        }
-    };
-    const handleClickProductName = (productId: number) => {
-        setSearchClick(false);
-        dispatch(clearSearching());
-        navigate(`/product/${productId}`);
-    };
+
     const handleQuantityCart = () => {
         return (
             productCarts.length > 0 &&
@@ -201,6 +182,18 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
             }, 0)
         );
     };
+    const handleSearchOff = () => {
+        setSearchClick(false);
+        setColorBlack(false);
+        dispatch(clearSearching());
+    };
+
+    const handleCloseBlack = () => {
+        setColorBlack(false);
+        setSearchClick(false);
+        dispatch(upStatusSearch(false));
+    };
+
     return (
         <div className={cx('header')}>
             <div className={cx('header-main')}>
@@ -215,7 +208,7 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
                     </Link>
                 </div>
                 <div className={cx('menu-drawer')}>
-                    <MenuHeader />
+                    <MenuHeader handleSearchOn={handleSearchOn} />
                 </div>
                 <div
                     className={cx('header-main-right')}
@@ -224,15 +217,20 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
                     <div className={cx('main-right-body')}>
                         <ULLeft className={cx('main-right-list')} $isChangeBackgroundHeader={isChangeBackgroundHeader}>
                             <li>
-                                <Link to="/">Trang Chủ</Link>
+                                <Link to="/" onClick={() => setActiveMenu(false)}>
+                                    Trang Chủ
+                                </Link>
                             </li>
                             <li>
-                                <Link to="/shop">Cửa Hàng</Link>
+                                <Link to="/shop" onClick={() => setActiveMenu(false)}>
+                                    Cửa Hàng
+                                </Link>
                             </li>
                             <li>
                                 <ScrollLink
                                     onClick={() => {
                                         navigate('/');
+                                        setActiveMenu(false);
                                     }}
                                     to={`${isChangeBackgroundHeader ? '' : 'information-shop'}`}
                                     smooth={true}
@@ -244,7 +242,11 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
                             </li>
                         </ULLeft>
                         <ULRight className={cx('main-right-icon')} $isChangeBackgroundHeader={isChangeBackgroundHeader}>
-                            <li onClick={handleSearchOn}>
+                            <li
+                                onClick={() => {
+                                    handleSearchOn();
+                                }}
+                            >
                                 <SearchIcon />
                             </li>
                             <li className={cx('right-cart')}>
@@ -305,68 +307,10 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
             </div>
             {searchClick && (
                 <div className={cx('header-main-search')}>
-                    <div className={cx('head-search-main')}>
-                        <div className={cx('head-search-left')}>
-                            <div className={cx('search-left')}>
-                                <img src={logo} alt="logo" />
-                            </div>
-                            <div className={cx('search-input')}>
-                                <div className={cx('search-input-main')}>
-                                    <div className={cx('search-input-top')}>
-                                        <i className={cx('fa-solid fa-magnifying-glass')}></i>
-                                        <input
-                                            type="text"
-                                            placeholder="Tìm kiếm"
-                                            onChange={(e) => handleChangeInput(e)}
-                                        />
-                                    </div>
-                                    {isSearching ? (
-                                        <div className={cx('custom-loader')}></div>
-                                    ) : (
-                                        <>
-                                            {productSearches.length > 0 ? (
-                                                <>
-                                                    <div className={cx('search-result')}>
-                                                        <p>Kết quả tìm kiếm</p>
-                                                        <ul>
-                                                            {productSearches.map((product: Product) => {
-                                                                return (
-                                                                    <li
-                                                                        key={product.productId}
-                                                                        onClick={() =>
-                                                                            handleClickProductName(product.productId)
-                                                                        }
-                                                                    >
-                                                                        {product.name}
-                                                                    </li>
-                                                                );
-                                                            })}
-                                                        </ul>
-                                                    </div>
-                                                </>
-                                            ) : (
-                                                <div className={cx('search-result')}>
-                                                    <p>Cụm từ tìm kiếm phổ biến</p>
-                                                    <ul>
-                                                        <li>JUMSUIT Liền thân</li>
-                                                        <li>Đầm ngắn</li>
-                                                        <li>Đầm dài</li>
-                                                        <li>Set bộ rời</li>
-                                                        <li>Vest</li>
-                                                    </ul>
-                                                </div>
-                                            )}
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-                            <div className={cx('search-right')} onClick={handleSearchOff}>
-                                <p>Tắt tìm kiếm</p>
-                            </div>
-                        </div>
-                    </div>
+                    <SearchHeader handleSearchOffMenu={handleSearchOff} />
                 </div>
             )}
+            {colorBlack && <div className={cx('menu-black')} onClick={handleCloseBlack}></div>}
         </div>
     );
 };

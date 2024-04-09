@@ -116,11 +116,6 @@ const InformationProduct: React.FC<ChildrenProps> = ({ children }) => {
                                                             handleClickProduct(product.productId);
                                                         }}
                                                     >
-                                                        {/* {product.discount && (
-                                                        <div className={cx('list-discount')}>
-                                                            <span>{product.discount}</span>
-                                                        </div>
-                                                    )} */}
                                                         <div className={cx('list-img')}>
                                                             <img src={product.image} alt={product.name} />
                                                         </div>

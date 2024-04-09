@@ -192,6 +192,10 @@
             font-size: 27px !important;
             padding: 0 !important;
         }
+        & > i {
+            top: -1rem !important;
+            right: 1.5rem !important;
+        }
     }
     .button-list {
         width: 16.4rem !important;

@@ -682,7 +682,12 @@
         }
     }
     .button-control {
-        & > button {
+        & > .button-cart {
+            padding: 11px 0;
+            font-size: 19px !important;
+        }
+        & > .button-payment {
+            padding: 21px 0;
             font-size: 19px !important;
         }
     }
