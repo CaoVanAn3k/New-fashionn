@@ -120,6 +120,7 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
 
     const { isLogined, userName } = useAppSelector((state) => state.users);
     const { productCarts } = useAppSelector((state) => state.carts);
+    const [resultSearching, setResultSearching] = useState(false);
     const handleClickCart = () => {
         navigate('/cart');
         setActiveMenu(false);
@@ -156,7 +157,8 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
     const handleClickLogout = async () => {
         const accessToken: string | undefined = Cookies.get('accessToken');
         if (accessToken !== undefined && accessToken.length > 0) {
-            Promise.all([dispatch(clearState()), dispatch(clearStateWhenLogout()), dispatch(logout())]);
+            await dispatch(logout());
+            Promise.all([dispatch(clearState()), dispatch(clearStateWhenLogout())]);
             await waiting(1000);
             navigate('/login');
         }
@@ -173,7 +175,34 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
         dispatch(upStatusSearch(true));
         setActiveMenu(false);
     };
+<<<<<<< HEAD
 
+=======
+    const handleSearchOff = () => {
+        setSearchClick(false);
+        dispatch(clearSearching());
+    };
+    const handleChangeInput = (e: any) => {
+        if (e.target.value !== '') {
+            const hasSpecialCharacters = /[!@#$%^&*()?":{}|<>]/.test(e.target.value);
+            if (!hasSpecialCharacters) {
+                setResultSearching(true);
+                dispatch(findProductBySearching(e.target.value));
+            } else {
+                setResultSearching(true);
+                dispatch(clearSearching());
+            }
+        } else {
+            setResultSearching(false);
+            dispatch(clearSearching());
+        }
+    };
+    const handleClickProductName = (productId: number) => {
+        setSearchClick(false);
+        dispatch(clearSearching());
+        navigate(`/product/${productId}`);
+    };
+>>>>>>> 3e0f9900ea71c3fecc720228c8d2ed358d1e0d64
     const handleQuantityCart = () => {
         return (
             productCarts.length > 0 &&
@@ -307,7 +336,76 @@ const Header = ({ isChangeBackgroundHeader }: HeaderProps) => {
             </div>
             {searchClick && (
                 <div className={cx('header-main-search')}>
+<<<<<<< HEAD
                     <SearchHeader handleSearchOffMenu={handleSearchOff} />
+=======
+                    <div className={cx('head-search-main')}>
+                        <div className={cx('head-search-left')}>
+                            <div className={cx('search-left')}>
+                                <img src={logo} alt="logo" />
+                            </div>
+                            <div className={cx('search-input')}>
+                                <div className={cx('search-input-main')}>
+                                    <div className={cx('search-input-top')}>
+                                        <i className={cx('fa-solid fa-magnifying-glass')}></i>
+                                        <input
+                                            type="text"
+                                            placeholder="Tìm kiếm"
+                                            onChange={(e) => handleChangeInput(e)}
+                                        />
+                                    </div>
+                                    {isSearching ? (
+                                        <div className={cx('custom-loader')}></div>
+                                    ) : (
+                                        <>
+                                            {productSearches.length > 0 ? (
+                                                <div className={cx('search-result')}>
+                                                    <p>Kết quả tìm kiếm</p>
+                                                    <ul>
+                                                        {productSearches.map((product: Product) => {
+                                                            return (
+                                                                <li
+                                                                    key={product.productId}
+                                                                    onClick={() =>
+                                                                        handleClickProductName(product.productId)
+                                                                    }
+                                                                >
+                                                                    {product.name}
+                                                                </li>
+                                                            );
+                                                        })}
+                                                    </ul>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    {resultSearching ? (
+                                                        <div className={cx('search-result')}>
+                                                            <p>Không tìm thấy sản phẩm</p>
+                                                        </div>
+                                                    ) : (
+                                                        <div className={cx('search-result')}>
+                                                            <p>Cụm từ tìm kiếm phổ biến</p>
+                                                            <ul>
+                                                                <li>JUMSUIT Liền thân</li>
+                                                                <li>Đầm ngắn</li>
+                                                                <li>Đầm dài</li>
+                                                                <li>Set bộ rời</li>
+                                                                <li>Vest</li>
+                                                            </ul>
+                                                        </div>
+                                                    )}
+                                                </>
+                                            )}
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                            <div className={cx('search-right')} onClick={handleSearchOff}>
+                                <p>Tắt tìm kiếm</p>
+                            </div>
+                        </div>
+                    </div>
+>>>>>>> 3e0f9900ea71c3fecc720228c8d2ed358d1e0d64
                 </div>
             )}
             {colorBlack && <div className={cx('menu-black')} onClick={handleCloseBlack}></div>}

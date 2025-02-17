@@ -15,12 +15,16 @@ import {
     logout,
     checkStateLogin,
     OAuthExchangeCode,
+    OAuthLoginFacebook,
 } from '../../redux/Authentication/Authentication';
 import { getAllProductInCart } from '../../redux/Cart/cart';
 import { useAppDispatch, useAppSelector } from '../../redux/store';                 
 import waiting from '../../util/waiting';
 import Cookies from 'js-cookie';
 import { useGoogleLogin } from '@react-oauth/google';
+import { toast } from 'react-toastify';
+import { FacebookLoginButton } from 'react-social-login-buttons';
+import { LoginSocialFacebook } from 'reactjs-social-login';
 interface Person {
     userName: string;
     fullName: string;
@@ -171,7 +175,6 @@ const Authentication = () => {
 
     const handleGoogleLogin = useGoogleLogin({
         onSuccess: (codeResponse) => {
-            console.log(codeResponse);
             dispatch(OAuthExchangeCode(codeResponse.code));
         },
         onError: (errResponse) => console.log(errResponse),
@@ -319,7 +322,18 @@ const Authentication = () => {
                                 </button>
                             </form>
                         ) : (
-                            <form onSubmit={formLogin.handleSubmit}>
+                            <form
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    if (formLogin.values.userName === '') {
+                                        toast.error('Tên đăng nhập không được để trống');
+                                    } else if (formLogin.values.password === '') {
+                                        toast.error('Mật khẩu không được để trống');
+                                    } else {
+                                        formLogin.handleSubmit(e);
+                                    }
+                                }}
+                            >
                                 <div className={cx('input')} onClick={focusInputUsername}>
                                     <input
                                         type="text"
@@ -374,10 +388,25 @@ const Authentication = () => {
                                 <hr />
                             </div>
                             <div className={cx('login-networking')}>
-                                <button className={cx('login', 'login-facebook')}>
-                                    <i className={cx('fa-brands fa-facebook-f')}></i>
-                                    <span>Đăng nhập bằng Facebook</span>
-                                </button>
+                                <div className={cx('login', 'login-facebook')}>
+                                    <LoginSocialFacebook
+                                        appId={`${process.env.REACT_APP_APP_ID_FACEBOOK}`}
+                                        onResolve={(response) => {
+                                            const data = {
+                                                accessToken: response.data?.accessToken,
+                                                expiresIn: response.data?.expiresIn,
+                                                name: response.data?.name,
+                                                userId: response.data?.userID,
+                                            };
+                                            dispatch(OAuthLoginFacebook(data));
+                                        }}
+                                        onReject={(error) => {
+                                            console.log(error);
+                                        }}
+                                    >
+                                        <FacebookLoginButton />
+                                    </LoginSocialFacebook>
+                                </div>
                                 <button className={cx('login', 'login-google')} onClick={() => handleGoogleLogin()}>
                                     <i className={cx('fa-brands fa-google')}></i>
                                     <span>Đăng nhập bằng Google</span>

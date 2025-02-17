@@ -18,11 +18,8 @@ let refreshPromise: Promise<void> | null = null;
 const callRefreshToken = async (): Promise<void> => {
     if (!isRefreshing) {
         isRefreshing = true;
-        const res = await axiosInstance.get<void, response>('/auth/refreshToken');
+        await axiosInstance.get<void, response>('/auth/refreshToken');
         isRefreshing = false;
-
-        // Lưu AccessToken mới vào Cookies hoặc nơi lưu trữ khác
-        Cookies.set('accessToken', res.token);
     }
 };
 axiosInstance.interceptors.request.use(

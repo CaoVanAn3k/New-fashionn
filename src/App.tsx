@@ -5,11 +5,6 @@ import RouterPublic from './components/Router/Router';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-// import { getAllProductInCart } from './redux/Cart/cart';
-// import { checkStateLogin } from './redux/Authentication/Authentication';
-// import { useAppDispatch, useAppSelector } from './redux/store';
-// import Cookies from 'js-cookie';
-// import { useEffect } from 'react';
 
 function App() {
     const PublicRouter = RouterPublic();

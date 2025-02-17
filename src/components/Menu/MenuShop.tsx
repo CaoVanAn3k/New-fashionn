@@ -59,8 +59,8 @@ function MenuShop() {
                 sortName: e.target.value,
                 offset: 0,
             };
+            await dispatch(updateStateSortName(e.target.value));
             await dispatch(findAllProductShopBySortPrice(data));
-            dispatch(updateStateSortName(e.target.value));
         }
     };
 

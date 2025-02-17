@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { axiosInstance } from '../../util/axiosUtil';
+import axios from 'axios';
 import { toast } from 'react-toastify';
+const API_URL = process.env.REACT_APP_API_URL;
 interface ResponseProductHome {
     products_news: Array<{}>;
     products_featured: Array<{}>;
@@ -54,9 +55,9 @@ interface initState {
 }
 export const findProductHome = createAsyncThunk<any>('findProductHome', async () => {
     try {
-        const res = await axiosInstance.get<ResponseProductHome>('/home');
+        const res = await axios.get<ResponseProductHome>(`${API_URL}/web/home`);
         if (res) {
-            return res;
+            return res.data;
         }
     } catch (err) {
         console.log(err);
@@ -64,9 +65,9 @@ export const findProductHome = createAsyncThunk<any>('findProductHome', async ()
 });
 export const findAllProductShop = createAsyncThunk<any, number>('findAllProductShop', async (offSet: number) => {
     try {
-        const res = await axiosInstance.get(`/shop?offset=${offSet}&limit=16`);
+        const res = await axios.get(`${API_URL}/web/shop?offset=${offSet}&limit=16`);
         if (res) {
-            return res;
+            return res.data;
         }
     } catch (err: any) {
         throw new Error(err);
@@ -76,11 +77,11 @@ export const findAllProductShopBySortPrice = createAsyncThunk<any, SortData>(
     'findAllProductShopBySortPrice',
     async (data: SortData) => {
         try {
-            const res = await axiosInstance.get(
-                `/shop/products/sort?sortName=${data.sortName}&offset=${data.offset}&limit=16`,
+            const res = await axios.get(
+                `${API_URL}/web/shop/products/sort?sortName=${data.sortName}&offset=${data.offset}&limit=16`,
             );
             if (res) {
-                return res;
+                return res.data;
             }
         } catch (error: any) {
             throw new Error(error);
@@ -89,9 +90,9 @@ export const findAllProductShopBySortPrice = createAsyncThunk<any, SortData>(
 );
 export const getAllCategory = createAsyncThunk<any>('getAllCategory', async () => {
     try {
-        const res = await axiosInstance.get('/category');
+        const res = await axios.get(`${API_URL}/web/category`);
         if (res) {
-            return res;
+            return res.data;
         }
     } catch (err: any) {
         throw new Error(err);
@@ -101,9 +102,9 @@ export const getProductById = createAsyncThunk<ResponseProductById | any, number
     'getProductById',
     async (id: number) => {
         try {
-            const res = await axiosInstance.get<ResponseProductById>(`/products/${id}`);
+            const res = await axios.get<ResponseProductById>(`${API_URL}/web/products/${id}`);
             if (res) {
-                return res;
+                return res.data;
             }
         } catch (err: any) {
             throw new Error(err);
@@ -112,9 +113,9 @@ export const getProductById = createAsyncThunk<ResponseProductById | any, number
 );
 export const findProductByCategoryId = createAsyncThunk<any, number>('findProductByCategoryId', async (id: number) => {
     try {
-        const res = await axiosInstance.get(`/shop/products?categoryId=${id}`);
+        const res = await axios.get(`${API_URL}/web/shop/products?categoryId=${id}`);
         if (res) {
-            return res;
+            return res.data;
         }
     } catch (err: any) {
         throw new Error(err);
@@ -122,9 +123,9 @@ export const findProductByCategoryId = createAsyncThunk<any, number>('findProduc
 });
 export const findProductBySearching = createAsyncThunk<any, string>('findProductBySearching', async (data: string) => {
     try {
-        const res = await axiosInstance.get(`/products/search?searchName=${data}`);
+        const res = await axios.get(`${API_URL}/web/products/search?searchName=${data}`);
         if (res) {
-            return res;
+            return res.data;
         }
     } catch (err: any) {
         throw new Error(err);
@@ -134,11 +135,11 @@ export const findAllProductByCategoryName = createAsyncThunk<any, CategoryData>(
     'findAllProductByCategoryName',
     async (data: CategoryData) => {
         try {
-            const res = await axiosInstance.get(
-                `/shop/products/category?categoryName=${data.categoryName}&offset=${data.offset}&limit=16`,
+            const res = await axios.get(
+                `${API_URL}/web/shop/products/category?categoryName=${data.categoryName}&offset=${data.offset}&limit=16`,
             );
             if (res) {
-                return res;
+                return res.data;
             }
         } catch (error: any) {
             toast.error(error.data);
@@ -205,6 +206,7 @@ const ProductsSlice: any = createSlice({
                 state.categoryName = '';
             }
             state.sortName = action.payload;
+            state.products = [];
         },
         updateStateOffset: (state) => {
             state.offsetState = state.offsetState + 16;
@@ -254,14 +256,21 @@ const ProductsSlice: any = createSlice({
                 state.isLoadingProductShop = false;
                 state.productCategoryId = [];
                 let newArr: Product[] = [];
-                if (state.sortName !== '') {
-                    newArr = [...state.products, ...action.payload];
+                if (state.sortName === 'increase') {
+                    newArr = [
+                        ...state.products,
+                        ...action.payload.sort((firstItem, secondItem) => firstItem.price - secondItem.price),
+                    ];
                 } else {
-                    newArr = action.payload;
+                    newArr = [
+                        ...state.products,
+                        ...action.payload.sort((firstItem, secondItem) => firstItem.price - secondItem.price).reverse(),
+                    ];
                 }
                 state.products = newArr.filter((item, index, self) => {
                     return self.findIndex((t) => t.productId === item.productId) === index;
                 });
+                console.log(state.products);
             })
             .addCase(getAllCategory.fulfilled, (state, action: PayloadAction<any>) => {
                 state.loading = false;

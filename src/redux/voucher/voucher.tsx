@@ -15,7 +15,7 @@ interface InitialState {
 }
 export const getAllVoucherOfUser = createAsyncThunk<VoucherData[]>('getAllVoucherOfUser', async () => {
     try {
-        const res = await axiosInstance.get('/voucher/free-shipping');
+        const res = await axiosInstance.get('/web/voucher/free-shipping');
         if (res.data) {
             return res.data;
         }

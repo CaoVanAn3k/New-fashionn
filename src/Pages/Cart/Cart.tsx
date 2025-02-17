@@ -103,8 +103,8 @@ function Cart() {
         }
     }, [productCarts]);
     useEffect(() => {
+        const jsonProductReOrder = sessionStorage.getItem('productsOrder');
         if (productCarts.length > 0) {
-            const jsonProductReOrder = sessionStorage.getItem('productsReOrder');
             if (jsonProductReOrder !== null) {
                 const productsReOrder: ResponseDataRender = JSON.parse(jsonProductReOrder);
                 const productChecked = productCarts.filter((product: ProductCart) => {
@@ -122,7 +122,7 @@ function Cart() {
                 setTotalPayment(productChecked);
             }
         }
-    }, [productCarts]);
+    }, [dispatch, productCarts]);
     const handleClickOpen = (product: ProductCart) => {
         setProduct(product);
         setOpen(true);
@@ -184,7 +184,7 @@ function Cart() {
         dispatch(decrementProductCart(product));
     };
     const handleClickPayment = () => {
-        sessionStorage.removeItem('productsReOrder');
+        sessionStorage.removeItem('productsOrder');
         if (voucherSelected.code !== '') {
             sessionStorage.setItem(
                 'discountMoney',

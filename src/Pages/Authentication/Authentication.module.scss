@@ -285,13 +285,28 @@
                 }
                 & > .login-facebook {
                     background-color: #4692f5;
-                    color: var(--color-fff1);
-                    font-size: 1.5rem;
-                    & > i {
-                        font-size: 2rem;
+                    & > div {
+                        width: max-content;
+                        background-color: #4692f5;
+                        color: var(--color-fff1);
+                        font-size: 1.5rem;
+                        & > button {
+                            width: 100% !important;
+                            background-color: #4692f5 !important;
+                            height: auto !important;
+                            border: none !important;
+                            border-radius: 0 !important;
+                            box-shadow: none !important;
+                            margin: 0 !important;
+                            font-size: 1.5rem !important;
+                            & > div > div > svg {
+                                width: 20px;
+                                height: 20px;
+                            }
+                        }
                     }
                     &:hover {
-                        background-color: #4692f5bf;
+                        opacity: 0.9;
                     }
                 }
                 & > .login-google {
@@ -302,7 +317,7 @@
                         font-size: 2rem;
                     }
                     &:hover {
-                        background-color: #f54646cf;
+                        opacity: 0.9;
                     }
                 }
             }

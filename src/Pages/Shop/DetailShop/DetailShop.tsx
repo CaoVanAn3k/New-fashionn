@@ -4,15 +4,17 @@ import Slider from 'react-slick';
 import MenuLink from '../../../components/Menu/MenuLink';
 import { useState, useEffect, useCallback } from 'react';
 import InformationDetailShop from './InformationDetailShop';
-import IconEvaluate from '../../../components/IconEvaluate';
 import CommentDetailShop from './CommentDetailShop';
 import { useAppSelector, useAppDispatch } from '../../../redux/store';
 import { deleteDataProductId, getProductById } from '../../../redux/products/products';
+import { findCommentByUserAndProduct, getAllRatingCommentByProduct } from '../../../redux/Comment/comment';
 import { addToCart } from '../../../redux/Cart/cart';
 import { useParams, useNavigate } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
+import { toast } from 'react-toastify';
 // import WebSocket from '../../../util/webSocket';
 const cx = classNames.bind(styles);
 interface galleryThumbnail {
@@ -36,6 +38,23 @@ interface Product {
     sizeNames: [];
     categoryId: number;
     galleryImages: [];
+}
+// interface ResponseFeedbackProduct {
+//     commentId: number;
+//     productId: number;
+//     nameProduct: string;
+//     color: string;
+//     size: string;
+//     rating: number;
+//     descriptionProductQuality: string;
+//     descriptionFeature: string;
+//     userName: string;
+//     active: boolean;
+//     createdAt: string | undefined;
+// }
+interface RatingResponse {
+    rating: number;
+    rating_count: number;
 }
 let menuLink = [
     {
@@ -106,101 +125,12 @@ const informationDetail = [
             'Tại Bích Thuận Store, chúng tôi cam kết đảm bảo sự hài lòng của khách hàng. Nếu bạn không hoàn toàn hài lòng với sản phẩm mua từ cửa hàng của chúng tôi, chúng tôi sẽ tự hào hoàn tiền hoặc đổi sản phẩm cho bạn. Chính sách hoàn trả của chúng tôi dễ dàng và linh hoạt, với thời hạn hợp lý để bạn có đủ thời gian để kiểm tra và quyết định. Chúng tôi cam kết đảm bảo mọi giao dịch mua sắm với chúng tôi đều là một trải nghiệm thoải mái và không có rủi ro.',
     },
 ];
-const iconEvaluate = [
-    {
-        id: 1,
-        color: 'yellow',
-        quantity: '',
-    },
-    {
-        id: 2,
-        color: 'yellow',
-        quantity: '',
-    },
-    {
-        id: 3,
-        color: 'yellow',
-        quantity: '',
-    },
-    {
-        id: 4,
-        color: 'yellow',
-        quantity: '',
-    },
-    {
-        id: 5,
-        color: 'yellow',
-        quantity: '(10)',
-    },
-];
-const iconEvaluate1 = [
-    {
-        id: 1,
-        color: 'yellow',
-        quantity: '',
-    },
-    {
-        id: 2,
-        color: 'yellow',
-        quantity: '',
-    },
-    {
-        id: 3,
-        color: 'fff',
-        quantity: '',
-    },
-    {
-        id: 4,
-        color: 'fff',
-        quantity: '',
-    },
-    {
-        id: 5,
-        color: 'fff',
-        quantity: '(0)',
-    },
-];
-
-const commentDetail = [
-    {
-        id: 1,
-        name: 'Nguyen',
-        date: '07/08/2023',
-        title: 'Tên sản phẩm:Sản phẩm mẫu số 1',
-        color: 'Màu sắc:Green',
-        size: 'Kích cỡ',
-        comment: 'Quần áo có vừa không:Đúng với kích thước',
-        evaluate: 'Đánh giá',
-        evaluatecmt: 'Sản phẩm đẹp,lên dánh ok,sẽ ủng hộ thêm sau này !!!',
-    },
-    {
-        id: 2,
-        name: 'An',
-        date: '08/08/2023',
-        title: 'Tên sản phẩm:Sản phẩm mẫu số 1',
-        color: 'Màu sắc:Green',
-        size: 'Kích cỡ',
-        comment: 'Quần áo có vừa không:Đúng với kích thước',
-        evaluate: 'Đánh giá',
-        evaluatecmt: 'Sản phẩm đẹp,lên dánh ok,sẽ ủng hộ thêm sau này !!!',
-    },
-    {
-        id: 3,
-        name: 'Huy',
-        date: '10/08/2023',
-        title: 'Tên sản phẩm:Sản phẩm mẫu số 1',
-        color: 'Màu sắc:Green',
-        size: 'Kích cỡ',
-        comment: 'Quần áo có vừa không:Đúng với kích thước',
-        evaluate: 'Đánh giá',
-        evaluatecmt: 'Sản phẩm đẹp,lên dánh ok,sẽ ủng hộ thêm sau này !!!',
-    },
-];
 const DetailShop = () => {
     const { id } = useParams<string>();
     const navigate = useNavigate();
     const { productById, isLoadingProductById, productSame } = useAppSelector((state) => state.products);
-    // const { userName } = useAppSelector((state) => state.users);
+    const { reviewedProductItem, ratingList } = useAppSelector((state) => state.comment);
+    const { isLoadingAddToCart } = useAppSelector((state) => state.carts);
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
     const [selectedQuantity, setSelectedQuantity] = useState(1);
@@ -223,7 +153,11 @@ const DetailShop = () => {
     useEffect(() => {
         if (id) {
             menuLink = menuLink.filter((item) => item.id !== 3);
-            dispatch(getProductById(Number(id)));
+            Promise.all([
+                dispatch(getProductById(Number(id))),
+                dispatch(findCommentByUserAndProduct(Number.parseInt(id))),
+                dispatch(getAllRatingCommentByProduct(Number.parseInt(id))),
+            ]);
         }
     }, [dispatch, id]);
     useEffect(() => {
@@ -304,9 +238,63 @@ const DetailShop = () => {
                 quantity: selectedQuantity,
             };
             dispatch(addToCart(data));
-            // if (userName !== '') {
-            //     WebSocket.updateCartByUserName(userName);
-            // }
+        } else {
+            if (selectedSize === '') {
+                toast.warning('Vui lòng chọn size');
+            } else if (selectedColor === '') {
+                toast.warning('Vui lòng chọn màu');
+            }
+        }
+    };
+    const handleCalculatorRating = (number: number) => {
+        if (ratingList) {
+            const isRating: RatingResponse | undefined = ratingList.find(
+                (item: RatingResponse) => item.rating === number,
+            );
+            if (isRating) {
+                return isRating.rating_count;
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
+    };
+    const handleClickBuying = async () => {
+        if (selectedSize !== '' && selectedColor !== '' && productById.productId !== null) {
+            const data = {
+                id: productById.productId,
+                color: selectedColor,
+                size: selectedSize,
+                quantity: selectedQuantity,
+            };
+            await dispatch(addToCart(data));
+            sessionStorage.setItem(
+                'productsOrder',
+                JSON.stringify({
+                    orderId: 0,
+                    data: [
+                        {
+                            orderId: 0,
+                            productId: data.id,
+                            nameProduct: '',
+                            priceProduct: 0,
+                            moneyPersonPay: 0,
+                            color: data.color,
+                            size: data.size,
+                            image: '',
+                            quantity: data.quantity,
+                        },
+                    ],
+                }),
+            );
+            navigate('/cart');
+        } else {
+            if (selectedSize === '') {
+                toast.warning('Vui lòng chọn size');
+            } else if (selectedColor === '') {
+                toast.warning('Vui lòng chọn màu');
+            }
         }
     };
     return (
@@ -418,30 +406,59 @@ const DetailShop = () => {
                                     <div className={cx('information-quantity')}>
                                         <div className={cx('quantity-top-list')}>
                                             <p>SỐ LƯỢNG</p>
-                                            <span>Còn {productById.quantity} bộ</span>
+                                            <span>
+                                                {productById.quantity > 0
+                                                    ? `Còn ${productById.quantity} bộ`
+                                                    : 'Hết hàng'}{' '}
+                                            </span>
                                         </div>
                                         <div className={cx('quantity-bottom-list')}>
-                                            <select
-                                                onChange={(e: any) => {
-                                                    setSelectedQuantity(e.target.value);
-                                                }}
-                                            >
-                                                {[...Array.from(Array(productById.quantity))].map((item, index) => {
-                                                    return (
-                                                        <option key={index} value={`${index + 1}`}>
-                                                            {index + 1}
-                                                        </option>
-                                                    );
-                                                })}
-                                            </select>
+                                            <div className={cx('container')}>
+                                                <span
+                                                    className={cx('minus')}
+                                                    onClick={() => {
+                                                        if (selectedQuantity === 1) {
+                                                            toast.error('Số lượng không thể là 0');
+                                                        } else {
+                                                            setSelectedQuantity((prevous) => prevous - 1);
+                                                        }
+                                                    }}
+                                                >
+                                                    <i className="fa-solid fa-minus"></i>
+                                                </span>
+                                                <p className={cx('quantity')}>{selectedQuantity}</p>
+                                                <span
+                                                    className={cx('plus')}
+                                                    onClick={() => {
+                                                        if (selectedQuantity === productById.quantity) {
+                                                            toast.error(
+                                                                'Không thể chọn số lượng vượt quá số lượng trong kho',
+                                                            );
+                                                        } else {
+                                                            setSelectedQuantity((prevous) => prevous + 1);
+                                                        }
+                                                    }}
+                                                >
+                                                    <i className="fa-solid fa-plus"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className={cx('button-control')}>
-                                        <button className={cx('button-cart')} onClick={handleClickAddToCart}>
-                                            Thêm Vào Giỏ Hàng
-                                        </button>
-                                        <button className={cx('button-payment')}>MUA NGAY</button>
-                                    </div>
+                                    {isLoadingAddToCart ? (
+                                        <div className={cx('custom-loader-container')}>
+                                            <div className={cx('custom-loader', 'dot')}></div>
+                                            <p>vui lòng chờ</p>
+                                        </div>
+                                    ) : (
+                                        <div className={cx('button-control')}>
+                                            <button className={cx('button-cart')} onClick={handleClickAddToCart}>
+                                                Thêm Vào Giỏ Hàng
+                                            </button>
+                                            <button className={cx('button-payment')} onClick={handleClickBuying}>
+                                                MUA NGAY
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </>
                         )}
@@ -452,22 +469,37 @@ const DetailShop = () => {
                     <div className={cx('shop-evaluate-main')}>
                         <div className={cx('evaluate-main-title')}>
                             <h1>ĐÁNH GIÁ</h1>
-                            <IconEvaluate children={iconEvaluate} />
                         </div>
                         <div className={cx('evaluate-main-title')}>
                             <h3>ĐÁNH GIÁ CỦA KHÁCH HÀNG</h3>
                         </div>
                         <div className={cx('evaluate-main-icon')}>
-                            <IconEvaluate children={iconEvaluate} />
-                            <IconEvaluate children={iconEvaluate} />
-                            <IconEvaluate children={iconEvaluate} />
-                            <IconEvaluate children={iconEvaluate1} />
-                            <IconEvaluate children={iconEvaluate1} />
+                            {Array.from([0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5])
+                                .reverse()
+                                .map((value, index) => {
+                                    return (
+                                        <div
+                                            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                                            key={index}
+                                        >
+                                            <Rating
+                                                name="read-only"
+                                                value={value}
+                                                readOnly
+                                                precision={0.5}
+                                                sx={{ display: 'flex', fontSize: '2.5rem', color: '#f0e713' }}
+                                            />
+                                            <span style={{ fontSize: '1.5rem', color: 'var(--color-red)' }}>
+                                                ({handleCalculatorRating(value)})
+                                            </span>
+                                        </div>
+                                    );
+                                })}
                         </div>
                         <div className={cx('evaluate-main-item')}>
-                            <p>10 bài đáng giá</p>
+                            <p>{reviewedProductItem.length > 0 ? reviewedProductItem.length : 0} bài đáng giá</p>
                         </div>
-                        <CommentDetailShop children={commentDetail} />
+                        <CommentDetailShop children={reviewedProductItem} />
                         <button className={cx('evaluate-main-button')}>XEM THÊM</button>
                     </div>
                 </div>

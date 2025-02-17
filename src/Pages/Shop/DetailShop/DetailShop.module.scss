@@ -209,14 +209,62 @@
     }
 }
 .quantity-bottom-list {
-    width: 14%;
-    & > select {
-        width: 100%;
-        cursor: pointer;
-        padding: 5px 5px;
-        font-size: 17px;
+    width: max-content;
+    & > .container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        & > span {
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
+            background-color: var(--back-ground-red);
+            color: var(--color-fff1);
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            &:hover {
+                background-color: #742433c7;
+            }
+        }
+        & > p {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            margin: 0;
+            font-size: 1.5rem;
+            border: 1px solid var(--color-red);
+            color: var(--color-red);
+        }
     }
 }
+.custom-loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    & > p {
+        margin: 0;
+        font-size: 2rem;
+        color: var(--color-red);
+        font-weight: 500;
+    }
+    & > .custom-loader.dot {
+        width: 50px;
+        height: 24px;
+        background: radial-gradient(circle closest-side, #f43939 90%, #0000) 0% 50%,
+            radial-gradient(circle closest-side, #f43939 90%, #0000) 50% 50%,
+            radial-gradient(circle closest-side, #f43939 90%, #0000) 100% 50%;
+        background-size: calc(100% / 3) 12px;
+        background-repeat: no-repeat;
+        animation: d3 1s infinite linear;
+    }
+}
+
 .button-control {
     display: flex;
     width: 100%;
@@ -739,5 +787,19 @@
                 font-size: 22px !important;
             }
         }
+    }
+}
+@keyframes d3 {
+    20% {
+        background-position: 0% 0%, 50% 50%, 100% 50%;
+    }
+    40% {
+        background-position: 0% 100%, 50% 0%, 100% 50%;
+    }
+    60% {
+        background-position: 0% 50%, 50% 100%, 100% 0%;
+    }
+    80% {
+        background-position: 0% 50%, 50% 50%, 100% 100%;
     }
 }

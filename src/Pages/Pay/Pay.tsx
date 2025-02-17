@@ -12,20 +12,31 @@ import {
     orderPayment,
     handleActiveLoadingPayment,
     clearStatePayment,
+    clearStatusError,
 } from '../../redux/payment/payment';
+import { updateCart } from '../../redux/Cart/cart';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import React from 'react';
 const cx = classNames.bind(styles);
 interface ProductPaymentData {
+    productCartId: number;
+    productId: number;
+    name: string;
+    color: string;
+    size: string;
+    price: number;
+    image: string;
+    quantity: number;
+}
+interface ProductCart {
     productCartId: number;
     productId: number;
     name: string;
@@ -64,6 +75,7 @@ function Pay() {
     const { addressDefault, isLoading, productsPayment, statusError, isPayment, addressList } = useAppSelector(
         (state) => state.payment,
     );
+    const { productCarts } = useAppSelector((state) => state.carts);
     const { isLogined } = useAppSelector((state) => state.users);
     const [onAdd, setOnAdd] = useState(false);
     const [onChangeAddress, setOnChangeAddress] = useState(false);
@@ -74,7 +86,6 @@ function Pay() {
     const handleClose = () => {
         setOpen(false);
     };
-
     const handleOffChangeAddress = () => {
         setOnChangeAddress(false);
     };
@@ -106,16 +117,20 @@ function Pay() {
         setOpen(true);
     };
     useEffect(() => {
-        if (statusError === 402) {
+        if (statusError !== 0) {
+            dispatch(handleActiveLoadingPayment(false));
             handleClickOpen();
         }
-    }, [statusError]);
-
+    }, [dispatch, statusError]);
     useEffect(() => {
-        // Chờ 3 giây trước khi navigate, chỉ nếu statusError là 0 và isPayment là true
         const timerId = setTimeout(() => {
             if (isPayment && statusError === 0) {
+                const updateCartData = productCarts.filter((product: ProductCart) => {
+                    return productsPayment.find((p: ProductPaymentData) => product.productCartId !== p.productCartId);
+                });
+                dispatch(updateCart(updateCartData));
                 dispatch(handleActiveLoadingPayment(false));
+                dispatch(clearStatusError());
                 dispatch(clearStatePayment());
                 sessionStorage.removeItem('productPayment');
                 sessionStorage.removeItem('discountMoney');
@@ -125,7 +140,7 @@ function Pay() {
         return () => {
             clearTimeout(timerId);
         };
-    }, [dispatch, isPayment, navigate, statusError]);
+    }, [dispatch, isPayment, navigate, productCarts, productsPayment, statusError]);
     const handleTotalPayment = useCallback(() => {
         if (productsPayment.length > 0) {
             let totalPayment = productsPayment.reduce((sum: number, product: ProductPaymentData) => {
@@ -356,17 +371,31 @@ function Pay() {
                         keepMounted
                         onClose={handleClose}
                         aria-describedby="alert-dialog-slide-description"
+                        className={cx('dialog-phoneNumber')}
                     >
-                        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+                        <DialogTitle>{'Bạn cần xác minh số điện thoại'}</DialogTitle>
                         <DialogContent>
-                            <DialogContentText id="alert-dialog-slide-description">
-                                Let Google help apps determine location. This means sending anonymous location data to
-                                Google, even when no apps are running.
-                            </DialogContentText>
+                            <div className={cx('container')}>
+                                <div className={cx('authentication-phoneNumber')}>
+                                    <div className={cx('input-phoneNumber')}>
+                                        <input type="text" placeholder="số điện thoại" />
+                                    </div>
+                                    <div className={cx('verify')}>
+                                        <button className={cx('btn-verify-phoneNumber')}>
+                                            <span>Gửi OTP</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className={cx('verify-code')}>
+                                    <div className={cx('verify-input')}>
+                                        <input type="text" placeholder="OTP" />
+                                    </div>
+                                </div>
+                            </div>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleClose}>Disagree</Button>
-                            <Button onClick={handleClose}>Agree</Button>
+                            <Button onClick={handleClose}>Hủy bỏ</Button>
+                            <Button onClick={handleClose}>Xác minh</Button>
                         </DialogActions>
                     </Dialog>
                 </>

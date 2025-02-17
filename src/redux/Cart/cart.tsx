@@ -15,6 +15,7 @@ interface ProductCart {
 interface initState {
     loading: boolean;
     isLoadingChangeQuantity: boolean;
+    isLoadingAddToCart: boolean;
     productCarts: ProductCart[];
     error: string;
 }
@@ -28,10 +29,10 @@ interface DataRequest {
 export const addToCart = createAsyncThunk<any, DataRequest>('addToCart', async (data: DataRequest) => {
     try {
         const { id, ...values } = data;
-        const res: any = await axiosInstance.post(`/cart/products/addToCart/${id}`, values);
+        const res: any = await axiosInstance.post(`/web/cart/products/addToCart/${id}`, values);
         if (res) {
             toast.success(res);
-            const updateCart = await axiosInstance.get('/cart/products');
+            const updateCart = await axiosInstance.get('/web/cart/products');
             if (updateCart !== null) {
                 return updateCart;
             }
@@ -47,7 +48,7 @@ export const addToCart = createAsyncThunk<any, DataRequest>('addToCart', async (
 });
 export const getAllProductInCart = createAsyncThunk<any>('getAllProductInCart', async () => {
     try {
-        const res = await axiosInstance.get('/cart/products');
+        const res = await axiosInstance.get('/web/cart/products');
         if (res.data !== undefined) {
             return res.data;
         }
@@ -59,7 +60,7 @@ export const getAllProductInCart = createAsyncThunk<any>('getAllProductInCart', 
 export const incrementProductCart = createAsyncThunk('incrementProductCart', async (data: ProductCart) => {
     try {
         const { productCartId, ...value } = data;
-        const res = await axiosInstance.put(`/cart/products/increase/${productCartId}`, value);
+        const res = await axiosInstance.put(`/web/cart/products/increase/${productCartId}`, value);
         if (res) {
             return res;
         }
@@ -76,7 +77,7 @@ export const decrementProductCart = createAsyncThunk<any, ProductCart>(
         try {
             const { productCartId, ...value } = data;
             if (value.quantity === 1) {
-                const res = await axiosInstance.delete(`/cart/products/delete/${productCartId}`);
+                const res = await axiosInstance.delete(`/web/cart/products/delete/${productCartId}`);
                 return {
                     message: res,
                     product: data,
@@ -93,7 +94,7 @@ export const decrementProductCart = createAsyncThunk<any, ProductCart>(
 export const deleteProductCart = createAsyncThunk<any, ProductCart>('deleteProductCart', async (data: ProductCart) => {
     try {
         const { productCartId } = data;
-        const res: string | undefined = await axiosInstance.delete(`/cart/products/delete/${productCartId}`);
+        const res: string | undefined = await axiosInstance.delete(`/web/cart/products/delete/${productCartId}`);
         if (res !== undefined) {
             toast.success(res);
             return {
@@ -110,6 +111,7 @@ const initialState: initState = {
     isLoadingChangeQuantity: false,
     error: '',
     productCarts: [],
+    isLoadingAddToCart: false,
 };
 const CartSlice: any = createSlice({
     name: 'Cart',
@@ -126,6 +128,7 @@ const CartSlice: any = createSlice({
         builder
             .addCase(addToCart.pending, (state) => {
                 state.loading = true;
+                state.isLoadingAddToCart = true;
             })
             .addCase(getAllProductInCart.pending, (state) => {
                 state.loading = true;
@@ -141,6 +144,7 @@ const CartSlice: any = createSlice({
             })
             .addCase(addToCart.fulfilled, (state, action: PayloadAction<any>) => {
                 state.loading = false;
+                state.isLoadingAddToCart = false;
                 state.productCarts = action.payload;
             })
             .addCase(getAllProductInCart.fulfilled, (state, action: PayloadAction<ProductCart[]>) => {
@@ -181,6 +185,7 @@ const CartSlice: any = createSlice({
             })
             .addCase(addToCart.rejected, (state) => {
                 state.loading = false;
+                state.isLoadingAddToCart = false;
                 state.error = 'error when add product in cart';
             })
             .addCase(getAllProductInCart.rejected, (state) => {

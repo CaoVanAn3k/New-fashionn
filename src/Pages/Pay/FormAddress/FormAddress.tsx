@@ -335,6 +335,11 @@ const FormAddress: React.FC<Props> = (props) => {
     const handleFinishInput = () => {
         if (isCheckInput()) {
             const hasSpecialCharacters = /[!@#$%^&*()?":{}|<>]/.test(address);
+            const checkFullNumber = /[a-zA-Z]/.test(address);
+            if (!checkFullNumber) {
+                toast.error('Địa chỉ không thể nào là số, vui lòng nhập địa chỉ chính xác để shop giao hàng đến bạn.');
+                return;
+            }
             if (!hasSpecialCharacters) {
                 const data = {
                     address,
@@ -359,6 +364,7 @@ const FormAddress: React.FC<Props> = (props) => {
     const handleFinishInputUpdate = () => {
         if (isCheckInput()) {
             const hasSpecialCharacters = /[!@#$%^&*()?":{}|<>]/.test(address);
+
             if (!hasSpecialCharacters) {
                 const data = {
                     id: addressChange.id,

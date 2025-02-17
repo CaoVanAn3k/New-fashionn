@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { axiosInstance } from '../../util/axiosUtil';
 import { toast } from 'react-toastify';
+// import axios from 'axios';
 interface Person {
     userName: string;
     fullName: string;
@@ -31,6 +32,12 @@ interface RequestAddress {
     status: boolean | undefined;
     phonePayment: string;
     namePayment: string;
+}
+interface FacebookRequest {
+    accessToken: string;
+    expiresIn: number;
+    name: string;
+    userId: string;
 }
 export const register = createAsyncThunk<void, Person>('register', async (data: Person) => {
     const values = {
@@ -114,6 +121,22 @@ export const saveAddress = createAsyncThunk<any, RequestAddress>('saveAddress', 
         return err.message;
     }
 });
+export const OAuthLoginFacebook = createAsyncThunk<any, FacebookRequest>(
+    'OAuthLoginFacebook',
+    async (data: FacebookRequest) => {
+        try {
+            const res: string | undefined = await axiosInstance.post('/auth/oauth2/facebook', data);
+            if (res) {
+                return res;
+            }
+        } catch (err: any) {
+            if (err.status === 400) {
+                toast.error(err.message);
+            }
+            throw new Error(err.message);
+        }
+    },
+);
 const initialState: AuthState = {
     loading: false,
     isLogined: false,
@@ -154,6 +177,10 @@ const AuthenTicationSlice = createSlice({
                 state.loading = true;
                 state.userName = '';
             })
+            .addCase(OAuthLoginFacebook.pending, (state) => {
+                state.loading = true;
+                state.userName = '';
+            })
             .addCase(saveAddress.pending, (state) => {
                 state.loading = true;
             })
@@ -175,6 +202,11 @@ const AuthenTicationSlice = createSlice({
                 state.userName = action.payload;
             })
             .addCase(OAuthExchangeCode.fulfilled, (state, action: PayloadAction<string>) => {
+                state.loading = false;
+                state.isLogined = true;
+                state.userName = action.payload;
+            })
+            .addCase(OAuthLoginFacebook.fulfilled, (state, action: PayloadAction<string>) => {
                 state.loading = false;
                 state.isLogined = true;
                 state.userName = action.payload;
@@ -202,6 +234,11 @@ const AuthenTicationSlice = createSlice({
                 state.error = action.error.message || 'session is expires';
             })
             .addCase(OAuthExchangeCode.rejected, (state, action) => {
+                state.loading = false;
+                state.isLogined = false;
+                state.error = action.error.message || 'OAuth2 is failed';
+            })
+            .addCase(OAuthLoginFacebook.rejected, (state, action) => {
                 state.loading = false;
                 state.isLogined = false;
                 state.error = action.error.message || 'OAuth2 is failed';
